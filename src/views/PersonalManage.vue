@@ -48,24 +48,26 @@ import Bread from '../components/Bread'
 export default {
   components: { Bread },
   created() {
-    this.getInfo()
+    // this.getInfo()
   },
   data() {
     return {
       fit: 'cover', // 头像类型
       url:
-        'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=656257457,1108249792&fm=26&gp=0.jpg' // 头像url
+        'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=656257457,1108249792&fm=26&gp=0.jpg', // 头像url
+      userInfo: {}
     }
   },
   methods: {
-    getInfo() {
-      this.$axios
-        .get('/springdemo1/personInfo/findLikePersonName')
-        .then(res => {
-          console.log(res)
-        })
-        .catch(() => {})
-    }
+    // getInfo() {
+    //   this.$axios
+    //     .get('/data')
+    //     .then(res => {
+    //       console.log(res)
+    //       this.userInfo = res.data.USER_INFO
+    //     })
+    //     .catch(() => {})
+    // }
   }
 }
 </script>
