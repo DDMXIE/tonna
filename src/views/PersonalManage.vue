@@ -61,10 +61,15 @@ export default {
   methods: {
     // getInfo() {
     //   this.$axios
-    //     .get('/data')
+    //     .get('/user', {
+    //       params: {
+    //         'username': 'tony',
+    //         'userage': 12
+    //       }
+    //     })
     //     .then(res => {
     //       console.log(res)
-    //       this.userInfo = res.data.USER_INFO
+    //       // this.userInfo = res.data.USER_INFO
     //     })
     //     .catch(() => {})
     // }

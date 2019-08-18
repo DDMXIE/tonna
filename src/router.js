@@ -12,6 +12,7 @@ import NotePad from './views/NotePad'
 import LifeStyle from './views/LifeStyle'
 // importLifeStyle Waterfall from './views/Waterfall'
 import PersonalManage from './views/PersonalManage'
+import Login from './views/Login'
 // import Waterfall from './views/Waterfall'
 
 Vue.use(Router)
@@ -23,6 +24,11 @@ export default new Router({
       ? '/' // '/views/index2.html/'
       : '/',
   routes: [
+    {
+      path: '/',
+      name: 'login',
+      component: Login
+    },
     {
       path: '/index',
       name: 'index',
