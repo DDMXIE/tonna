@@ -66,14 +66,6 @@
         </div>
       </el-col>
     </el-row>
-    <!-- <el-row
-      align="middle"
-      justify="center"
-      style="height:7%;"
-      type="flex"
-    >
-      <span style="font-size:30px;color: #aaa;">Tonna</span>
-    </el-row> -->
     <el-row
       align="middle"
       justify="center"
