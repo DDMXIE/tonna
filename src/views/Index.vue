@@ -39,13 +39,6 @@
                   <el-radio-button :label="false">展开</el-radio-button>
                   <el-radio-button :label="true">收起</el-radio-button>
                   </el-radio-group> -->
-                  <!-- <el-dropdown size="mini" split-button type="primary">
-                    切换主题
-                    <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item @click="changeColor">浅色模式</el-dropdown-item>
-                      <el-dropdown-item>深色模式</el-dropdown-item>
-                    </el-dropdown-menu>
-                  </el-dropdown> -->
                   <el-radio-group v-model="whatColorRadio" size="mini">
                     <el-radio-button label="浅色模式"></el-radio-button>
                     <el-radio-button label="深色模式"></el-radio-button>
@@ -334,8 +327,6 @@ export default {
   .el-scrollbar__bar.is-horizontal{
     display: none;
   }
-
-
 
 
   .el-menu.el-menu--horizontal{
