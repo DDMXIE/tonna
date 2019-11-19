@@ -86,7 +86,15 @@ export default {
   },
   methods: {
     getWeather() {
-      this.$axios.get('https://www.tianqiapi.com/api/?version=v1&cityid=101210101').then(response => {
+      // this.$axios.get('https://www.tianqiapi.com/api/?version=v1&cityid=101210101').then(response => {
+      this.$axios.get('https://www.tianqiapi.com/api/?appid=63461311&appsecret=BK9Zyj5v&version=v1&cityid=101210101').then(response => {
+      // this.$axios.get('https://www.tianqiapi.com/api/', {
+      //   appid: '63461311',
+      //   appsecret: 'BK9Zyj5v',
+      //   version: 'v1',
+      //   cityid: '101210101'
+
+        // }).then(response => {
         this.weatherObj = response.data
         console.log(this.weatherObj)
       }).catch(() => {})

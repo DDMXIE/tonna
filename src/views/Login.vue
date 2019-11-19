@@ -1,80 +1,82 @@
 <template>
-  <div
-    style="height:100%;width:100%;"
-    class="login-bg"
-  >
-    <el-row
-      align="middle"
-      justify="end"
-      type="flex"
-      style="height:90%;"
+  <transition name="fade">
+    <div
+      style="height:100%;width:100%;"
+      class="login-bg"
     >
-      <el-col
-        :lg="7"
-        :md="8"
-        :sm="10"
-        :xl="5"
-        :xs="23"
-        style="text-align: center;padding-top:40px;margin-right:140px;"
+      <el-row
+        align="middle"
+        justify="end"
+        type="flex"
+        style="height:90%;"
       >
-        <div style="text-align:center;">
-          <el-form
-            :model="loginForm"
-            :rules="rules"
-            ref="loginForm"
-            label-width="100px"
-            class="demo-ruleForm"
-            style="padding-top:80px;"
-          >
-            <el-form-item
-              label="用户名"
-              prop="USERNAME"
+        <el-col
+          :lg="7"
+          :md="8"
+          :sm="10"
+          :xl="5"
+          :xs="23"
+          style="text-align: center;padding-top:40px;margin-right:140px;"
+        >
+          <div style="text-align:center;">
+            <el-form
+              :model="loginForm"
+              :rules="rules"
+              ref="loginForm"
+              label-width="100px"
+              class="demo-ruleForm"
+              style="padding-top:80px;"
             >
-              <el-input
-                v-model="loginForm.USERNAME"
-                style="border-radius:50px;"
-              ></el-input>
-            </el-form-item>
-            <el-form-item
-              label="密码"
-              prop="PASSWORD"
-              style="margin-bottom:8px;"
-            >
-              <el-input
-                v-model="loginForm.PASSWORD"
-                type="password"
-              ></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button
-                type="primary"
-                round
-                @click="submitForm"
-                style="width:140px;margin-top:25px;"
-              >登 录
-              <i class="el-icon-s-promotion el-icon--right"></i>
-              </el-button>
-              <el-button
-                type="success"
-                round
-                @click="sign"
-                style="width:100px;margin-top:25px;"
-              >注 册</el-button>
-              <!-- <el-button @click="resetForm('loginForm')">重置</el-button> -->
-            </el-form-item>
-          </el-form>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row
-      align="middle"
-      justify="center"
-      style="height:5%;"
-      type="flex"
-    >
-      <span style="font-size:14px;color: #aaa;">@托纳博客 Tonna China &nbsp;&nbsp;&nbsp; Designed by Tony</span>
-    </el-row>
-  </div>
+              <el-form-item
+                label="用户名"
+                prop="USERNAME"
+              >
+                <el-input
+                  v-model="loginForm.USERNAME"
+                  style="border-radius:50px;"
+                ></el-input>
+              </el-form-item>
+              <el-form-item
+                label="密码"
+                prop="PASSWORD"
+                style="margin-bottom:8px;"
+              >
+                <el-input
+                  v-model="loginForm.PASSWORD"
+                  type="password"
+                ></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button
+                  type="primary"
+                  round
+                  @click="submitForm"
+                  style="width:140px;margin-top:25px;"
+                >登 录
+                  <i class="el-icon-s-promotion el-icon--right"></i>
+                </el-button>
+                <el-button
+                  type="success"
+                  round
+                  @click="sign"
+                  style="width:100px;margin-top:25px;"
+                >注 册</el-button>
+                <!-- <el-button @click="resetForm('loginForm')">重置</el-button> -->
+              </el-form-item>
+            </el-form>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row
+        align="middle"
+        justify="center"
+        style="height:5%;"
+        type="flex"
+      >
+        <span style="font-size:14px;color: #aaa;">@托纳博客 Tonna China &nbsp;&nbsp;&nbsp; Designed by Tony</span>
+      </el-row>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -125,7 +127,7 @@ export default {
       })
     },
     sign() {
-
+      this.$router.push('/register')
     }
   }
 }
@@ -148,6 +150,14 @@ export default {
   height: 100%;
   position: fixed;
   width: 100%;
+}
+/* 过渡效果 */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.8s;
+}
+.fade-enter-to, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
 
