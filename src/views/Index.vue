@@ -1,12 +1,8 @@
 <template>
   <el-container>
   <el-header style="margin:0;padding:0;position:fixed;left:0;top:0;z-index:1000;width:100%">
-      <!-- <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
-      <el-radio-button :label="false">展开</el-radio-button>
-      <el-radio-button :label="true">收起</el-radio-button>
-      </el-radio-group> -->
       <el-row :style="{'backgroundColor':topMenuBgColor}">
-        <el-col :span="4">
+        <el-col :span="4" v-if="isTonnaShow">
           <span class="title" @click="menuCollapse" :style="{'color':titleColor}">Tonna</span>
         </el-col>
         <el-col :span="20">
@@ -19,7 +15,7 @@
               text-color="#fff"
               :active-text-color="topMenuChosedColor" >
                 <el-menu-item index="/index/PersonalManage" style="font-weight:bolder">个人中心</el-menu-item>
-                <el-submenu index="2">
+                <!-- <el-submenu index="2">
                   <template slot="title" style="font-weight:bolder">我的工作台</template>
                   <el-menu-item index="2-1">选项1</el-menu-item>
                   <el-menu-item index="2-2">选项2</el-menu-item>
@@ -30,16 +26,11 @@
                     <el-menu-item index="2-4-2">选项2</el-menu-item>
                     <el-menu-item index="2-4-3">选项3</el-menu-item>
                   </el-submenu>
-                </el-submenu>
-                <el-menu-item index="3" style="font-weight:bolder">文章管理</el-menu-item>
-                <el-menu-item index="4" style="font-weight:bolder">消息中心</el-menu-item>
-                <!-- <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item> -->
+                </el-submenu> -->
+                <!-- <el-menu-item index="3" style="font-weight:bolder">文章管理</el-menu-item>
+                <el-menu-item index="4" style="font-weight:bolder">消息中心</el-menu-item> -->
                 <div style="float:right;margin-top:15px;padding-right:10px;">
-                  <!-- <el-radio-group v-model="isCollapse" size="mini">
-                  <el-radio-button :label="false">展开</el-radio-button>
-                  <el-radio-button :label="true">收起</el-radio-button>
-                  </el-radio-group> -->
-                  <el-radio-group v-model="whatColorRadio" size="mini">
+                  <el-radio-group v-model="whatColorRadio" size="mini" v-if="isTonnaShow">
                     <el-radio-button label="浅色模式"></el-radio-button>
                     <el-radio-button label="深色模式"></el-radio-button>
                   </el-radio-group>
@@ -47,8 +38,6 @@
                     size="mini"
                     @click="menuCollapse"
                     style="margin-left:10px;">
-                    <!-- <span v-if="isCollapse === true">展开&nbsp;</span>
-                    <span v-if="isCollapse === false">折叠&nbsp;</span> -->
                     <i v-if="isCollapse === true" class="el-icon-s-unfold">&nbsp;菜单</i>
                     <i v-if="isCollapse === false" class="el-icon-s-fold">&nbsp;菜单</i>
                   </el-button>
@@ -57,76 +46,8 @@
               </el-menu>
         </el-col>
       </el-row>
-    
   </el-header>
 
-  <!-- <el-container class="aside" :style="height">
-      <el-menu
-      :router="true"
-      :default-active="$route.path"
-      class="el-menu-vertical-demo" 
-      @open="handleOpen" 
-      @close="handleClose" 
-      :unique-opened="true"
-      :background-color="leftMenuBgColor"
-      :text-color="leftMenuTextColor"
-      :active-text-color="leftMenuChosedColor"
-      :collapse="isCollapse" style="height:-webkit-fill-available"
-      @mouseenter.native="menuOpen"
-      @mouseleave.native="menuClose"
-      > -->
-    
-        <!-- <el-submenu index="1">
-          <template slot="title">
-            <i class="el-icon-location"></i>
-            <span slot="title">导航一</span>
-          </template>
-          <el-menu-item-group>
-            <span slot="title">分组一</span>
-            <el-menu-item index="1-1">选项1</el-menu-item>
-            <el-menu-item index="1-2">选项2</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group title="分组2">
-            <el-menu-item index="1-3">选项3</el-menu-item>
-          </el-menu-item-group>
-          <el-submenu index="1-4">
-            <span slot="title">选项4</span>
-            <el-menu-item index="1-4-1">选项1</el-menu-item>
-          </el-submenu>
-        </el-submenu> -->
-
-
-        <!-- <el-menu-item index="/index/home">
-          <i class="el-icon-menu"></i>
-          <span slot="title">首页</span>
-        </el-menu-item> -->
-        <!-- <el-menu-item index="/index/about">
-          <i class="el-icon-camera-solid"></i>
-          <span slot="title">新世界</span>
-        </el-menu-item> -->
-        <!-- <el-menu-item index="/index/preview">
-          <i class="el-icon-document"></i>
-          <span slot="title">图片预览</span>
-        </el-menu-item> -->
-         <!-- <el-menu-item index="/index/surf">
-          <i class="el-icon-s-promotion"></i>
-          <span slot="title">首页</span>
-        </el-menu-item>
-        <el-menu-item index="/index/editPage">
-          <i class="el-icon-s-claim"></i>
-          <span slot="title">发表文章</span>
-        </el-menu-item>
-         <el-menu-item index="/index/articleView">
-          <i class="el-icon-s-home"></i>
-          <span slot="title">社区</span>
-        </el-menu-item>
-          <el-menu-item index="/index/notePad">
-          <i class="el-icon-s-comment"></i>
-          <span slot="title">留言板</span>
-        </el-menu-item>
-      </el-menu> -->
-    
-  <!-- </el-container> -->
     <el-main class="main" style="padding:0;margin:0;padding-top:60px;">
         <el-scrollbar style="width:100%;height:100%">
           <transition name="router">
@@ -144,7 +65,7 @@
       >
         <el-menu
         :router="true"
-        :default-active="$route.path"
+        :default-active="defaultActive"
         class="el-menu-vertical-demo" 
         @open="handleOpen" 
         @close="handleClose" 
@@ -182,10 +103,26 @@
           <i class="el-icon-s-comment"></i>
           <span slot="title">留言板</span>
         </el-menu-item>
-        <el-menu-item index="/index/lifeStyle">
+        <!-- <el-menu-item index="/index/lifeStyle">
           <i class="el-icon-s-shop"></i>
           <span slot="title">生活</span>
-        </el-menu-item>
+        </el-menu-item> -->
+
+        <el-submenu index="/index">
+            <template slot="title">
+              <i class="el-icon-s-shop" ></i>
+              <span>生活</span>
+            </template>
+            <el-menu-item index="/index/lifeStyle">
+              <i class="el-icon-camera"></i>
+              <span slot="title">探索</span>
+            </el-menu-item>
+            <el-menu-item index="/index/weather">
+              <i class="el-icon-umbrella"></i>
+              <span slot="title">天气</span>
+            </el-menu-item>
+        </el-submenu>
+       
       </el-menu>
     </el-drawer>
 </el-container>
@@ -263,6 +200,20 @@ export default {
     },
     Close(done) {
       done()
+    }
+  },
+
+  computed: {
+    defaultActive() {
+      console.log(this.$route.path)
+      return this.$route.path
+    },
+    isTonnaShow() {
+      if (document.documentElement.clientWidth < 500) {
+        return false
+      } else {
+        return true
+      }
     }
   },
   watch: {

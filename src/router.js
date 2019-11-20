@@ -14,6 +14,7 @@ import LifeStyle from './views/LifeStyle'
 import PersonalManage from './views/PersonalManage'
 import Login from './views/Login'
 import Register from './views/Register'
+import Weather from './views/Weather'
 // import Waterfall from './views/Waterfall'
 
 Vue.use(Router)
@@ -76,12 +77,24 @@ export default new Router({
         component: NotePad,
         meta: { title: '留言板' }
       },
-      {// 生活
+      {
         path: 'lifeStyle',
         name: 'lifeStyle',
         component: LifeStyle,
-        meta: { title: '生活' }
+        meta: { title: '生活方式' }
       },
+      {
+        path: 'weather',
+        name: 'weather',
+        component: Weather,
+        meta: { title: '天气' }
+      },
+      // {// 生活
+      //   path: 'life',
+      //   name: 'life',
+      //   component: LifeStyle,
+      //   meta: { title: '生活' },
+      // },
       {// 个人中心
         path: 'personalManage',
         name: 'personalManage',

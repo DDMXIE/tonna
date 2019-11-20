@@ -5,22 +5,23 @@
     </div>
     <div class="lifestyle-div">
       <el-row :gutter="20">
-        <el-col :span="16" >
+        <el-col :span="mapSpan" v-if="mapSpan === 16">
           <div>
             <el-card :body-style="{ padding: '0px' }">
               <div>
-                 <div class="amap-wrapper">
-                  <el-amap ref="map" class="amap-box" :vid="'amap-vue'"></el-amap>
+                <div class="amap-wrapper">
+                    <el-amap ref="map" class="amap-box" :vid="'amap-vue'"></el-amap>
                 </div>
                 <!-- <Map></Map> -->
               </div>
             </el-card>
           </div>
         </el-col>
-        <el-col :span="8" >
+        <el-col :span="weatherSpan">
           <el-row>
             <el-col :span="24" style="box-shadow: 0 12px 20px 0 rgba(0, 0, 0, 0.5);padding:0">
               <el-card class="weather-card">
+                <el-button round size="mini" @click="goToWeather">查看7天预报</el-button>
                 <div style="padding-top:40px;padding-bottom:10px;">
                   <i class="el-icon-location" style="font-size:25px;color:white"/>
                   <span style="color:white;font-size:26px">
@@ -74,6 +75,7 @@ export default {
   },
   data() {
     return {
+      cityid: '101210101',
       // 返回的天气列表
       weatherObj: {
         city: null,
@@ -87,7 +89,7 @@ export default {
   methods: {
     getWeather() {
       // this.$axios.get('https://www.tianqiapi.com/api/?version=v1&cityid=101210101').then(response => {
-      this.$axios.get('https://www.tianqiapi.com/api/?appid=63461311&appsecret=BK9Zyj5v&version=v1&cityid=101210101').then(response => {
+      this.$axios.get('https://www.tianqiapi.com/api/?appid=63461311&appsecret=BK9Zyj5v&version=v1&cityid=' + this.cityid).then(response => {
       // this.$axios.get('https://www.tianqiapi.com/api/', {
       //   appid: '63461311',
       //   appsecret: 'BK9Zyj5v',
@@ -98,6 +100,25 @@ export default {
         this.weatherObj = response.data
         console.log(this.weatherObj)
       }).catch(() => {})
+    },
+    goToWeather() {
+      this.$router.push({ path: '/index/weather', query: { cityid: '101210101' }})
+    }
+  },
+  computed: {
+    mapSpan() {
+      if (document.documentElement.clientWidth < 500) {
+        return 24
+      } else {
+        return 16
+      }
+    },
+    weatherSpan() {
+      if (document.documentElement.clientWidth < 500) {
+        return 24
+      } else {
+        return 8
+      }
     }
   }
 }
