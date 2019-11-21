@@ -22,29 +22,29 @@
             <el-col :span="24" style="box-shadow: 0 12px 20px 0 rgba(0, 0, 0, 0.5);padding:0">
               <el-card class="weather-card">
                 <el-button round size="mini" @click="goToWeather">查看7天预报</el-button>
-                <div style="padding-top:40px;padding-bottom:10px;">
+                <div class="weather-city">
                   <i class="el-icon-location" style="font-size:25px;color:white"/>
                   <span style="color:white;font-size:26px">
                     {{weatherObj.city}}市
                   </span>
                 </div>
-                <div style="padding-top:20px;">
-                  <span style="color:white;font-size:65px;font-weight:400">
+                <div class="detail-div">
+                  <span class="weather-detail" style="font-size:65px;">
                   {{weatherObj.data[0].tem}}
                   </span>
                 </div>
-                <div style="padding-top:20px;">
-                  <span style="color:white;font-size:19px;font-weight:400">
+                <div class="detail-div">
+                  <span class="weather-detail" style="font-size:19px;">
                   {{weatherObj.data[0].wea}}
                   </span>
                 </div>
                 <div style="padding-top:10px;">
-                  <span style="color:white;font-size:14px;font-weight:400">
+                  <span class="weather-detail" style="font-size:14px;">
                     <i class="el-icon-timer"/>
                   空气指数：{{weatherObj.data[0].air}}
                   </span>
                   <el-divider direction="vertical"></el-divider>
-                  <span style="color:white;font-size:14px;font-weight:400">
+                  <span class="weather-detail" style="font-size:14px;">
                   空气质量：{{weatherObj.data[0].air_level}}
                   </span>
                 </div>
@@ -126,10 +126,20 @@ export default {
   background-size: cover;
   text-align: center;
 }
-
 .amap-wrapper {
   width: 1200px;
   height: 600px;
+}
+.weather-detail{
+  color:white;
+  font-weight:400;
+}
+.weather-city{
+  padding-top:40px;
+  padding-bottom:10px;
+}
+.detail-div{
+  padding-top:20px;
 }
 </style>
 

@@ -73,7 +73,7 @@
         :background-color="leftMenuBgColor"
         :text-color="leftMenuTextColor"
         :active-text-color="leftMenuChosedColor"
-        :collapse="isCollapse" style="height:-webkit-fill-available"
+        :collapse="isCollapse" style="height:100%"
         >
          <!-- <el-menu-item index="/index/home">
           <i class="el-icon-menu"></i>

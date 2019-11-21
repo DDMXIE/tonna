@@ -145,7 +145,7 @@ export default {
       if (document.documentElement.clientWidth < 500) {
         return '100px'
       } else {
-        return '140px'
+        return '130px'
       }
     },
     signBtnWidth() {

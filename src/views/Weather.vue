@@ -6,9 +6,9 @@
     <div class="weather-div">
       <el-row>
         <el-col :span="24">
-          <el-card class="weather-title-card">
+          <el-card class="weather-title-card" :style="{backgroundImage: seasonImageUrl}">
              <div style="padding-top:50px;">
-               <span class="weather-title-span">秋</span>
+               <span class="weather-title-span">{{seasonName}}</span>
              </div>
           </el-card>
         </el-col>
@@ -36,7 +36,7 @@
                </div>
               
                 <el-collapse accordion>
-                    <el-collapse-item v-for="(item,index) in weatherObj.data[0].hours">
+                    <el-collapse-item v-for="(item,index) in weatherObj.data[0].hours" :key="index">
                       <template slot="title">
                         <span style="padding-left:20px;">{{item.day}}</span>&nbsp;
                         <i class="header-icon el-icon-info"></i>
@@ -73,6 +73,8 @@ export default {
   data() {
     return {
       myChart: null,
+      seasonImageUrl: '',
+      seasonName: '',
       weatherObj: {
         data: [{
           wea: ''
@@ -153,6 +155,7 @@ export default {
   },
   created() {
     this.getWeather(this.$route.query.cityid)
+    this.loadSeasonImage()
   },
   methods: {
     getWeather(cityid) {
@@ -177,6 +180,23 @@ export default {
       }
       // 绘制图表
       this.myChart.setOption(this.echarsOption)
+    },
+    loadSeasonImage() {
+      var date = new Date()
+      var str = date.getMonth()
+      if (str >= 3 && str < 6) { // 春
+        this.seasonName = '春'
+        this.seasonImageUrl = 'url(' + require('../assets/weather/weather_spring.jpg') + ')'
+      } else if (str >= 6 && str < 9) { // 夏
+        this.seasonName = '夏'
+        this.seasonImageUrl = 'url(' + require('../assets/weather/weather_summer.jpg') + ')'
+      } else if (str >= 9 && str < 12) { // 秋
+        this.seasonName = '秋'
+        this.seasonImageUrl = 'url(' + require('../assets/weather/weather_bg2.jpg') + ')'
+      } else { // 冬
+        this.seasonName = '冬'
+        this.seasonImageUrl = 'url(' + require('../assets/weather/weather_winter.jpg') + ')'
+      }
     },
     loadEchartsData() {
       var dayArr = []
@@ -208,7 +228,7 @@ export default {
 }
 .weather-title-card{
   text-align:center;
-  background-image: url("../assets/weather/weather_bg2.jpg");
+  /* background-image: ; */
   background-size: cover;
   height: 280px;
 }
