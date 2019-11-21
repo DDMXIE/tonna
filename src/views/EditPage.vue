@@ -32,5 +32,16 @@
   width: 100%;
   height: 39px;
 }
+
+@media(max-width:500px){
+  /* 当屏幕最大669时，执行下面css */
+  .editPage-title{
+    font-size: 40px;
+    font-weight: 400;
+    color: white;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+}
 </style>
 

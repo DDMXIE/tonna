@@ -11,13 +11,17 @@ import 'quill/dist/quill.bubble.css'
 import VirtualCollection from 'vue-virtual-collection'
 // import VueMasonryPlugin from 'vue-masonry'
 import VueAMap from 'vue-amap'
+import Meta from 'vue-meta'
+import echarts from 'echarts'
 
 // Vue.use(VueResouse)
 // Vue.use(VueMasonryPlugin)
 Vue.use(VueQuillEditor)
 Vue.use(VirtualCollection)
 Vue.use(VueAMap)
+Vue.use(Meta)
 
+Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
 
 VueAMap.initAMapApiLoader({

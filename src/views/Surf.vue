@@ -1,9 +1,9 @@
 <template>
 <div class="div-surf">
   <div class="carousel">
-     <el-carousel :interval="5000" arrow="always">
+     <el-carousel :interval="5000" arrow="always" :height="carouselHeight">
         <el-carousel-item  v-for="(img,index) in imgList" :key="index">
-         <img v-bind:src="img.url" width="100%">
+         <img v-bind:src="img.url" width="100%" height="100%">
         </el-carousel-item>
       </el-carousel>
   </div>
@@ -14,12 +14,12 @@
   </div>
   <div>
     <el-row>
-      <el-col :span="12">
+      <el-col :xs="24" :sm="12" :md="8" :lg="12" :xl="2">
         <el-card>
           <img src="../assets/surf/MBTI.png" width="100%">
         </el-card>
       </el-col>
-      <el-col :span="12">
+      <el-col :xs="24" :sm="12" :md="16" :lg="12" :xl="22">
         <el-card>
           <div class="collapse-surf">
             <el-collapse v-model="activeName" accordion>
@@ -65,6 +65,15 @@ export default {
       ],
       width: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
     }
+  },
+  computed: {
+    carouselHeight() {
+      if (document.documentElement.clientWidth < 500) {
+        return '160px'
+      } else {
+        return '300px'
+      }
+    }
   }
 }
 </script>
@@ -84,6 +93,15 @@ export default {
 }
 .div-surf{
   width:100%;
+}
+
+@media(max-width:500px){
+  /* 当屏幕最大669时，执行下面css */
+  .tip{
+    color:#989595;
+    font-size: 9px;
+    font-style: italic;
+  }
 }
 </style>
 

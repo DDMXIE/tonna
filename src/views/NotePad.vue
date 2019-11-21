@@ -5,8 +5,8 @@
     </div>
     <div style="padding-top:60px;">
       <el-row>
-        <el-col :span="8">
-          <el-row>
+        <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="2">
+          <!-- <el-row>
             <el-col :span="12">
               <el-card :body-style="{ padding: '10px' }">
                 <img src="../assets/notePad/1.jpg" width="100%">
@@ -17,16 +17,16 @@
                 <img src="../assets/notePad/2.jpg" width="100%">
               </el-card>
             </el-col>
-          </el-row>
+          </el-row> -->
           <el-row>
-            <el-col :span="24">
+            <el-col :span="24" style="padding-bottom:20px;">
               <el-card :body-style="{ padding: '10px' }">
                 <img src="../assets/notePad/3.jpg" width="100%">
               </el-card>
             </el-col>
           </el-row>
         </el-col>
-        <el-col :span="16">
+        <el-col :xs="24" :sm="12" :md="16" :lg="16" :xl="22">
           <div>
               <div style="padding-left:20px;padding-right:20px;">
                 <div>

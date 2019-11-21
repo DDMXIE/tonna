@@ -16,16 +16,19 @@
           :sm="10"
           :xl="5"
           :xs="23"
-          style="text-align: center;padding-top:40px;margin-right:140px;"
+          style="text-align: center;padding-top:40px;margin-right:80px;"
         >
           <div style="text-align:center;">
+            <div style="text-align:center;margin-left:80px;">
+              <span v-if="isTonnaShow" class="login-title">Tonna</span>
+            </div>
             <el-form
               :model="loginForm"
               :rules="rules"
               ref="loginForm"
               label-width="100px"
               class="demo-ruleForm"
-              style="padding-top:80px;"
+              style="padding-top:60px;"
             >
               <el-form-item
                 label="用户名"
@@ -51,7 +54,7 @@
                   type="primary"
                   round
                   @click="submitForm"
-                  style="width:140px;margin-top:25px;"
+                  :style="{width:submitBtnWidth,marginTop:'25px'}"
                 >登 录
                   <i class="el-icon-s-promotion el-icon--right"></i>
                 </el-button>
@@ -59,7 +62,7 @@
                   type="success"
                   round
                   @click="sign"
-                  style="width:100px;margin-top:25px;"
+                  :style="{width:signBtnWidth,marginTop:'25px'}"
                 >注 册</el-button>
                 <!-- <el-button @click="resetForm('loginForm')">重置</el-button> -->
               </el-form-item>
@@ -81,6 +84,12 @@
 
 <script>
 export default {
+  metaInfo: {
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' }
+    ]
+  },
   created() {
     document.onkeydown = e => {
       if (e.keyCode === 13) {
@@ -117,7 +126,8 @@ export default {
           this.$notify({
             title: '登录成功',
             message: 'Welcome to Tonna!',
-            type: 'success'
+            type: 'success',
+            duration: 1500
           })
           this.$router.push({ path: '/index/surf' })
         } else {
@@ -128,6 +138,29 @@ export default {
     },
     sign() {
       this.$router.push('/register')
+    }
+  },
+  computed: {
+    submitBtnWidth() {
+      if (document.documentElement.clientWidth < 500) {
+        return '100px'
+      } else {
+        return '140px'
+      }
+    },
+    signBtnWidth() {
+      if (document.documentElement.clientWidth < 500) {
+        return '80px'
+      } else {
+        return '100px'
+      }
+    },
+    isTonnaShow() {
+      if (document.documentElement.clientWidth < 500) {
+        return true
+      } else {
+        return false
+      }
     }
   }
 }
@@ -158,6 +191,11 @@ export default {
 }
 .fade-enter-to, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+.login-title{
+  color:white;
+  font-weight:500;
+  font-size:60px;
 }
 </style>
 

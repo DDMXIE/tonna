@@ -14,7 +14,7 @@
               :background-color="topMenuBgColor"
               text-color="#fff"
               :active-text-color="topMenuChosedColor" >
-                <el-menu-item index="/index/PersonalManage" style="font-weight:bolder">个人中心</el-menu-item>
+                <el-menu-item index="/index/PersonalManage" style="font-weight:bolder"><i class="el-icon-user-solid" style="font-size:23px;"/>个人中心</el-menu-item>
                 <!-- <el-submenu index="2">
                   <template slot="title" style="font-weight:bolder">我的工作台</template>
                   <el-menu-item index="2-1">选项1</el-menu-item>
@@ -57,7 +57,7 @@
     </el-main>
 
     <el-drawer
-      title="欢迎来到 Tonna！"
+      title="欢迎，Tonna！"
       :visible.sync="drawer"
       :direction="direction"
       :before-close="Close"
@@ -136,7 +136,7 @@ export default {
   created() {
     this.isCollapse = false
     if (document.documentElement.clientWidth < 500) {
-      this.menuSize = '50%'
+      this.menuSize = '60%'
     } else if (document.documentElement.clientWidth > 1500) {
       this.menuSize = '15%'
     } else {
