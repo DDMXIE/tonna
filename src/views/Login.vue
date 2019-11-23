@@ -70,6 +70,7 @@
           </div>
         </el-col>
       </el-row>
+
       <el-row
         align="middle"
         justify="center"
@@ -138,6 +139,9 @@ export default {
     },
     sign() {
       this.$router.push('/register')
+    },
+    goToSurf() {
+      this.$router.push('/index/surf')
     }
   },
   computed: {

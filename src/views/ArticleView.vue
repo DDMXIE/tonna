@@ -6,7 +6,7 @@
     <div>
         <el-row :gutter="30" style="padding-top:50px;padding-right:10px;padding-left:10px;margin:0;"> 
             <!-- 手机个人面板 -->
-            <el-col :xs="24" :sm="12" :md="16" :lg="8" :xl="22" v-if="isSmallWidth === true" style="margin-bottom:15px;">
+            <el-col :xs="24" :sm="12" :md="16" :lg="8" :xl="8" v-if="isSmallWidth === true" style="margin-bottom:15px;">
               <el-card>
                 <div style="text-align:center;">
                     <div style="padding-top:50px;">
@@ -49,7 +49,7 @@
                 </div>
               </el-card>
             </el-col>
-            <el-col :xs="24" :sm="16" :md="16" :lg="16" :xl="2">
+            <el-col :xs="24" :sm="16" :md="16" :lg="16" :xl="16">
               <el-row :gutter="20">
                 <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8" v-for="(o, index) in 3" :key="o" >
                   <div style="padding-top:10px;">
@@ -98,7 +98,7 @@
 
           
             <!-- 右边个人面板 -->
-            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="22" v-if="isSmallWidth === false" style="position:fixed;top:80px;right:20px;z-index:999">
+            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" v-if="isSmallWidth === false" style="position:fixed;top:80px;right:20px;z-index:999">
               <el-card>
                 <div style="text-align:center">
                     <div style="padding-top:50px;">

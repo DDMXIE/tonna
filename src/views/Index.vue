@@ -14,7 +14,11 @@
               :background-color="topMenuBgColor"
               text-color="#fff"
               :active-text-color="topMenuChosedColor" >
-                <el-menu-item index="/index/PersonalManage" style="font-weight:bolder"><i class="el-icon-user-solid" style="font-size:23px;"/>个人中心</el-menu-item>
+                <el-menu-item index="/index/PersonalManage" style="font-weight:bolder;border-bottom-width:0px;"><el-avatar shape="square" size="small" :src="squareUrl"></el-avatar>
+                <!-- <i class="el-icon-user-solid" style="font-size:23px;"/> -->
+                &nbsp;
+                <span style="font-size:15px;">个人中心</span>
+                </el-menu-item>
                 <!-- <el-submenu index="2">
                   <template slot="title" style="font-weight:bolder">我的工作台</template>
                   <el-menu-item index="2-1">选项1</el-menu-item>
@@ -41,7 +45,6 @@
                     <i v-if="isCollapse === true" class="el-icon-s-unfold">&nbsp;菜单</i>
                     <i v-if="isCollapse === false" class="el-icon-s-fold">&nbsp;菜单</i>
                   </el-button>
-                  <!-- <el-avatar shape="square" size="small" :src="squareUrl"></el-avatar> -->
                 </div>
               </el-menu>
         </el-col>
@@ -149,7 +152,7 @@ export default {
       drawer: false, // 菜单状态
       direction: 'rtl',
       whatColorRadio: '深色模式',
-      topMenuChosedColor: '#6bd9ff',
+      topMenuChosedColor: '#ffffff',
       topMenuBgColor: '#3c444c',
       titleColor: '#fff',
       leftMenuChosedColor: '#10f58f',
@@ -160,7 +163,8 @@ export default {
       activeIndex2: '1',
       height: {
         height: window.innerHeight - 60 + 'px'
-      }
+      },
+      squareUrl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=656257457,1108249792&fm=26&gp=0.jpg'
     }
   },
   methods: {
@@ -220,7 +224,7 @@ export default {
     whatColorRadio(val) {
       if (val === '深色模式') {
         this.titleColor = '#fff'
-        this.topMenuChosedColor = '#6bd9ff'
+        this.topMenuChosedColor = '#ffffff'
         this.topMenuBgColor = '#3c444c'
         this.leftMenuBgColor = '#3c444c'
         this.leftMenuTextColor = '#fff'

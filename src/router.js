@@ -26,8 +26,12 @@ export default new Router({
       ? '/' // '/views/index2.html/'
       : '/',
   routes: [
-    {
+    {// 首页
       path: '/',
+      redirect: '/index/surf'
+    },
+    {
+      path: '/login',
       name: 'login',
       component: Login
     },

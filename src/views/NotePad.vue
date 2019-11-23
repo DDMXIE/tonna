@@ -5,7 +5,7 @@
     </div>
     <div style="padding-top:60px;">
       <el-row>
-        <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="2">
+        <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
           <!-- <el-row>
             <el-col :span="12">
               <el-card :body-style="{ padding: '10px' }">
@@ -26,7 +26,7 @@
             </el-col>
           </el-row>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="16" :lg="16" :xl="22">
+        <el-col :xs="24" :sm="12" :md="16" :lg="16" :xl="16">
           <div>
               <div style="padding-left:20px;padding-right:20px;">
                 <div>

@@ -127,7 +127,7 @@ export default {
   text-align: center;
 }
 .amap-wrapper {
-  width: 1200px;
+  width: 100%;
   height: 600px;
 }
 .weather-detail{

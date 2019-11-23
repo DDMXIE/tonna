@@ -13,9 +13,9 @@
           </el-card>
         </el-col>
       </el-row>
-      <el-row>
-        <el-col :xs="24" :sm="12" :md="8" :lg="9" :xl="2">
-          <el-card :body-style="{ padding: '0px' }">
+      <el-row :gutter="20">
+        <el-col :xs="24" :sm="12" :md="8" :lg="7" :xl="6">
+          <el-card class="weather-card" :body-style="{ padding: '0px' }">
              <div class="subtitle-div">
                <span class="subtitle-span">今日天气</span>
                <div style="float:right;">
@@ -52,8 +52,8 @@
           </el-card>
         </el-col>
 
-         <el-col :xs="24" :sm="12" :md="16" :lg="15" :xl="22">
-           <el-card :body-style="{ padding: '0px' }">
+         <el-col :xs="24" :sm="12" :md="16" :lg="17" :xl="18">
+           <el-card class="weather-card" :body-style="{ padding: '0px' }">
              <div class="subtitle-div">
                <span class="subtitle-span">未来七天内气温</span>
              </div>
@@ -161,6 +161,7 @@ export default {
     getWeather(cityid) {
       this.$axios.get('https://www.tianqiapi.com/api/?appid=63461311&appsecret=BK9Zyj5v&version=v1&cityid=' + cityid).then(response => {
         this.weatherObj = response.data
+        console.log(this.weatherObj)
         this.todayImgUrl = require('../assets/weather/' + this.weatherObj.data[0].wea_img + '.png')
         this.loadEchartsData()
       }).catch(() => {})
@@ -220,7 +221,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .weather-div{
   padding-top:50px;
   padding-left:20px;
@@ -258,5 +259,7 @@ export default {
   font-weight: 500;
   color:#5b6265;
 }
-
+.weather-card{
+  margin-top:10px;
+}
 </style>

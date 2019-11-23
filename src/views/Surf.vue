@@ -14,12 +14,12 @@
   </div>
   <div>
     <el-row>
-      <el-col :xs="24" :sm="12" :md="8" :lg="12" :xl="2">
+      <el-col :xs="24" :sm="12" :md="8" :lg="12" :xl="10">
         <el-card>
           <img src="../assets/surf/MBTI.png" width="100%">
         </el-card>
       </el-col>
-      <el-col :xs="24" :sm="12" :md="16" :lg="12" :xl="22">
+      <el-col :xs="24" :sm="12" :md="16" :lg="12" :xl="14">
         <el-card>
           <div class="collapse-surf">
             <el-collapse v-model="activeName" accordion>
@@ -70,6 +70,8 @@ export default {
     carouselHeight() {
       if (document.documentElement.clientWidth < 500) {
         return '160px'
+      } else if (document.documentElement.clientWidth > 1700) {
+        return '370px'
       } else {
         return '300px'
       }
