@@ -109,7 +109,7 @@ export default {
       //   })
       //   .catch(() => {})
       // ------------------------请求用户信息---------------------
-      this.userForm.username = 'Tony'
+      this.userForm.username = ''
       this.userForm.sex = 'male'
       this.userForm.auth = '会员用户'
     },

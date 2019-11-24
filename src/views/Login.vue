@@ -32,20 +32,20 @@
             >
               <el-form-item
                 label="用户名"
-                prop="USERNAME"
+                prop="username"
               >
                 <el-input
-                  v-model="loginForm.USERNAME"
+                  v-model="loginForm.username"
                   style="border-radius:50px;"
                 ></el-input>
               </el-form-item>
               <el-form-item
                 label="密码"
-                prop="PASSWORD"
+                prop="password"
                 style="margin-bottom:8px;"
               >
                 <el-input
-                  v-model="loginForm.PASSWORD"
+                  v-model="loginForm.password"
                   type="password"
                 ></el-input>
               </el-form-item>
@@ -104,17 +104,17 @@ export default {
   data() {
     return {
       loginForm: {
-        USERNAME: '',
-        PASSWORD: ''
+        username: '',
+        password: ''
       },
       rules: {
-        USERNAME: [
+        username: [
           { required: true, message: '用户名不能为空', trigger: 'blur' },
           { min: 3, max: 10, message: '用户名输入不规范', trigger: 'blur' }
         ],
-        PASSWORD: [
+        password: [
           { required: true, message: '密码不能为空', trigger: 'blur' },
-          { min: 8, max: 20, message: '密码为 8 到 20 位字符', trigger: 'blur' }
+          { min: 4, max: 20, message: '密码为 4 到 20 位字符', trigger: 'blur' }
         ]
       }
     }
@@ -124,18 +124,55 @@ export default {
     submitForm() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.$notify({
-            title: '登录成功',
-            message: 'Welcome to Tonna!',
-            type: 'success',
-            duration: 1500
-          })
-          this.$router.push({ path: '/index/surf' })
+          this.login()
         } else {
           console.log('error submit!!')
           return false
         }
       })
+    },
+    async login() {
+      try {
+        var res = await this.axios.post('/login', {
+          username: this.loginForm.username,
+          password: this.loginForm.password
+        },
+        {
+          // Form Data中数据格式转换
+          transformRequest: [
+            function(data) {
+              let ret = ''
+              for (const it in data) {
+                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+              }
+              ret = ret.substring(0, ret.lastIndexOf('&'))
+              return ret
+            }
+          ]
+        },
+        {
+          // 修改相应Spring Security验证请求头类型（headers中的Content-Type）
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        })
+      } catch (err) {
+        console.log(err)
+      }
+      if (res && res.data.status === 200) {
+        this.$notify({
+          title: '登录成功',
+          message: 'Welcome to Tonna!',
+          type: 'success',
+          duration: 1500
+        })
+        localStorage.setItem('token', res.data.token)
+        this.$router.push({ path: '/index/surf', query: { userRole: res.data.username }})
+      } else {
+        this.$notify.error({
+          title: '登录失败！',
+          message: '用户名或密码错误',
+          duration: 1500
+        })
+      }
     },
     sign() {
       this.$router.push('/register')

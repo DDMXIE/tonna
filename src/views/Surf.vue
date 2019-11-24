@@ -66,6 +66,20 @@ export default {
       width: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
     }
   },
+  created() {
+    // this.showUserInfoByToken()
+  },
+  methods: {
+    showUserInfoByToken() {
+      try {
+        this.axios.get('/user/showUserInfoByToken').then(res => {
+          console.log('后端的数据', res.data)
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  },
   computed: {
     carouselHeight() {
       if (document.documentElement.clientWidth < 500) {
