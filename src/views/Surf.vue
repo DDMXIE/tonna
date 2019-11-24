@@ -67,7 +67,8 @@ export default {
     }
   },
   created() {
-    // this.showUserInfoByToken()
+    this.showUserInfoByToken()
+    console.log(this.$store.getters.userName)
   },
   methods: {
     showUserInfoByToken() {
@@ -76,7 +77,7 @@ export default {
           console.log('后端的数据', res.data)
         })
       } catch (error) {
-        console.log(error)
+        console.log(error.res)
       }
     }
   },

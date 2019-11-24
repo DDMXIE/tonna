@@ -2,6 +2,7 @@
 
 import Vue from 'vue'
 import axios from 'axios'
+import router from '../router'
 
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
@@ -35,12 +36,25 @@ _axios.interceptors.request.use(
 _axios.interceptors.response.use(
   function(response) {
     // Do something with response data
-    console.log('response', config)
+    console.log('response', response)
     return response
   },
   function(error) {
     // Do something with response error
-    return Promise.reject(error)
+    if (error.response.data.msg === 'Token 已过期，请重新登录验证!') {
+      console.log(axios)
+      axios.post('/logout')
+        .then(res => {
+          console.log('退出登录 res=>', res)
+        })
+      router.replace({
+        path: '/login',
+        query: {
+          redirect: router.currentRoute.fullPath
+        }
+      })
+    }
+    return Promise.reject(error.response)
   }
 )
 

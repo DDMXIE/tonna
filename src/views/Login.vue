@@ -114,7 +114,7 @@ export default {
         ],
         password: [
           { required: true, message: '密码不能为空', trigger: 'blur' },
-          { min: 4, max: 20, message: '密码为 4 到 20 位字符', trigger: 'blur' }
+          { min: 3, max: 20, message: '密码为 4 到 20 位字符', trigger: 'blur' }
         ]
       }
     }
@@ -157,6 +157,7 @@ export default {
       } catch (err) {
         console.log(err)
       }
+      console.log(res)
       if (res && res.data.status === 200) {
         this.$notify({
           title: '登录成功',
@@ -165,6 +166,7 @@ export default {
           duration: 1500
         })
         localStorage.setItem('token', res.data.token)
+        this.$store.commit('handleUserName', res.data.username)
         this.$router.push({ path: '/index/surf', query: { userRole: res.data.username }})
       } else {
         this.$notify.error({

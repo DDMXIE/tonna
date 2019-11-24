@@ -11,7 +11,7 @@
               <el-avatar shape="square" :size="180" :fit="fit" :src="url"></el-avatar>
             </div>
             <div>
-              <span style="font-weight:bold;font-size:30px;">Tony</span>
+              <span style="font-weight:bold;font-size:30px;">{{$store.getters.userName}}</span>
             </div>
           </div>
         </el-col>
@@ -109,7 +109,7 @@ export default {
       //   })
       //   .catch(() => {})
       // ------------------------请求用户信息---------------------
-      this.userForm.username = ''
+      this.userForm.username = 'Tony'
       this.userForm.sex = 'male'
       this.userForm.auth = '会员用户'
     },
