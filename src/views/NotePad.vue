@@ -48,7 +48,7 @@
             <div>
               <div class="block note-pad">
                 <el-timeline>
-                  <el-timeline-item v-for="item in notes" :timestamp="item.time" placement="top">
+                  <el-timeline-item v-for="(item,index) in notes" :timestamp="item.time" :key="index" placement="top">
                     <el-card>
                       <h4>{{item.title}}</h4>
                       <p>{{item.content}}</p>
