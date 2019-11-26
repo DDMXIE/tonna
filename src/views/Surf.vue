@@ -56,6 +56,24 @@
       </el-col>
     </el-row>
       
+    <el-row class="row-advertise">
+      <el-col :xs="24" :sm="12" :md="8" :lg="10" :xl="6">
+        <div class="div-advertise">
+           <img src="../assets/surf/surf_iphone.png" style="width:40%;">
+        </div>
+       
+      </el-col>
+      <el-col :xs="24" :sm="12" :md="16" :lg="14" :xl="18">
+        <div style="padding-top:200px;text-align:center;">
+          <div>
+            <span style="font-size:40px;">全新手机版，现已推出</span>
+          </div>
+          <div>
+            <span style="font-size:20px;">The new mobile version is now available!</span>
+          </div>
+        </div>
+      </el-col>
+    </el-row>
   </div>
   
 </div>
@@ -132,6 +150,15 @@ export default {
   display:block;
   width:510px;
   font-size: 30px;
+}
+.div-advertise{
+  text-align:center;
+  padding-top:40px;
+  padding-bottom:40px;
+}
+.row-advertise{
+  background-color:#e2e2e2;
+  margin-top:40px;
 }
 .block-text{
   color:white;
