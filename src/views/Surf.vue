@@ -1,16 +1,26 @@
 <template>
 <div class="div-surf">
-  <div class="carousel">
+  <!-- <div class="carousel">
      <el-carousel :interval="5000" arrow="always" :height="carouselHeight">
         <el-carousel-item  v-for="(img,index) in imgList" :key="index">
          <img v-bind:src="img.url" width="100%" height="100%">
         </el-carousel-item>
-      </el-carousel>
-  </div>
-  <div>
+     </el-carousel>
+  </div> -->
+
+
+  <!-- <div>
      <el-divider content-position="center">
        <span class="tip">自古，能善始者实繁，克终者盖寡</span>
      </el-divider>
+  </div> -->
+  <div class="div-title">
+    <div class="div-title-content">
+      <div>
+        <span class="block-text title-text">Tonna</span>
+      </div>
+      <span class="block-text">欢迎来到Tonna,你可以在这里尽情享受生活的每分每刻，快来分享你的快乐！</span>
+    </div>
   </div>
   <div>
     <el-row>
@@ -67,8 +77,7 @@ export default {
     }
   },
   created() {
-    this.showUserInfoByToken()
-    console.log(this.$store.getters.userName)
+    // this.showUserInfoByToken()
   },
   methods: {
     showUserInfoByToken() {
@@ -88,7 +97,7 @@ export default {
       } else if (document.documentElement.clientWidth > 1700) {
         return '370px'
       } else {
-        return '300px'
+        return '380px'
       }
     }
   }
@@ -111,6 +120,26 @@ export default {
 .div-surf{
   width:100%;
 }
+.div-title{
+  width: 100%;
+  background: url('../assets/surf/surf_bg2.png')  no-repeat;
+  background-size: 100% auto;
+}
+.div-title-content{
+  padding-top:11%;
+  padding-bottom:18%;
+  padding-left: 80px;
+  display:block;
+  width:510px;
+  font-size: 30px;
+}
+.block-text{
+  color:white;
+  word-wrap:break-word;
+}
+.title-text{
+  font-size:65px;font-weight:900
+}
 
 @media(max-width:500px){
   /* 当屏幕最大669时，执行下面css */
@@ -118,6 +147,23 @@ export default {
     color:#989595;
     font-size: 9px;
     font-style: italic;
+  }
+  .div-title{
+    width: 100%;
+    background: url('../assets/surf/surf_bg2.png')  no-repeat;
+    background-size: 100% 95%;
+  }
+  .div-title-content{
+    padding-top:10%;
+    padding-bottom:15%;
+    padding-left: 20px;
+    display:block;
+    width:170px;
+    font-size: 10px;
+  }
+  .title-text{
+    font-size:55px;
+    font-weight:900;
   }
 }
 </style>

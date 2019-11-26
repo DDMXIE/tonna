@@ -19,11 +19,14 @@ const _axios = axios.create(config)
 
 _axios.interceptors.request.use(
   function(config) {
-    // Do something before request is sent
-    console.log('request', config)
-    if (config.url !== '/login') {
+    var reqUrl
+    if (config.url.substr(0, 5) === 'https') {
+      reqUrl = config.url.match(/(\S*)api/)[1]
+    }
+    if (config.url !== '/login' && reqUrl !== 'https://www.tianqiapi.com/') {
       config.headers.Authorization = 'bearer ' + localStorage.getItem('token')
     }
+    // Do something before request is sent
     return config
   },
   function(error) {
@@ -41,11 +44,16 @@ _axios.interceptors.response.use(
   },
   function(error) {
     // Do something with response error
-    if (error.response.data.msg === 'Token 已过期，请重新登录验证!') {
-      console.log(axios)
+    if (error.response.data && error.response.data.msg === 'Token 已过期，请重新登录验证!') {
+      // this.$notify({
+      //   title: '登录过期，请重新登录！',
+      //   type: 'warning'
+      // })
+      alert('登录过期，请重新登录！')
       axios.post('/logout')
         .then(res => {
           console.log('退出登录 res=>', res)
+          localStorage.removeItem('user_name')
         })
       router.replace({
         path: '/login',
@@ -54,7 +62,7 @@ _axios.interceptors.response.use(
         }
       })
     }
-    return Promise.reject(error.response)
+    return Promise.reject(error)
   }
 )
 

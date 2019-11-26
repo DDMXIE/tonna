@@ -11,7 +11,7 @@
               <el-avatar shape="square" :size="180" :fit="fit" :src="url"></el-avatar>
             </div>
             <div>
-              <span style="font-weight:bold;font-size:30px;">{{$store.getters.userName}}</span>
+              <span style="font-weight:bold;font-size:30px;">{{getUserName}}</span>
             </div>
           </div>
         </el-col>
@@ -61,6 +61,12 @@
                   </el-collapse>
             </el-card>
           </el-col>
+
+          <el-col :span="24">
+            <div style="text-align:center;padding-top:30px;">
+              <el-button type="primary" @click="logout">退出登录<i class="el-icon-error el-icon--right"></i></el-button>
+            </div>
+          </el-col>
         </el-row>
       </div>
     </div>
@@ -73,7 +79,7 @@ export default {
   components: { Bread },
   created() {
     this.loadUserInfo()
-    if (this.userForm.username === '') {
+    if (this.$store.getters.userName === '' || this.$store.getters.userName === null) {
       this.$notify({
         title: '请先登录！',
         type: 'warning'
@@ -113,6 +119,18 @@ export default {
       this.userForm.sex = 'male'
       this.userForm.auth = '会员用户'
     },
+    logout() {
+      this.axios.post('/logout')
+        .then(res => {
+          console.log('退出登录按钮', res)
+          localStorage.removeItem('user_name')
+          this.$notify({
+            title: '您已退出登录',
+            type: 'success'
+          })
+        })
+      this.$router.push('/login')
+    },
     infoCollapseChange(val) {
       if (val !== '') {
         this.isShowInfoTip = false
@@ -126,6 +144,12 @@ export default {
       } else {
         this.isShowNoteTip = true
       }
+    }
+  },
+  computed: {
+    // 这里需要把store 动态的数据放到computed里面才会同步更新 视图
+    getUserName() {
+      return this.$store.getters.userName
     }
   }
 }
