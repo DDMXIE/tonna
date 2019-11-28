@@ -1,8 +1,5 @@
 <template>
 <div class="div-surf">
-
-
-
   <!-- <div>
      <el-divider content-position="center">
        <span class="tip">自古，能善始者实繁，克终者盖寡</span>
@@ -54,22 +51,22 @@
       </el-col>
     </el-row>
 
-    <!-- <div class="carousel">
+    <div class="carousel">
       <el-carousel :interval="5000" arrow="always" :height="carouselHeight">
           <el-carousel-item  v-for="(img,index) in imgList" :key="index">
           <img v-bind:src="img.url" width="100%" height="100%">
           </el-carousel-item>
       </el-carousel>
-    </div> -->
+    </div>
       
     <el-row class="row-advertise">
-      <el-col :xs="24" :sm="12" :md="8" :lg="10" :xl="6">
+      <el-col :xs="24" :sm="8" :md="8" :lg="10" :xl="6">
         <div class="div-advertise">
            <img src="../assets/surf/surf_iphone.png" style="width:40%;">
         </div>
        
       </el-col>
-      <el-col :xs="24" :sm="12" :md="16" :lg="14" :xl="18">
+      <el-col :xs="24" :sm="16" :md="16" :lg="14" :xl="18">
         <div class="div-text-advertise">
           <div>
             <span class="text-advertise-title">全新手机版，现已推出</span>
@@ -97,21 +94,21 @@
             <div class="div-tip-bottom">
                 <span class="text-tip-bottom-title">Tonna中国 生活博客交流社区</span>
                 <el-row :gutter="40">
-                  <el-col :span="15">
+                  <el-col :xs="24" :sm="15" :md="15" :lg="15" :xl="6">
                     <div style="padding-top:30px;font-size:14px;">
                       <span>Tonna中国 生活博客交流社区是一个致力于分享、发现、生活的专业平台，来自全国各地的每一位生活分享师是我们忠实的用户。世界很大，不如来Tonna逛一逛。</span>
                     </div>
                   </el-col>
-                  <el-col :span="9">
+                  <el-col :xs="24" :sm="9" :md="9" :lg="9" :xl="18">
                     <div style="text-align:center;">
-                      <img src="../assets/surf/tonna2.png" style="width:80%;">
+                      <img class="tip-bottom-img" src="../assets/surf/tonna2.png">
                     </div>
                   </el-col>
                 </el-row>
 
                 <div style="padding-top:30px;">
                   <span>帮助中心</span> ｜ <span>服务条款</span> ｜ <span>联系我们</span> &nbsp;&nbsp;&nbsp;
-                  <span>Copyright © 2019 Tonna. 保留所有权利。</span>
+                  <span>Copyright © 2019 Tonna. 保留所有权利</span>
                 </div>
             </div>
         </el-col>
@@ -238,6 +235,9 @@ export default {
   width:340px;
   font-size:18px;
 }
+.tip-bottom-img{
+  width:80%;
+}
 @media(max-width:1200px){
    .div-title-content{
     padding-top:11%;
@@ -294,6 +294,10 @@ export default {
   }
   .btn-join{
     display: none;
+  }
+  .tip-bottom-img{
+    padding-top: 30px;
+    width:50%;
   }
 }
 
