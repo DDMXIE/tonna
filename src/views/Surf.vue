@@ -1,12 +1,6 @@
 <template>
 <div class="div-surf">
-  <!-- <div class="carousel">
-     <el-carousel :interval="5000" arrow="always" :height="carouselHeight">
-        <el-carousel-item  v-for="(img,index) in imgList" :key="index">
-         <img v-bind:src="img.url" width="100%" height="100%">
-        </el-carousel-item>
-     </el-carousel>
-  </div> -->
+
 
 
   <!-- <div>
@@ -20,16 +14,20 @@
         <span class="block-text title-text">Tonna</span>
       </div>
       <span class="block-text">欢迎来到Tonna,你可以在这里尽情享受生活的每分每刻，快来分享你的快乐！</span>
+      <div class="btn-join">
+        <el-button plain>立刻加入 Tonna ></el-button>
+      </div>
     </div>
   </div>
+  
   <div>
     <el-row>
-      <el-col :xs="24" :sm="12" :md="8" :lg="12" :xl="10">
+      <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="10">
         <el-card>
           <img src="../assets/surf/MBTI.png" width="100%">
         </el-card>
       </el-col>
-      <el-col :xs="24" :sm="12" :md="16" :lg="12" :xl="14">
+      <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="14">
         <el-card>
           <div class="collapse-surf">
             <el-collapse v-model="activeName" accordion>
@@ -55,6 +53,14 @@
         </el-card>
       </el-col>
     </el-row>
+
+    <!-- <div class="carousel">
+      <el-carousel :interval="5000" arrow="always" :height="carouselHeight">
+          <el-carousel-item  v-for="(img,index) in imgList" :key="index">
+          <img v-bind:src="img.url" width="100%" height="100%">
+          </el-carousel-item>
+      </el-carousel>
+    </div> -->
       
     <el-row class="row-advertise">
       <el-col :xs="24" :sm="12" :md="8" :lg="10" :xl="6">
@@ -64,15 +70,51 @@
        
       </el-col>
       <el-col :xs="24" :sm="12" :md="16" :lg="14" :xl="18">
-        <div style="padding-top:200px;text-align:center;">
+        <div class="div-text-advertise">
           <div>
-            <span style="font-size:40px;">全新手机版，现已推出</span>
+            <span class="text-advertise-title">全新手机版，现已推出</span>
           </div>
           <div>
-            <span style="font-size:20px;">The new mobile version is now available!</span>
+            <span class="text-advertise-subtitle">The new mobile version is now available!</span>
+          </div>
+          <div>
+            <img src="../assets/surf/surf_code.png" style="width:22%;padding-top:30px;">
           </div>
         </div>
       </el-col>
+    </el-row>
+
+    <el-row>
+        <el-col :span="24">
+            <div style="padding-top:30px;padding-bottom:30px;text-align:center;">
+                <el-button class="btn-join-bottom" type="primary">加入 Tonna</el-button>
+            </div>
+        </el-col>
+    </el-row>
+
+     <el-row class="row-advertise">
+        <el-col :span="24">
+            <div class="div-tip-bottom">
+                <span class="text-tip-bottom-title">Tonna中国 生活博客交流社区</span>
+                <el-row :gutter="40">
+                  <el-col :span="15">
+                    <div style="padding-top:30px;font-size:14px;">
+                      <span>Tonna中国 生活博客交流社区是一个致力于分享、发现、生活的专业平台，来自全国各地的每一位生活分享师是我们忠实的用户。世界很大，不如来Tonna逛一逛。</span>
+                    </div>
+                  </el-col>
+                  <el-col :span="9">
+                    <div style="text-align:center;">
+                      <img src="../assets/surf/tonna2.png" style="width:80%;">
+                    </div>
+                  </el-col>
+                </el-row>
+
+                <div style="padding-top:30px;">
+                  <span>帮助中心</span> ｜ <span>服务条款</span> ｜ <span>联系我们</span> &nbsp;&nbsp;&nbsp;
+                  <span>Copyright © 2019 Tonna. 保留所有权利。</span>
+                </div>
+            </div>
+        </el-col>
     </el-row>
   </div>
   
@@ -145,7 +187,7 @@ export default {
 }
 .div-title-content{
   padding-top:11%;
-  padding-bottom:18%;
+  padding-bottom:14%;
   padding-left: 80px;
   display:block;
   width:510px;
@@ -156,8 +198,18 @@ export default {
   padding-top:40px;
   padding-bottom:40px;
 }
+.div-text-advertise{
+  padding-top:110px;
+  text-align:center;
+}
+.div-tip-bottom{
+  padding-left:40px;
+  padding-right:40px;
+  padding-top:30px;
+  padding-bottom: 50px;
+}
 .row-advertise{
-  background-color:#e2e2e2;
+  background-color:#f1f1f1;
   margin-top:40px;
 }
 .block-text{
@@ -165,9 +217,44 @@ export default {
   word-wrap:break-word;
 }
 .title-text{
-  font-size:65px;font-weight:900
+  font-size:65px;
+  font-weight:900;
 }
-
+.text-advertise-title{
+  font-size: 40px;
+}
+.text-advertise-subtitle{
+  font-size:20px;
+}
+.text-tip-bottom-title{
+  font-size:20px;
+  font-weight:500;
+}
+.btn-join{
+  padding-top:40px;
+  /* float: right; */
+}
+.btn-join-bottom{
+  width:340px;
+  font-size:18px;
+}
+@media(max-width:1200px){
+   .div-title-content{
+    padding-top:11%;
+    padding-bottom:13%;
+    padding-left: 80px;
+    display:block;
+    width:510px;
+    font-size: 30px;
+  }
+  .div-text-advertise{
+    padding-top:40px;
+    text-align:center;
+  }
+  .btn-join{
+    display: none;
+  }
+}
 @media(max-width:500px){
   /* 当屏幕最大669时，执行下面css */
   .tip{
@@ -192,7 +279,27 @@ export default {
     font-size:55px;
     font-weight:900;
   }
+  .div-text-advertise{
+    padding-top:0px;
+    text-align:center;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 40px;
+  }
+  .text-advertise-title{
+    font-size: 30px;
+  }
+  .text-advertise-subtitle{
+    font-size:15px;
+  }
+  .btn-join{
+    display: none;
+  }
 }
+
+/* @media screen and (min-width: 1201px) { 
+.abc {width: 1200px}  
+}  */
 </style>
 
 

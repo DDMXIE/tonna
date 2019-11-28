@@ -2,7 +2,7 @@
   <el-container>
   <el-header style="margin:0;padding:0;position:fixed;left:0;top:0;z-index:1000;width:100%">
       <el-row :style="{'backgroundColor':topMenuBgColor}">
-        <el-col :span="4" v-if="isTonnaShow">
+        <el-col :span="4" class="display-none">
           <span class="title" @click="menuCollapse" :style="{'color':titleColor}">Tonna</span>
         </el-col>
         <el-col :span="20">
@@ -34,7 +34,7 @@
                 <!-- <el-menu-item index="3" style="font-weight:bolder">文章管理</el-menu-item>
                 <el-menu-item index="4" style="font-weight:bolder">消息中心</el-menu-item> -->
                 <div style="float:right;margin-top:15px;padding-right:10px;">
-                  <el-radio-group v-model="whatColorRadio" size="mini" v-if="isTonnaShow">
+                  <el-radio-group class="display-none" v-model="whatColorRadio" size="mini" >
                     <el-radio-button label="浅色模式"></el-radio-button>
                     <el-radio-button label="深色模式"></el-radio-button>
                   </el-radio-group>
@@ -241,6 +241,15 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+@media(max-width:500px){
+  .display-none{
+    display: none;
+  }
+}
+</style>
+
 
 <style>
   .el-menu-vertical-demo:not(.el-menu--collapse) {

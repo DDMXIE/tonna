@@ -30,7 +30,9 @@ export default {
   watch: {
     $route(to, from) { // to:即将要跳转到的页面   from:即将离开的页面
       // ----------- 每次跳转页面时 重新拿token获取信息尝试，若token过期
-      this.showUserInfoByToken()
+      if (to.path !== '/login' && to.path !== '/index/weather' && to.path !== '/index/lifeStyle') {
+        this.showUserInfoByToken()
+      }
       console.log('-----即将要跳转到的页面----', to.path)
       if (this.$store.getters.userName === '' || this.$store.getters.userName === null) {
         if (to.path === '/index/editPage' || to.path === '/index/notePad' || to.path === '/index/articleView') {

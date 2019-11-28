@@ -124,6 +124,7 @@ export default {
         .then(res => {
           console.log('退出登录按钮', res)
           localStorage.removeItem('user_name')
+          localStorage.removeItem('token')
           this.$notify({
             title: '您已退出登录',
             type: 'success'

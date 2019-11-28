@@ -45,14 +45,11 @@ _axios.interceptors.response.use(
   function(error) {
     // Do something with response error
     if (error.response.data && error.response.data.msg === 'Token 已过期，请重新登录验证!') {
-      // this.$notify({
-      //   title: '登录过期，请重新登录！',
-      //   type: 'warning'
-      // })
       alert('登录过期，请重新登录！')
       axios.post('/logout')
         .then(res => {
           console.log('退出登录 res=>', res)
+          localStorage.removeItem('token')
           localStorage.removeItem('user_name')
         })
       router.replace({
