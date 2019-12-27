@@ -185,13 +185,13 @@ export default {
     loadSeasonImage() {
       var date = new Date()
       var str = date.getMonth()
-      if (str >= 3 && str < 6) { // 春
+      if (str >= 2 && str < 5) { // 春
         this.seasonName = '春'
         this.seasonImageUrl = 'url(' + require('../assets/weather/weather_spring.jpg') + ')'
-      } else if (str >= 6 && str < 9) { // 夏
+      } else if (str >= 5 && str < 8) { // 夏
         this.seasonName = '夏'
         this.seasonImageUrl = 'url(' + require('../assets/weather/weather_summer.jpg') + ')'
-      } else if (str >= 9 && str < 12) { // 秋
+      } else if (str >= 8 && str < 11) { // 秋
         this.seasonName = '秋'
         this.seasonImageUrl = 'url(' + require('../assets/weather/weather_bg2.jpg') + ')'
       } else { // 冬
