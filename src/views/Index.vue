@@ -1,6 +1,6 @@
 <template>
   <el-container>
-  <el-header style="margin:0;padding:0;position:fixed;left:0;top:0;z-index:2001;width:100%">
+  <el-header style="margin:0;padding:0;position:fixed;left:0;top:0;z-index:1000;width:100%">
       <el-row :style="{'backgroundColor':topMenuBgColor}">
         <el-col :span="4" class="display-none">
           <span class="title" @click="menuCollapse" :style="{'color':titleColor}">Tonna</span>
@@ -301,5 +301,8 @@ export default {
   }
   .el-drawer__body{
     background-color: #3c444c;
+  }
+  :focus{
+    outline: 0;
   }
 </style>

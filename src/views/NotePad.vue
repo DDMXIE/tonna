@@ -5,7 +5,7 @@
     </div>
     <div style="padding-top:60px;">
       <el-row>
-        <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
           <!-- <el-row>
             <el-col :span="12">
               <el-card :body-style="{ padding: '10px' }">
@@ -20,13 +20,13 @@
           </el-row> -->
           <el-row>
             <el-col :span="24" style="padding-bottom:20px;">
-              <el-card :body-style="{ padding: '10px' }">
-                <img src="../assets/notePad/3.jpg" width="100%">
-              </el-card>
+              <!-- <el-card :body-style="{ padding: '10px' }"> -->
+                <img src="../assets/notePad/note_bg.jpg" width="100%">
+              <!-- </el-card> -->
             </el-col>
           </el-row>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="16" :lg="16" :xl="16">
+        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
           <div>
               <div style="padding-left:20px;padding-right:20px;">
                 <div>
@@ -42,7 +42,7 @@
                   </el-input>
                 </div>
                 <div class="note-btn">
-                  <el-button type="primary" @click="addNote">我要留言<i class="el-icon-s-comment el-icon--right"></i></el-button>
+                  <el-button type="info" @click="addNote">我要留言<i class="el-icon-s-comment el-icon--right"></i></el-button>
                 </div>
             </div>
             <div>
@@ -50,7 +50,7 @@
                 <el-timeline>
                   <el-timeline-item v-for="(item,index) in notes" :timestamp="item.time" :key="index" placement="top">
                     <el-card>
-                      <h4>{{item.title}}</h4>
+                      <h4><i class="el-icon-chat-line-round" style="font-size:25px;"/>&nbsp;{{item.title}}</h4>
                       <p>{{item.content}}</p>
                     </el-card>
                   </el-timeline-item>

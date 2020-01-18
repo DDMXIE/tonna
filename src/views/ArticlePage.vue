@@ -33,7 +33,7 @@
                           sdfjkdhfjkhajhsfjkhsdkjfh
                           hdshfksdkflkdsjfkljkdfjklj</span>
                       </div>
-                    </el-col >
+                    </el-col>
                   </el-row>
                 </div>
                 <div style="padding-top:20px;">

@@ -4,7 +4,6 @@ import Home from './views/Home.vue'
 import About from './views/About.vue'
 import Index from './views/Index'
 import HomePage from './views/HomePage'
-import Preview from './views/Preview'
 import Surf from './views/Surf'
 import EditPage from './views/EditPage'
 import ArticleView from './views/ArticleView'
@@ -53,11 +52,6 @@ export default new Router({
         path: 'home',
         name: 'home',
         component: HomePage
-      },
-      {// 测试图片流
-        path: 'preview',
-        name: 'preview',
-        component: Preview
       },
       {// 首页
         path: 'surf',

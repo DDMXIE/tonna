@@ -13,6 +13,8 @@ import VirtualCollection from 'vue-virtual-collection'
 import VueAMap from 'vue-amap'
 import Meta from 'vue-meta'
 import echarts from 'echarts'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
 // Vue.use(VueResouse)
 // Vue.use(VueMasonryPlugin)
@@ -20,6 +22,7 @@ Vue.use(VueQuillEditor)
 Vue.use(VirtualCollection)
 Vue.use(VueAMap)
 Vue.use(Meta)
+Vue.use(mavonEditor)
 
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
