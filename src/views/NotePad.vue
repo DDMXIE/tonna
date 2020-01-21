@@ -1,28 +1,19 @@
 <template>
   <div style="width:100%;height:100%"> 
-    <div style="width:100%,">
+    <!-- <div style="width:100%,">
       <Bread></Bread>
-    </div>
-    <div style="padding-top:60px;">
+    </div> -->
+    <div>
       <el-row>
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-          <!-- <el-row>
-            <el-col :span="12">
-              <el-card :body-style="{ padding: '10px' }">
-                <img src="../assets/notePad/1.jpg" width="100%">
-              </el-card>
-            </el-col>
-            <el-col :span="12">
-              <el-card :body-style="{ padding: '10px' }">
-                <img src="../assets/notePad/2.jpg" width="100%">
-              </el-card>
-            </el-col>
-          </el-row> -->
           <el-row>
             <el-col :span="24" style="padding-bottom:20px;">
-              <!-- <el-card :body-style="{ padding: '10px' }"> -->
                 <img src="../assets/notePad/note_bg.jpg" width="100%">
-              <!-- </el-card> -->
+                <div style="text-align:center;padding-top:18px;">
+                  <i class="el-icon-moon-night" style="font-size:50px;padding-right:25px;"/>
+                  <span style="font-size:70px;font-weight:lighter;">留言，</span>
+                  <span style="font-size:40px;font-weight:200;">代表你的生活。</span>
+                </div>
             </el-col>
           </el-row>
         </el-col>
@@ -30,7 +21,6 @@
           <div>
               <div style="padding-left:20px;padding-right:20px;">
                 <div>
-                  <!-- <span style="padding-left:20px;">留言板:</span> -->
                   <el-input
                     style="width:95%"
                     class="note-input"
@@ -48,10 +38,16 @@
             <div>
               <div class="block note-pad">
                 <el-timeline>
-                  <el-timeline-item v-for="(item,index) in notes" :timestamp="item.time" :key="index" placement="top">
+                  <el-timeline-item v-for="(item,index) in notes" :timestamp="item.create_DATE" :key="index" placement="top">
                     <el-card>
-                      <h4><i class="el-icon-chat-line-round" style="font-size:25px;"/>&nbsp;{{item.title}}</h4>
-                      <p>{{item.content}}</p>
+                      <h4><i class="el-icon-chat-line-round" style="font-size:25px;"/>&nbsp;来自：{{item.user_NAME}}</h4>
+                      <el-row>
+                        <el-col :span="22"><p>{{item.message_CONTENT}}</p></el-col>
+                        <el-col :span="2"> 
+                            <el-button v-if="item.user_ID === $store.getters.userId" 
+                                  type="danger" icon="el-icon-delete" style="float:right;" @click="checkDelete(item.message_ID)"></el-button>
+                        </el-col>
+                      </el-row>
                     </el-card>
                   </el-timeline-item>
                 </el-timeline>
@@ -69,7 +65,7 @@
 
 <script>
 import Bread from '../components/Bread'
-import { getMessageByAdmin } from '@/api'
+import { getMessageByAdmin, addMessageByAdmin, deleteMessageByAdmin } from '@/api'
 export default {
   components: { Bread },
   data() {
@@ -85,44 +81,65 @@ export default {
       },
       userId: '', // 用户
       noteContent: '', // 留言内容
-      notes: [{ // 留言list假数据
-        title: '123123',
-        content: 'asfsdfdsf',
-        time: ' 2019/8/2 08:40:40'
-      }, {
-        title: '456456',
-        content: 'dfdeer',
-        time: ' 2019/5/11 14:11:43'
-      }, {
-        title: '6578678',
-        content: 'sdfdf',
-        time: ' 2018/8/24 21:40:23'
-      }]
+      notes: []// 留言数据
     }
   },
   created() {
-    this.getMessageByAdmin()
+    this.loadData()
   },
   methods: {
+    loadData() {
+      this.getMessageByAdmin()
+    },
+    // 加载所有留言
     getMessageByAdmin() {
       var params = {}
-      params.userId = 'e5d59fa1-c40c-40e3-8e28-89106f349bcf'
+      params.userId = ''
       getMessageByAdmin(params).then((res) => {
+        this.notes = res.data.data
+      })
+    },
+    // 删除自己的留言
+    checkDelete(messageId) {
+      this.$confirm('忍心删除这条留言, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        var params = {}
+        params.messageId = messageId
+        deleteMessageByAdmin(params).then(res => {
+          console.log('***', res)
+          if (res.data.meta === 200) {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+            this.loadData()
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
     },
     // 添加留言板留言
     addNote() {
+      console.log('userid==================', this.$store.getters.userId)
       var pushNote = {}
-      pushNote.title = '来自用户' + ' ' + (this.userId++).toString() + ' ' + '的留言'
-      pushNote.content = this.noteContent
-      pushNote.time = this.formatDate(new Date(), 'yyyy/MM/dd hh:mm:ss')
+      pushNote.userId = this.$store.getters.userId
+      pushNote.messageContent = this.noteContent
+      // pushNote.time = this.formatDate(new Date(), 'yyyy/MM/dd hh:mm:ss')
       if (this.noteContent !== '') {
-        this.notes.unshift(pushNote)
-        this.noteContent = ''
+        addMessageByAdmin(pushNote).then(res => {
+          this.noteContent = ''
+          this.loadData()
+        })
       } else {
         this.$alert('请先填写留言后提交')
       }
-      // console.log(pushNote)
     },
     // 时间格式化方法
     formatDate(date, fmt) {

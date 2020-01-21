@@ -9,6 +9,18 @@ import address from './addres'
 // }
 
 /**
+ * 通过Token读取实时有效用户数据
+ * @param {*} params
+ */
+export function getUserInfoByToken(params) {
+  return request({
+    url: address.getUserInfoByToken(),
+    method: 'get',
+    params: params
+  })
+}
+
+/**
  * 查询留言数据（可根据用户查询）
  * @param {*} params
  */
@@ -17,5 +29,41 @@ export function getMessageByAdmin(params) {
     url: address.getMessageByAdmin(),
     method: 'get',
     params: params
+  })
+}
+
+/**
+ * 根据id查询留言数据
+ * @param {*} params
+ */
+export function getMessageById(params) {
+  return request({
+    url: address.getMessageById(),
+    method: 'get',
+    params: params
+  })
+}
+
+/**
+ * 根据id软删除留言数据
+ * @param {*} params
+ */
+export function deleteMessageByAdmin(params) {
+  return request({
+    url: address.deleteMessageByAdmin(),
+    method: 'get',
+    params: params
+  })
+}
+
+/**
+ * 用户新增留言
+ * @param {*} data
+ */
+export function addMessageByAdmin(data) {
+  return request({
+    url: address.addMessageByAdmin(),
+    method: 'post',
+    data
   })
 }

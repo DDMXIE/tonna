@@ -84,6 +84,7 @@
 </template>
 
 <script>
+import { getUserInfoByToken } from '../api'
 export default {
   metaInfo: {
     meta: [
@@ -167,6 +168,9 @@ export default {
         })
         localStorage.setItem('token', res.data.token)
         this.$store.commit('handleUserName', res.data.username)
+        getUserInfoByToken().then(res => {
+          this.$store.commit('handleUserId', res.data.data.user_ID)
+        })
         this.$router.push({ path: '/index/surf', query: { userRole: res.data.username }})
       } else {
         this.$notify.error({
