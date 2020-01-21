@@ -69,6 +69,7 @@
 
 <script>
 import Bread from '../components/Bread'
+import { getMessageByAdmin } from '@/api'
 export default {
   components: { Bread },
   data() {
@@ -99,7 +100,16 @@ export default {
       }]
     }
   },
+  created() {
+    this.getMessageByAdmin()
+  },
   methods: {
+    getMessageByAdmin() {
+      var params = {}
+      params.userId = 'e5d59fa1-c40c-40e3-8e28-89106f349bcf'
+      getMessageByAdmin(params).then((res) => {
+      })
+    },
     // 添加留言板留言
     addNote() {
       var pushNote = {}
