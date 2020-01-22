@@ -1,18 +1,16 @@
 <template>
   <div style="width:100%;height:100%"> 
-    <!-- <div style="width:100%,">
-      <Bread></Bread>
-    </div> -->
+    <back-top></back-top>
     <div>
       <el-row>
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
           <el-row>
             <el-col :span="24" style="padding-bottom:20px;">
                 <img src="../assets/notePad/note_bg.jpg" width="100%">
-                <div style="text-align:center;padding-top:18px;">
-                  <i class="el-icon-moon-night" style="font-size:50px;padding-right:25px;"/>
-                  <span style="font-size:70px;font-weight:lighter;">留言，</span>
-                  <span style="font-size:40px;font-weight:200;">代表你的生活。</span>
+                <div class="title-div">
+                  <i class="el-icon-moon-night title-icon"/>
+                  <span class="title-text-first">留言，</span>
+                  <span class="title-text-second">代表你的生活。</span>
                 </div>
             </el-col>
           </el-row>
@@ -42,10 +40,12 @@
                     <el-card>
                       <h4><i class="el-icon-chat-line-round" style="font-size:25px;"/>&nbsp;来自：{{item.user_NAME}}</h4>
                       <el-row>
-                        <el-col :span="22"><p>{{item.message_CONTENT}}</p></el-col>
-                        <el-col :span="2"> 
-                            <el-button v-if="item.user_ID === $store.getters.userId" 
-                                  type="danger" icon="el-icon-delete" style="float:right;" @click="checkDelete(item.message_ID)"></el-button>
+                        <el-col :xs="24" :sm="24" :md="22" :lg="22" :xl="22">
+                          <p>{{item.message_CONTENT}}</p></el-col>
+                        <el-col :xs="24" :sm="24" :md="2" :lg="2" :xl="2"> 
+                            <el-button v-if="item.user_ID === $store.getters.userId" size="small"
+                                  type="danger" icon="el-icon-delete" style="float:right;" 
+                                  @click="checkDelete(item.message_ID)"></el-button>
                         </el-col>
                       </el-row>
                     </el-card>
@@ -53,8 +53,10 @@
                 </el-timeline>
               </div>
             </div>
+            <div class="bottom-tip">
+              <span>主人，没有更多了喔！</span>
+            </div>
           </div>
-          
         </el-col>
       </el-row>
       
@@ -64,10 +66,10 @@
 </template>
 
 <script>
-import Bread from '../components/Bread'
+import BackTop from '../components/BackTop'
 import { getMessageByAdmin, addMessageByAdmin, deleteMessageByAdmin } from '@/api'
 export default {
-  components: { Bread },
+  components: { BackTop },
   data() {
     return {
       myBackToTopStyle: {
@@ -97,6 +99,9 @@ export default {
       params.userId = ''
       getMessageByAdmin(params).then((res) => {
         this.notes = res.data.data
+        for (var i = 0; i < this.notes.length; i++) {
+          this.notes[i].create_DATE = this.timeFormat(this.notes[i].create_DATE)
+        }
       })
     },
     // 删除自己的留言
@@ -109,7 +114,6 @@ export default {
         var params = {}
         params.messageId = messageId
         deleteMessageByAdmin(params).then(res => {
-          console.log('***', res)
           if (res.data.meta === 200) {
             this.$message({
               type: 'success',
@@ -127,7 +131,6 @@ export default {
     },
     // 添加留言板留言
     addNote() {
-      console.log('userid==================', this.$store.getters.userId)
       var pushNote = {}
       pushNote.userId = this.$store.getters.userId
       pushNote.messageContent = this.noteContent
@@ -156,12 +159,60 @@ export default {
       if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (currentDate.getFullYear() + '').substr(4 - RegExp.$1.length))
       for (var k in o) { if (new RegExp('(' + k + ')').test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length))) }
       return fmt
+    },
+    // 时间格式化方法2
+    timeFormat(time) {
+      var d = new Date(time)
+
+      var year = d.getFullYear() // 年
+      var month = d.getMonth() + 1 // 月
+      var day = d.getDate() // 日
+
+      var hh = d.getHours() // 时
+      var mm = d.getMinutes() // 分
+      var ss = d.getSeconds() // 秒
+
+      var clock = year + '/'
+
+      if (month < 10) { clock += '0' }
+
+      clock += month + '/'
+
+      if (day < 10) { clock += '0' }
+
+      clock += day + ' '
+
+      if (hh < 10) { clock += '0' }
+
+      clock += hh + ':'
+      if (mm < 10) clock += '0'
+      clock += mm + ':'
+
+      if (ss < 10) clock += '0'
+      clock += ss
+      return (clock)
     }
   }
 }
 </script>
 
 <style scoped>
+  .title-div{
+    text-align:center;
+    padding-top:18px;
+  }
+  .title-icon{
+    font-size:50px;
+    padding-right:25px;
+  }
+  .title-text-first{
+    font-size:70px;
+    font-weight:lighter;
+  }
+  .title-text-second{
+    font-size:40px;
+    font-weight:200;
+  }
   .note-input{
     padding-left: 20px;
     padding-right:10px;
@@ -174,6 +225,24 @@ export default {
     padding-top:20px;
     padding-right:50px;
   }
+  .bottom-tip{
+    text-align: center;
+    padding-bottom: 30px;
+  }
+  @media(max-width:500px){
+  .title-icon{
+    font-size:30px;
+    padding-right:18px;
+  }
+  .title-text-first{
+    font-size:30px;
+    font-weight:lighter;
+  }
+  .title-text-second{
+    font-size:17px;
+    font-weight:200;
+  }
+}
 </style>
 
 

@@ -1,5 +1,6 @@
 <template>
   <div>
+      <back-top></back-top>
       <el-row>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="16">
             <el-row :gutter="20">
@@ -51,11 +52,12 @@
 </template>
 
 <script>
+import BackTop from '../components/BackTop'
 import Bread from '../components/Bread'
 import ArticlePage from '../views/ArticlePage'
 // import Aplayer from 'vue-aplayer'
 export default {
-  components: { Bread, ArticlePage },
+  components: { Bread, ArticlePage, BackTop },
   data() {
     return {
       isLike: false, // 是否添加喜欢
