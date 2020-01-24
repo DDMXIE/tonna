@@ -76,7 +76,8 @@ export default {
   opacity: .8;
   transition: .3s;
   text-align: center;
-  z-index: 999;
+  // z-index: 999;
+  z-index: 1501;
 }
 .el-icon-caret-top {
   font-size: 36px;
@@ -87,5 +88,6 @@ export default {
 }
 .hover {
   background-color: #409EFF;
+  // background-color: #f5a600;
 }
 </style>

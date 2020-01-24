@@ -67,3 +67,53 @@ export function addMessageByAdmin(data) {
     data
   })
 }
+// -------------------------------------笔记-------------------------------------
+/**
+ * 新增修改笔记
+ * @param {*} data
+ */
+export function addUpdateArticle(data) {
+  return request({
+    url: address.addUpdateArticle(),
+    method: 'post',
+    data
+  })
+}
+
+/**
+ * 根据笔记id查询笔记详情
+ * @param {*} params
+ */
+export function findArticleById(params) {
+  return request({
+    url: address.findArticleById(),
+    method: 'get',
+    params: params
+  })
+}
+
+// -------------------------------------配置-------------------------------------
+/**
+ * 获取配置类相应类型全部数据
+ * @param {*} params
+ */
+export function getConstType(params) {
+  return request({
+    url: address.getConstType(),
+    method: 'get',
+    params: params
+  })
+}
+
+/**
+ * 图片文件上传
+ * @param {*} data
+ */
+export function uploadFile(data) {
+  return request({
+    url: address.uploadFile(),
+    method: 'post',
+    // headers: { 'Content-Type': 'multipart/form-data' },
+    data
+  })
+}

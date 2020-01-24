@@ -32,6 +32,32 @@ const AddressLocal = {
    */
   addMessageByAdmin: () => {
     return `/admin/addMessageByAdmin`
+  },
+  // --------------------------------------笔记--------------------------------------
+  /**
+   * 新增修改笔记
+   */
+  addUpdateArticle: () => {
+    return `/admin/addUpdateArticle`
+  },
+  /**
+   * 根据笔记id查询笔记详情
+   */
+  findArticleById: () => {
+    return `/admin/findArticleById`
+  },
+  // --------------------------------------配置--------------------------------------
+  /**
+   * 获取配置类相应类型全部数据
+   */
+  getConstType: () => {
+    return `/admin/findConstType`
+  },
+  /**
+   * 图片文件上传
+   */
+  uploadFile: () => {
+    return `/admin/uploadFile`
   }
 }
 

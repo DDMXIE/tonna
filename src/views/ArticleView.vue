@@ -19,7 +19,7 @@
                         </div>
                         <!-- 用户名 div -->
                         <div style="padding-top:10px;">
-                          <span style="font-weight:bold;font-size:20px;">Tony</span>
+                          <span style="font-weight:bold;font-size:20px;" >{{$store.getters.userName}}</span>
                         </div>
                         <!-- 按钮 div -->
                         <div style="padding-top:60px;">
@@ -119,16 +119,18 @@
             </el-col> -->
         </el-row>
     </div>   
+    <Foot></Foot>
   </div>
 </template>
 
 
 <script>
 import Bread from '../components/Bread'
+import Foot from '../components/Foot'
 import ArticlePage from '../views/ArticlePage'
 // import Aplayer from 'vue-aplayer'
 export default {
-  components: { Bread, ArticlePage },
+  components: { Bread, ArticlePage, Foot },
   data() {
     return {
       loading: false,

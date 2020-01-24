@@ -46,6 +46,13 @@
                 </div>
               </el-card>
             </div>
+            <div style="text-align:center;padding-top:20px;padding-bottom:20px;">
+              <el-row>
+                <el-col :span="24">
+                  <el-button type="success" round style="width:60%;">阅读更多</el-button>
+                </el-col>
+              </el-row>
+            </div>
           </el-col>
       </el-row>
   </div>
