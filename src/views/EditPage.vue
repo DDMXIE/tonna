@@ -6,7 +6,7 @@
         Tonna 笔记
       </span>
     </div>
-    <div style="padding-top:10px;">
+    <div style="padding-top:10px;" v-loading="loading">
       <el-form ref="markdownForm" :label-position="'left'" :model="markdownForm" :rules="rules" label-width="100px" >
         <el-row style="padding-left:20px;padding-right:10px;">
           <el-col :xs="24" :sm="24" :md="13" :lg="13" :xl="11">
@@ -28,16 +28,17 @@
           </el-col>
         </el-row>
       </el-form>
-      <mavon-editor ref="md" @save="save" @imgAdd="imgAdd" @imgDel="imgDel" @change="change"
+      <mavon-editor ref="md" @save="save" @imgAdd="imgAdd" @imgDel="imgDel" @change="change" @fullScreen="fullScreen"
           v-model="markdownForm.contentMarkdown" :codeStyle="markdown.codeStyle" 
-          :toolbars="markdown.toolbars"/>
+          :toolbars="markdown.toolbars" :style="{height:mdHeight,zIndex:2002}"/>
       <br>
       <el-row style="text-align:center;">
         <el-col :span="12">
           <el-button>返 回</el-button>
         </el-col>
         <el-col :span="12">
-          <el-button type="primary" @click="save('markdownForm')">保 存</el-button>
+          <el-button type="primary" round @click="save('markdownForm')" style="width:40%">保 存</el-button>
+          <el-button type="success" round @click="published('markdownForm')" style="width:30%">发表</el-button>
         </el-col>
       </el-row>
     </div>
@@ -48,7 +49,7 @@
 <script>
 import Foot from '../components/Foot'
 import BackTop from '../components/BackTop'
-import { getConstType, uploadFile, addUpdateArticle, findArticleById } from '@/api'
+import { getConstType, uploadFile, addUpdateArticle, findArticleById, publishedAriticle } from '@/api'
 export default {
   components: { BackTop, Foot },
   data() {
@@ -98,10 +99,12 @@ export default {
         articleSecurity: true,
         contentMarkdown: '',
         contentHtml: '',
+        articleStatus: '',
         createDate: '',
         updateDate: '',
         isDelete: '',
-        type: 0
+        type: 0,
+        out: ''
       },
       rules: {
         title: [
@@ -114,7 +117,9 @@ export default {
       },
       lastSaveTime: null,
       timer: null,
-      constType: []
+      constType: [],
+      loading: true,
+      mdHeight: '500px'
     }
   },
   created() {
@@ -132,9 +137,11 @@ export default {
       this.getArticle()
     },
     getArticle() { // 获取文章内容
-      // const id = this.$route.query.a
-      const id = 'fa562fef-9bec-467e-8f72-507a40c0380d'
+      const id = this.$route.query.a
+      // const id = 'fa562fef-9bec-467e-8f72-507a40c0380d'
+      // const id = 'fa562fef-9bec-467e-8f72-507a40c0380d'
       if (id == null) {
+        this.loading = false
         this.markdownForm.contentMarkdown = ''
         this.markdownForm.new = 'add'
       } else {
@@ -148,6 +155,7 @@ export default {
           this.markdownForm.articleId = res.data.data[0].article_ID
           this.markdownForm.title = res.data.data[0].article_TITLE
           this.markdownForm.articleType = res.data.data[0].type_ID
+          this.markdownForm.articleStatus = res.data.data[0].article_STATUS
           this.markdownForm.createDate = res.data.data[0].create_DATE
           this.markdownForm.updateDate = res.data.data[0].update_DATE
           this.markdownForm.isDelete = res.data.data[0].is_DELETE
@@ -156,29 +164,58 @@ export default {
           } else {
             this.markdownForm.articleSecurity = false
           }
+          this.loading = false
         }).catch(e => {
           console.log(e)
         })
       }
     },
-    save(formName) { // 保存文章内容
+    save(formName) { // 保存发表文章内容
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.markdownForm.userId = this.$store.getters.userId
           this.markdownForm.createDate = new Date(this.markdownForm.createDate)
-          console.log('文章', this.markdownForm)
           addUpdateArticle(this.markdownForm).then(res => {
-            this.$notify({
-              title: '保存成功',
-              message: '您的笔记已保存！',
-              type: 'success'
-            })
             this.markdownForm.articleId = res.data.data.id
+            this.markdownForm.new = 'update'
+            this.markdownForm.articleStatus = res.data.data.articleStatus
+            this.markdownForm.createDate = res.data.data.createDate
+            this.markdownForm.isDelete = res.data.data.isDelete
             this.lastSaveTime = new Date()
+            this.$notify({ title: '保存成功', message: '笔记已保存到草稿箱！', type: 'success' })
           }).catch(e => {
             console.log(e)
           })
-          // alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    published(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.markdownForm.userId = this.$store.getters.userId
+          this.markdownForm.createDate = new Date(this.markdownForm.createDate)
+          addUpdateArticle(this.markdownForm).then(res => {
+            this.markdownForm.articleId = res.data.data.id
+            this.markdownForm.new = 'update'
+            this.markdownForm.articleStatus = res.data.data.articleStatus
+            this.markdownForm.createDate = res.data.data.createDate
+            this.markdownForm.isDelete = res.data.data.isDelete
+            this.lastSaveTime = new Date()
+            var params = {}
+            console.log(this.markdownForm)
+            params.articleId = this.markdownForm.articleId
+            console.log(params)
+            publishedAriticle(params).then(res => {
+              console.log('-------------------', res)
+              this.$notify({ title: '发表成功', message: '笔记已发表！', type: 'success' })
+              this.$router.push('/index/surf')
+            })
+          }).catch(e => {
+            console.log(e)
+          })
         } else {
           console.log('error submit!!')
           return false
@@ -224,6 +261,13 @@ export default {
       getConstType(params).then(res => {
         this.constType = res.data.data
       })
+    },
+    fullScreen(status) {
+      if (status === true) {
+        this.mdHeight = '100%'
+      } else {
+        this.mdHeight = '500px'
+      }
     }
   }
 

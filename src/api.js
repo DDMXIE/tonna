@@ -92,6 +92,30 @@ export function findArticleById(params) {
   })
 }
 
+/**
+ * 发布笔记
+ * @param {*} params
+ */
+export function publishedAriticle(params) {
+  return request({
+    url: address.publishedAriticle(),
+    method: 'get',
+    params: params
+  })
+}
+
+/**
+ * 查询所有笔记
+ * @param {*} params
+ */
+export function findAllArticle(params) {
+  return request({
+    url: address.findAllArticle(params),
+    method: 'get',
+    params: params
+  })
+}
+
 // -------------------------------------配置-------------------------------------
 /**
  * 获取配置类相应类型全部数据

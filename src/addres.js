@@ -46,6 +46,18 @@ const AddressLocal = {
   findArticleById: () => {
     return `/admin/findArticleById`
   },
+  /**
+   * 发布笔记
+   */
+  publishedAriticle: () => {
+    return `/admin/publishedAriticle`
+  },
+  /**
+   * 查询所有笔记
+   */
+  findAllArticle: () => {
+    return `/tonna/findAllArticle`
+  },
   // --------------------------------------配置--------------------------------------
   /**
    * 获取配置类相应类型全部数据

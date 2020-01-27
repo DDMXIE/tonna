@@ -1,47 +1,33 @@
 <template>
-  <div>
+  <div v-loading="loading">
       <back-top></back-top>
       <el-row>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="16">
-            <el-row :gutter="20">
-              <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8" v-for="(o, index) in 3" :key="o" >
-                <div style="padding-top:10px;">
-                    <el-card :body-style="{ padding: '0px' }">
-                      <img src="../assets/water/7.jpg" class="image">
-                      <div style="padding: 14px;">
-                        <span>测试标题</span>
-                        <div class="bottom clearfix">
-                          <time class="time">{{ currentDate }}</time>
-                          <el-button type="text" class="button">操作按钮</el-button>
-                        </div>
-                      </div>
-                    </el-card>
-                </div>
-              </el-col>
-            </el-row>
-            <div style="padding-top:10px;" v-for="item in 3">
+            <div style="padding-top:10px;" v-for="item in articleData">
               <el-card>
                 <div>
                   <el-row style="margin:0;">
-                    <el-col :span="16">
-                        <img src="../assets/article/11.jpg" width="100%">
+                    <el-col :xs="18" :sm="19" :md="18" :lg="19" :xl="16">
+                      <div style="word-wrap:break-word;padding-right:30px;">
+                        <span class="article-title title-control">{{item.article.article_TITLE}}</span>
+                        <div><span class="article-introduce introduce-control">{{item.article_INTRODUCE}}</span></div>
+                      </div>
                     </el-col>
-                    <el-col :span="8">
-                      <div style="word-wrap:break-word;padding-left:20px">
-                        <span>kfjkldsajfkdskljlkdfklsfsdjkfsfsdakfjsdklfjds
-                          sjkfdhsjkhfksjfhjksdhfjksdhfkjsdf
-                          skdfjhskfhsdkjfdshfdjshfksdjfhsdfhdsf
-                          sdfjkdhfjkhajhsfjkhsdkjfh
-                          hdshfksdkflkdsjfkljkdfjklj</span>
+                     <el-col :xs="6" :sm="5" :md="6" :lg="5" :xl="16">
+                      <div class="img-wrap">
+                        <img :src="item.img_URL[0]">
                       </div>
                     </el-col>
                   </el-row>
                 </div>
-                <div style="padding-top:20px;">
-                  <span class="article-title">这是我们的第一次旅行</span>
-                  <div style="float:right">
-                    <img v-if="isLike === false" src="../assets/article/heart.png" width="30px;" style="cursor:pointer;" @click="likeIt">
-                    <img v-else src="../assets/article/heart2.png" width="30px;" style="cursor:pointer;">
+                <div>
+                  <div>
+                    <i class="el-icon-user-solid" style="font-size:16px;"/>
+                    <span class="text-detail">{{item.article_AUTHOR}}</span>
+                    <i class="el-icon-chat-line-square" style="font-size:16px;"/>
+                    <span class="text-detail">{{item.talk}}</span>
+                    <img src="../assets/article/heart2.png" width="16px;" style="cursor:pointer;">
+                    <span style="font-size:12px;padding-left:5px;padding-right:15px;color:#bf2727;">{{item.like}}</span>
                   </div>
                 </div>
               </el-card>
@@ -49,7 +35,8 @@
             <div style="text-align:center;padding-top:20px;padding-bottom:20px;">
               <el-row>
                 <el-col :span="24">
-                  <el-button type="success" round style="width:60%;">阅读更多</el-button>
+                  <i v-if="iconLoading === true" class="el-icon-loading" />
+                  <el-button v-else type="success" round style="width:60%;" @click="readMore">阅读更多</el-button>
                 </el-col>
               </el-row>
             </div>
@@ -62,20 +49,102 @@
 import BackTop from '../components/BackTop'
 import Bread from '../components/Bread'
 import ArticlePage from '../views/ArticlePage'
+import { findAllArticle } from '@/api'
 // import Aplayer from 'vue-aplayer'
 export default {
+  props: {
+    articleType: {
+      type: String,
+      default: ''
+    }
+  },
   components: { Bread, ArticlePage, BackTop },
   data() {
     return {
+      loading: true,
+      iconLoading: false,
       isLike: false, // 是否添加喜欢
       fit: 'cover', // 头像类型
       url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=656257457,1108249792&fm=26&gp=0.jpg', // 头像url
-      currentDate: new Date()
+      currentDate: new Date(),
+      articleData: [
+        {
+          article: {},
+          img_URL: '',
+          article_INTRODUCE: '',
+          article_AUTHOR: ''
+        }
+      ],
+      content: '',
+      typeId: '',
+      pageSize: {
+        start: 0,
+        end: 2
+      }
     }
   },
   methods: {
-    likeIt() {
-      this.isLike = true
+    // likeIt() {
+    //   this.isLike = true
+    // },
+    readMore() {
+      this.iconLoading = true
+      var params = {}
+      params.typeId = this.typeId
+      this.pageSize.start = this.pageSize.start + 2
+      params.start = this.pageSize.start
+      params.end = this.pageSize.end
+      console.log('------_***** ------', params)
+      findAllArticle(params).then(res => {
+        console.log('--------------res-------------', res)
+        if (res.data.data.length === 0) {
+          this.$notify({
+            title: '自定义位置',
+            iconClass: 'el-icon-message-solid',
+            message: '我是有底线的喔！',
+            position: 'bottom-right'
+          })
+        } else {
+          for (var i = 0; i < res.data.data.length; i++) {
+            this.articleData.push(res.data.data[i])
+          }
+        }
+        this.iconLoading = false
+        // this.content = res.data.data[2].article_INTRODUCE
+      })
+      // this.$alert('这是一段内容', '标题名称', {
+      //   confirmButtonText: '确定',
+      //   callback: action => {
+      //     this.$message({
+      //       type: 'info',
+      //       message: `action: ${action}`
+      //     })
+      //   }
+      // })
+    },
+    showArticleType() {
+      // console.log('%%%%%%%', this.articleType)
+    }
+  },
+  watch: {
+    articleType: {
+      immediate: true, // 深度监听
+      handler: function(val) {
+        console.log(val)
+        this.typeId = val
+        this.pageSize.start = 0
+        this.pageSize.end = 2
+        var params = {}
+        params.typeId = val
+        params.start = this.pageSize.start
+        params.end = this.pageSize.end
+        findAllArticle(params).then(res => {
+          console.log('--------------res-------------', res)
+          this.articleData = res.data.data
+          this.loading = false
+          // this.content = res.data.data[2].article_INTRODUCE
+        })
+      }
     }
   }
 
@@ -83,43 +152,89 @@ export default {
 </script>
 
 <style scoped>
- .time {
+  .time {
     font-size: 13px;
     color: #999;
   }
-  
   .bottom {
     margin-top: 13px;
     line-height: 12px;
   }
-
   .button {
     padding: 0;
     float: right;
   }
-
   .image {
     width: 100%;
     display: block;
   }
-
   .clearfix:before,
   .clearfix:after {
       display: table;
       content: "";
   }
-  
   .clearfix:after {
       clear: both
   }
-  
   html.body{
     margin:0;
     padding:0;
   }
-
+  .text-detail{
+    font-size:12px;
+    padding-left:5px;
+    padding-right:15px;
+  }
   .article-title{
     font-size: 20px;
     font-weight: bold
+  }
+  .article-title:hover{
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .img-wrap {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%;
+    overflow: hidden;
+  }
+  .img-wrap img  {
+    position: absolute;
+    width: 100%;
+    height:100%;
+  }
+  .article-introduce{
+    font-size: 13px;
+    padding-top: 10px;
+    color: #999;
+    font-weight: 500;
+  }
+  .title-control{
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .introduce-control{
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+  @media(max-width:500px){
+    .article-title{
+      font-size: 15px;
+      font-weight: bold
+    }
+    .introduce-control{
+      -webkit-line-clamp: 2;
+    }
+    .title-control{
+      -webkit-line-clamp: 1;
+    }
   }
 </style>

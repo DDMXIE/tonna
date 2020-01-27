@@ -1,6 +1,6 @@
 <template>
   <el-container>
-  <el-header style="margin:0;padding:0;position:fixed;left:0;top:0;z-index:1000;width:100%">
+  <el-header style="margin:0;padding:0;position:fixed;left:0;top:0;z-index:2001;width:100%">
       <el-row :style="{'backgroundColor':topMenuBgColor}">
         <el-col :span="4" class="display-none">
           <span class="title" @click="menuCollapse" :style="{'color':titleColor}">Tonna</span>
@@ -35,15 +35,15 @@
                 <el-menu-item index="4" style="font-weight:bolder">消息中心</el-menu-item> -->
                 <div style="float:right;margin-top:15px;padding-right:10px;">
                   <el-radio-group class="display-none" v-model="whatColorRadio" size="mini" >
-                    <el-radio-button label="浅色模式"></el-radio-button>
-                    <el-radio-button label="深色模式"></el-radio-button>
+                    <el-radio-button label="浅"></el-radio-button>
+                    <el-radio-button label="深"></el-radio-button>
                   </el-radio-group>
                   <el-button type="info" 
                     size="mini"
                     @click="menuCollapse"
                     style="margin-left:10px;">
-                    <i v-if="isCollapse === true" class="el-icon-s-unfold">&nbsp;菜单</i>
-                    <i v-if="isCollapse === false" class="el-icon-s-fold">&nbsp;菜单</i>
+                    <i v-if="isCollapse === true" class="el-icon-s-unfold">&nbsp;MENU</i>
+                    <i v-if="isCollapse === false" class="el-icon-s-fold">&nbsp;MENU</i>
                   </el-button>
                 </div>
               </el-menu>
@@ -151,7 +151,7 @@ export default {
       menuSize: '',
       drawer: false, // 菜单状态
       direction: 'rtl',
-      whatColorRadio: '深色模式',
+      whatColorRadio: '深',
       topMenuChosedColor: '#ffffff',
       topMenuBgColor: '#3c444c',
       titleColor: '#fff',
@@ -222,7 +222,7 @@ export default {
   },
   watch: {
     whatColorRadio(val) {
-      if (val === '深色模式') {
+      if (val === '深') {
         this.titleColor = '#fff'
         this.topMenuChosedColor = '#ffffff'
         this.topMenuBgColor = '#3c444c'

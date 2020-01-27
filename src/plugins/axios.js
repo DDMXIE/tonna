@@ -23,7 +23,7 @@ _axios.interceptors.request.use(
     if (config.url.substr(0, 5) === 'https') {
       reqUrl = config.url.match(/(\S*)api/)[1]
     }
-    if (config.url !== '/login' && reqUrl !== 'https://www.tianqiapi.com/') {
+    if (config.url !== '/login' && reqUrl !== 'https://www.tianqiapi.com/' && config.url !== '/tonna/findAllArticle') {
       config.headers.Authorization = 'bearer ' + localStorage.getItem('token')
     }
     // Do something before request is sent

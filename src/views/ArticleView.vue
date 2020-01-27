@@ -5,118 +5,55 @@
     </div>
     <div>
         <el-row :gutter="20" style="padding-top:50px;padding-right:10px;padding-left:10px;margin:0;"> 
-            <!-- 手机个人面板 -->
-            <el-col :xs="24" :sm="24" :md="8" :lg="7" :xl="8"  style="margin-bottom:15px;">
-              <el-card>
-                <div style="text-align:center;">
-                    <div style="padding-top:50px;">
-                    </div>
-                    <div>
-                      <div class="demo-fit">
-                        <!-- 头像 div -->
-                        <div class="block">
-                            <el-avatar shape="circle" :size="120" :fit="fit" :src="url"></el-avatar>
-                        </div>
-                        <!-- 用户名 div -->
-                        <div style="padding-top:10px;">
-                          <span style="font-weight:bold;font-size:20px;" >{{$store.getters.userName}}</span>
-                        </div>
-                        <!-- 按钮 div -->
-                        <div style="padding-top:60px;">
-                          <el-badge :value="1" class="item" type="primary">
-                            <el-button size="small">发表</el-button>
-                          </el-badge>
-                          <el-divider direction="vertical"></el-divider>
-                          <el-badge :value="2" class="item" type="warning">
-                            <el-button size="small">评论</el-button>
-                          </el-badge>
-                          <el-divider direction="vertical"></el-divider>
-                          <el-badge :value="2" class="item">
-                            <el-button size="small">喜欢</el-button>
-                          </el-badge>
-                        </div>
-                        <!-- 文字 div -->
-                        <div style="padding-top:30px;">
-                          <el-divider content-position="center">
-                            <div style="width:140px;">
-                              <span style="font-weight:400;font-size:10px;">善始者实繁，克终者盖寡</span>
-                            </div>
-                            
-                          </el-divider>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-              </el-card>
-            </el-col>
+           <el-col :xs="24" :sm="24" :md="6" :lg="6" :xl="8"  style="margin-bottom:15px;">
+             <div>
+               <el-card>
+                  <div>
+                    <i class="el-icon-s-flag" style="padding-right:5px;color:#d81e05;font-size:18px;"/>
+                    <span>热搜榜</span>
+                  </div>
+                </el-card>
+             </div>
+           </el-col>
            
 
-            <el-col :xs="24" :sm="24" :md="16" :lg="17" :xl="16">
-              <el-tabs :tab-position="isTabTop" style="height: 100%;">
-                  <el-tab-pane label="生活穿搭" v-loading="loading">
-                    <ArticlePage></ArticlePage>
-                  </el-tab-pane>
-                  <el-tab-pane label="好文分享">好文分享</el-tab-pane>
-                  <el-tab-pane label="摄影靓图">摄影靓图</el-tab-pane>
-                  <el-tab-pane label="技术类分享">技术类分享</el-tab-pane>
-              </el-tabs>
+            <el-col :xs="24" :sm="14" :md="12" :lg="10" :xl="16">
+                <el-button v-for="(item,index) in items" :key="index" :type="item.type" @click="showType(item.typeId)"
+                          style="margin-top:10px;" size="small" >{{item.label}}</el-button>
+                <el-button icon="el-icon-refresh" circle size="mini"></el-button>
+                <ArticlePage :articleType="articleType" ></ArticlePage>
             </el-col>
-
-
-          
-            <!-- 右边个人面板 -->
-            <!-- <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" v-if="isSmallWidth === false" style="position:fixed;top:80px;right:20px;z-index:999">
-              <el-card>
-                <div style="text-align:center">
-                    <div style="padding-top:50px;">
-                    </div>
-                    <div>
-                      <div class="demo-fit">
-                        
-                        <div class="block">
-                            <el-avatar shape="circle" :size="120" :fit="fit" :src="url"></el-avatar>
-                        </div>
-                        
-                        <div style="padding-top:10px;">
-                          <span style="font-weight:bold;font-size:20px;">Tony</span>
-                        </div>
-                        
-                        <div style="padding-top:60px;">
-                          <el-badge :value="1" class="item" type="primary">
-                            <el-button size="small">发表</el-button>
-                          </el-badge>
-                          <el-divider direction="vertical"></el-divider>
-                          <el-badge :value="2" class="item" type="warning">
-                            <el-button size="small">评论</el-button>
-                          </el-badge>
-                          <el-divider direction="vertical"></el-divider>
-                          <el-badge :value="2" class="item">
-                            <el-button size="small">喜欢</el-button>
-                          </el-badge>
-                        </div>
-                        
-                        <div style="padding-top:30px;">
-                          <el-divider content-position="center">
-                            <span style="font-weight:400">善始者实繁，克终者盖寡</span>
-                            </el-divider>
-                        </div>
-                        
-                        <div style="padding-top:10px;">
-                          <aplayer autoplay
-                            :music="{
-                              title: 'secret base~君がくれたもの~',
-                              artist: 'Silent Siren',
-                              src: 'https://music.163.com/一如年少模样.mp3',
-                              pic: 'http://img2.imgtn.bdimg.com/it/u=1054720621,4056566051&fm=26&gp=0.jpg'
-                            }"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                </div>
-               
-              </el-card>
-            </el-col> -->
+            <el-col :xs="24" :sm="6" :md="6" :lg="6" :xl="16">
+              <div class="right-card">
+                <el-card class="right-card" :body-style="{ padding: '10px',backgroundColor:'#6697a4' }">
+                  <i class="el-icon-s-custom right-card-icon"/>
+                  <span class="right-card-text">Tonna 会员 ></span>
+                </el-card>
+                <el-card class="right-card" :body-style="{ padding: '10px',backgroundColor:'#bdd5d7' }">
+                  <i class="el-icon-s-claim right-card-icon" style="color:#547c82;"/>
+                  <span class="right-card-text" style="color:#547c82">作品优选 ></span>
+                </el-card>
+                <el-card class="right-card" :body-style="{ padding: '10px',backgroundColor:'#ffbfb4' }">
+                  <i class="el-icon-s-home right-card-icon"/>
+                  <span class="right-card-text">我的Tonna ></span>
+                </el-card>
+                <el-card class="right-card" :body-style="{ padding: '10px',backgroundColor:'#fdf1d9' }">
+                  <i class="el-icon-s-open right-card-icon" style="color:#c5ad7c;"/>
+                  <span class="right-card-text" style="color:#c5ad7c">版权申明 ></span>
+                </el-card>
+              </div>
+              <div class="author-div" style="padding-top:30px;">
+                <el-card>
+                  <div>
+                    <i class="el-icon-s-flag" style="padding-right:5px;color:#d81e05;font-size:18px;"/>
+                    <span>作者推荐</span>
+                  </div>
+                </el-card>
+              </div>
+            </el-col>
+            <el-col :xs="24" :sm="24" :md="3" :lg="4" :xl="16">
+              <div></div>
+            </el-col>
         </el-row>
     </div>   
     <Foot></Foot>
@@ -133,16 +70,28 @@ export default {
   components: { Bread, ArticlePage, Foot },
   data() {
     return {
-      loading: false,
+      loading: true,
       isLike: false, // 是否添加喜欢
       fit: 'cover', // 头像类型
       url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=656257457,1108249792&fm=26&gp=0.jpg', // 头像url
-      currentDate: new Date()
+      currentDate: new Date(),
+      articleType: '1',
+      editableTabsValue: '0',
+      items: [
+        { type: 'primary', label: '生活穿搭', typeId: '1' },
+        { type: 'success', label: '好文分享', typeId: '2' },
+        { type: 'info', label: '摄影靓图', typeId: '3' },
+        { type: 'danger', label: '外刊外文', typeId: '4' },
+        { type: 'warning', label: '技术类文章', typeId: '5' }
+      ]
     }
   },
   methods: {
     likeIt() {
       this.isLike = true
+    },
+    showType(typeId) {
+      this.articleType = typeId
     }
   },
   computed: {
@@ -200,12 +149,37 @@ export default {
     margin:0;
     padding:0;
   }
-
   .article-title{
     font-size: 20px;
     font-weight: bold
   }
+  .right-card{
+    margin-top: 5px;
+    cursor: pointer;
+  }
+  .right-card-icon{
+    padding-left: 10px;
+    font-size:18px;
+    color: white;
+  }
+  .right-card-text{
+    font-weight: 900;
+    padding-left: 20px;
+    color: white;
+  }
+  @media(max-width:500px){
+    .right-card{
+      display: none;
+    }
+    .author-div{
+      display: none;
+    }
+  }
+</style>
+
+<style>
   .el-loading-mask{
     z-index: 500;
   }
 </style>
+
