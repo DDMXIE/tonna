@@ -58,6 +58,25 @@ const AddressLocal = {
   findAllArticle: () => {
     return `/tonna/findAllArticle`
   },
+  /**
+   * 用户根据id获取笔记信息
+   */
+  findAritcleByIdUser: () => {
+    return `/tonna/findAritcleByIdUser`
+  },
+  // --------------------------------------评论--------------------------------------
+  /**
+   * 用户新增或回复评论
+   */
+  addOrReplyTalk: () => {
+    return `/admin/addOrReplyTalk`
+  },
+  /**
+   * 根据文章id获取文章评论
+   */
+  findAllTalk: () => {
+    return `/tonna/findAllTalk`
+  },
   // --------------------------------------配置--------------------------------------
   /**
    * 获取配置类相应类型全部数据

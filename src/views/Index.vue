@@ -2,10 +2,10 @@
   <el-container>
   <el-header style="margin:0;padding:0;position:fixed;left:0;top:0;z-index:2001;width:100%">
       <el-row :style="{'backgroundColor':topMenuBgColor}">
-        <el-col :span="4" class="display-none">
-          <span class="title" @click="menuCollapse" :style="{'color':titleColor}">Tonna</span>
+        <el-col :xs="0" :sm="4" :md="4" :lg="4" :xl="4">
+          <span class="title" @click="goToSurf" :style="{'color':titleColor}">Tonna</span>
         </el-col>
-        <el-col :span="20">
+        <el-col :xs="24" :sm="20" :md="20" :lg="20" :xl="20">
             <el-menu
               :router="true"
               class="el-menu-demo"
@@ -14,7 +14,7 @@
               :background-color="topMenuBgColor"
               text-color="#fff"
               :active-text-color="topMenuChosedColor" >
-                <el-menu-item index="/index/PersonalManage" style="font-weight:bolder;border-bottom-width:0px;"><el-avatar shape="square" size="small" :src="squareUrl"></el-avatar>
+                <el-menu-item index="/index/PersonalManage" style="font-weight:bolder;border-bottom-width:0px;"><el-avatar shape="square" size="small" :src="$store.getters.userImg"></el-avatar>
                 <!-- <i class="el-icon-user-solid" style="font-size:23px;"/> -->
                 &nbsp;
                 <span style="font-size:15px;">个人中心</span>
@@ -125,6 +125,10 @@
               <span slot="title">天气</span>
             </el-menu-item>
         </el-submenu>
+         <el-menu-item index="/index/connectUs">
+          <i class="el-icon-info"></i>
+          <span slot="title">关于我们</span>
+        </el-menu-item>
        
       </el-menu>
     </el-drawer>
@@ -163,8 +167,7 @@ export default {
       activeIndex2: '1',
       height: {
         height: window.innerHeight - 60 + 'px'
-      },
-      squareUrl: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=656257457,1108249792&fm=26&gp=0.jpg'
+      }
     }
   },
   methods: {
@@ -199,11 +202,13 @@ export default {
       this.drawer = true
     },
     changeColor() {
-      console.log('fdasdfdsaf')
       this.leftMenuBgColor = '#454545'
     },
     Close(done) {
       done()
+    },
+    goToSurf() {
+      this.$router.push('/index/surf')
     }
   },
 

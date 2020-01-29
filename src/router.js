@@ -14,6 +14,8 @@ import PersonalManage from './views/PersonalManage'
 import Login from './views/Login'
 import Register from './views/Register'
 import Weather from './views/Weather'
+import ArticleDetail from './views/ArticleDetail'
+import ConnectUs from './views/ConnectUs'
 // import Waterfall from './views/Waterfall'
 
 Vue.use(Router)
@@ -98,12 +100,24 @@ export default new Router({
         name: 'personalManage',
         component: PersonalManage,
         meta: { title: '个人中心' }
-      }
+      },
       // { //瀑布流
       //   path: 'waterfall',
       //   name: 'waterfall',
       //   component: Waterfall
       // }
+      {
+        path: 'articleDetail',
+        name: 'articleDetail',
+        component: ArticleDetail,
+        meta: { title: '文章预览' }
+      },
+      {
+        path: 'connectUs',
+        name: 'connectUs',
+        component: ConnectUs,
+        meta: { title: '关于我们' }
+      }
       ]
     },
     {

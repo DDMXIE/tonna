@@ -4,18 +4,45 @@
       <el-row>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="16">
             <div style="padding-top:10px;" v-for="item in articleData">
-              <el-card>
+              <el-card v-if="item.img_URL.length!==0">
                 <div>
                   <el-row style="margin:0;">
                     <el-col :xs="18" :sm="19" :md="18" :lg="19" :xl="16">
                       <div style="word-wrap:break-word;padding-right:30px;">
-                        <span class="article-title title-control">{{item.article.article_TITLE}}</span>
+                        <span class="article-title title-control" @click="showArticle(item)">{{item.article.article_TITLE}}</span>
                         <div><span class="article-introduce introduce-control">{{item.article_INTRODUCE}}</span></div>
                       </div>
                     </el-col>
                      <el-col :xs="6" :sm="5" :md="6" :lg="5" :xl="16">
                       <div class="img-wrap">
-                        <img :src="item.img_URL[0]">
+                        <!-- <img :src="item.img_URL[0]"> -->
+                        <el-image :src="item.img_URL[0]" :fit="'cover'" style="width: 110px; height: 110px">
+                          <div slot="placeholder" class="image-slot">
+                            加载中<span class="dot">...</span>
+                          </div>
+                        </el-image>
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+                <div>
+                  <div>
+                    <i class="el-icon-user-solid" style="font-size:16px;"/>
+                    <span class="text-detail">{{item.article_AUTHOR}}</span>
+                    <i class="el-icon-chat-line-square" style="font-size:16px;"/>
+                    <span class="text-detail">{{item.talk}}</span>
+                    <img src="../assets/article/heart2.png" width="16px;" style="cursor:pointer;">
+                    <span style="font-size:12px;padding-left:5px;padding-right:15px;color:#bf2727;">{{item.like}}</span>
+                  </div>
+                </div>
+              </el-card>
+              <el-card v-else>
+                 <div>
+                  <el-row style="margin:0;">
+                    <el-col :xs="18" :sm="19" :md="24" :lg="24" :xl="16">
+                      <div style="word-wrap:break-word;">
+                        <span class="article-title title-control" @click="showArticle(item)">{{item.article.article_TITLE}}</span>
+                        <div><span class="article-introduce introduce-control">{{item.article_INTRODUCE}}</span></div>
                       </div>
                     </el-col>
                   </el-row>
@@ -63,7 +90,7 @@ export default {
     return {
       loading: true,
       iconLoading: false,
-      isLike: false, // 是否添加喜欢
+      // isLike: false, // 是否添加喜欢
       fit: 'cover', // 头像类型
       url: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=656257457,1108249792&fm=26&gp=0.jpg', // 头像url
       currentDate: new Date(),
@@ -84,9 +111,6 @@ export default {
     }
   },
   methods: {
-    // likeIt() {
-    //   this.isLike = true
-    // },
     readMore() {
       this.iconLoading = true
       var params = {}
@@ -94,12 +118,10 @@ export default {
       this.pageSize.start = this.pageSize.start + 2
       params.start = this.pageSize.start
       params.end = this.pageSize.end
-      console.log('------_***** ------', params)
       findAllArticle(params).then(res => {
-        console.log('--------------res-------------', res)
         if (res.data.data.length === 0) {
           this.$notify({
-            title: '自定义位置',
+            title: '通知',
             iconClass: 'el-icon-message-solid',
             message: '我是有底线的喔！',
             position: 'bottom-right'
@@ -110,20 +132,17 @@ export default {
           }
         }
         this.iconLoading = false
-        // this.content = res.data.data[2].article_INTRODUCE
       })
-      // this.$alert('这是一段内容', '标题名称', {
-      //   confirmButtonText: '确定',
-      //   callback: action => {
-      //     this.$message({
-      //       type: 'info',
-      //       message: `action: ${action}`
-      //     })
-      //   }
-      // })
     },
-    showArticleType() {
-      // console.log('%%%%%%%', this.articleType)
+    showArticle(item) {
+      var params = {}
+      params.articleId = item.article.article_ID
+      const details = this.$router.resolve({
+        path: '/index/articleDetail',
+        query: params,
+        params: { catId: params.articleId }
+      })
+      window.open(details.href, '_blank')
     }
   },
   watch: {
@@ -138,6 +157,7 @@ export default {
         params.typeId = val
         params.start = this.pageSize.start
         params.end = this.pageSize.end
+        console.log('params', params)
         findAllArticle(params).then(res => {
           console.log('--------------res-------------', res)
           this.articleData = res.data.data

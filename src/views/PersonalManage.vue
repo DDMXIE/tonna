@@ -8,7 +8,7 @@
         <el-col :span="24">
           <div style="text-align:center;">
             <div class="block">
-              <el-avatar shape="square" :size="180" :fit="fit" :src="url"></el-avatar>
+              <el-avatar shape="square" :size="180" :fit="fit" :src="$store.getters.userImg"></el-avatar>
             </div>
             <div>
               <span style="font-weight:bold;font-size:30px;">{{getUserName}}</span>
@@ -125,6 +125,8 @@ export default {
           console.log('退出登录按钮', res)
           localStorage.removeItem('user_name')
           localStorage.removeItem('token')
+          localStorage.removeItem('user_id')
+          localStorage.removeItem('user_img')
           this.$notify({
             title: '您已退出登录',
             type: 'success'

@@ -80,8 +80,8 @@ export default {
       items: [
         { type: 'primary', label: '生活穿搭', typeId: '1' },
         { type: 'success', label: '好文分享', typeId: '2' },
-        { type: 'info', label: '摄影靓图', typeId: '3' },
-        { type: 'danger', label: '外刊外文', typeId: '4' },
+        { type: 'info', label: '发烧专区', typeId: '3' },
+        { type: 'danger', label: '外文专栏', typeId: '4' },
         { type: 'warning', label: '技术类文章', typeId: '5' }
       ]
     }

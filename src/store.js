@@ -6,7 +6,8 @@ export default new Vuex.Store({
   state: {
     // user_name: ''
     user_id: '' || localStorage.getItem('user_id'),
-    user_name: '' || localStorage.getItem('user_name')
+    user_name: '' || localStorage.getItem('user_name'),
+    user_img: '' || localStorage.getItem('user_img')
   },
   mutations: {
     handleUserId: (state, user_id) => {
@@ -18,6 +19,11 @@ export default new Vuex.Store({
       state.user_name = user_name
       // 把登录的用户的名保存到localStorage中，防止页面刷新，导致vuex重新启动，用户名就成为初始值（初始值为空）的情况
       localStorage.setItem('user_name', user_name)
+    },
+    handleUserImg: (state, user_img) => {
+      state.user_img = user_img
+      // 把登录的用户的名保存到localStorage中，防止页面刷新，导致vuex重新启动，用户名就成为初始值（初始值为空）的情况
+      localStorage.setItem('user_img', user_img)
     }
   },
   actions: {
@@ -25,6 +31,7 @@ export default new Vuex.Store({
   },
   getters: {
     userName: (state) => state.user_name,
-    userId: (state) => state.user_id
+    userId: (state) => state.user_id,
+    userImg: (state) => state.user_img
   }
 })

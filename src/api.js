@@ -116,6 +116,40 @@ export function findAllArticle(params) {
   })
 }
 
+/**
+ * 用户根据id获取笔记信息
+ * @param {*} params
+ */
+export function findAritcleByIdUser(params) {
+  return request({
+    url: address.findAritcleByIdUser(),
+    method: 'get',
+    params: params
+  })
+}
+// -------------------------------------评论-------------------------------------
+/**
+ * 用户新增或回复评论
+ * @param {*} data
+ */
+export function addOrReplyTalk(data) {
+  return request({
+    url: address.addOrReplyTalk(),
+    method: 'post',
+    data
+  })
+}
+/**
+ * 根据文章id获取文章评论
+ * @param {*} params
+ */
+export function findAllTalk(params) {
+  return request({
+    url: address.findAllTalk(),
+    method: 'get',
+    params: params
+  })
+}
 // -------------------------------------配置-------------------------------------
 /**
  * 获取配置类相应类型全部数据

@@ -170,6 +170,7 @@ export default {
         this.$store.commit('handleUserName', res.data.username)
         getUserInfoByToken().then(res => {
           this.$store.commit('handleUserId', res.data.data.user_ID)
+          this.$store.commit('handleUserImg', res.data.data.user_IMG)
         })
         this.$router.push({ path: '/index/surf', query: { userRole: res.data.username }})
       } else {

@@ -30,7 +30,7 @@
       </el-form>
       <mavon-editor ref="md" @save="save" @imgAdd="imgAdd" @imgDel="imgDel" @change="change" @fullScreen="fullScreen"
           v-model="markdownForm.contentMarkdown" :codeStyle="markdown.codeStyle" 
-          :toolbars="markdown.toolbars" :style="{height:mdHeight,zIndex:2002}"/>
+          :toolbars="markdown.toolbars" :style="{height:mdHeight,zIndex:zindex}"/>
       <br>
       <el-row style="text-align:center;">
         <el-col :span="12">
@@ -119,7 +119,8 @@ export default {
       timer: null,
       constType: [],
       loading: true,
-      mdHeight: '500px'
+      mdHeight: '500px',
+      zindex: 1500
     }
   },
   created() {
@@ -265,8 +266,10 @@ export default {
     fullScreen(status) {
       if (status === true) {
         this.mdHeight = '100%'
+        this.zindex = 2002
       } else {
         this.mdHeight = '500px'
+        this.zindex = 1500
       }
     }
   }
