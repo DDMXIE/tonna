@@ -11,11 +11,13 @@
         &nbsp;
         <div class="left-div">
           <div style="padding-bottom:30px;">
-            <el-button icon="el-icon-thumb" circle></el-button>
+            <el-button v-if="showLike === false" icon="el-icon-thumb" circle @click="like('like')"></el-button>
+            <el-button v-else icon="el-icon-thumb" type="primary" circle @click="like('unlike')"></el-button>
             <div style="padding-top:3px;"><span style="padding-left:5px;font-size:14px;">点赞</span></div>
           </div>
           <div>
-            <el-button icon="el-icon-star-off" circle></el-button>
+            <el-button v-if="showCollect === false" icon="el-icon-star-off" circle @click="collect('collect')"></el-button>
+            <el-button v-else icon="el-icon-star-off" type="warning" circle @click="collect('uncollect')"></el-button>
             <div style="padding-top:3px;"><span style="padding-left:5px;font-size:14px;">收藏</span></div>
           </div>
         </div>
@@ -41,8 +43,10 @@
           style="width:100%;"/>
           <el-card>
             <div style="text-align:center;">
-              <el-button icon="el-icon-thumb" circle style="margin-right:20px;"></el-button>
-              <el-button icon="el-icon-star-off" circle></el-button>
+              <el-button v-if="showLike === false" icon="el-icon-thumb" circle @click="like('like')"></el-button>
+              <el-button v-else icon="el-icon-thumb" type="primary" circle @click="like('unlike')"></el-button>
+              <el-button v-if="showCollect === false" icon="el-icon-star-off" circle @click="collect('collect')"></el-button>
+              <el-button v-else icon="el-icon-star-off" type="warning" circle @click="collect('uncollect')"></el-button>
               <div style="padding-top:30px;padding-bottom:20px;">
                  <span >"小礼物刷一刷，加入Tonna关注我"</span>
               </div>
@@ -200,7 +204,8 @@
 <script>
 import BackTop from '../components/BackTop'
 import utilFunction from '../utilFunction'
-import { findAritcleByIdUser, findAllArticle, addOrReplyTalk, findAllTalk } from '@/api'
+import { findAritcleByIdUser, findAllArticle, addOrReplyTalk, findAllTalk
+  , likeArticleByUser, findUserLikeByAticleId, collectArticleByUser, findUserCollectByAticleId } from '@/api'
 export default {
   components: { BackTop },
   data() {
@@ -243,7 +248,9 @@ export default {
         replyId: '',
         targetId: '',
         targetName: ''
-      }
+      },
+      showLike: false,
+      showCollect: false
     }
   },
   mounted() {
@@ -278,6 +285,8 @@ export default {
           this.topHeight = this.$refs.topDiv.offsetHeight
         })
         this.loadTalk()
+        this.loadLike()
+        this.loadCollect()
       })
     },
     showIcon() {
@@ -313,6 +322,7 @@ export default {
         params.ownerName = this.$store.getters.userName
         addOrReplyTalk(params).then(res => {
           this.usertalk = ''
+          this.loadTalk()
           this.$notify({
             title: '发布成功',
             message: '评论已发表！',
@@ -362,6 +372,7 @@ export default {
       addOrReplyTalk(this.replyParams).then(res => {
         this.replyContent = ''
         this.$refs.inputbox[index].style.display = 'none'
+        this.loadTalk()
         this.$notify({
           title: '回复成功',
           message: '已回复评论！',
@@ -374,6 +385,60 @@ export default {
     },
     cancelTalk() {
       this.usertalk = ''
+    },
+    like(flag) {
+      var params = {}
+      params.userId = this.$store.getters.userId
+      params.articleId = this.$route.query.articleId
+      if (flag === 'like') {
+        params.islike = 'like'
+      } else {
+        params.islike = 'unlike'
+      }
+      likeArticleByUser(params).then(res => {
+        console.log('&&&&&&&&', res)
+        this.loadLike()
+      })
+    },
+    loadLike() {
+      var params = {}
+      params.userId = this.$store.getters.userId
+      console.log(this.$store.getters.userId)
+      params.articleId = this.$route.query.articleId
+      findUserLikeByAticleId(params).then(res => {
+        console.log('&&&&&', res)
+        if (res.data.data.length !== 0 && res.data.data[0].user_ID === this.$store.getters.userId) {
+          this.showLike = true
+        } else {
+          this.showLike = false
+        }
+      })
+    },
+    collect(flag) {
+      var params = {}
+      params.userId = this.$store.getters.userId
+      params.articleId = this.$route.query.articleId
+      if (flag === 'collect') {
+        params.iscollect = 'collect'
+      } else {
+        params.iscollect = 'uncollect'
+      }
+      collectArticleByUser(params).then(res => {
+        this.loadCollect()
+      })
+    },
+    loadCollect() {
+      var params = {}
+      params.userId = this.$store.getters.userId
+      console.log(this.$store.getters.userId)
+      params.articleId = this.$route.query.articleId
+      findUserCollectByAticleId(params).then(res => {
+        if (res.data.data.length !== 0 && res.data.data[0].user_ID === this.$store.getters.userId) {
+          this.showCollect = true
+        } else {
+          this.showCollect = false
+        }
+      })
     }
 
   }

@@ -14,10 +14,17 @@
               :background-color="topMenuBgColor"
               text-color="#fff"
               :active-text-color="topMenuChosedColor" >
-                <el-menu-item index="/index/PersonalManage" style="font-weight:bolder;border-bottom-width:0px;"><el-avatar shape="square" size="small" :src="$store.getters.userImg"></el-avatar>
-                <!-- <i class="el-icon-user-solid" style="font-size:23px;"/> -->
-                &nbsp;
-                <span style="font-size:15px;">个人中心</span>
+                <el-menu-item v-if="$store.getters.userImg !== null" index="/index/PersonalManage" style="font-weight:bolder;border-bottom-width:0px;">
+                    <el-avatar  shape="square" size="small" :src="$store.getters.userImg"></el-avatar>
+                    &nbsp;
+                    <span style="font-size:15px;">个人中心</span>
+                </el-menu-item>
+                <el-menu-item v-else index="/index/PersonalManage" style="font-weight:bolder;border-bottom-width:0px;">
+                    <el-avatar  shape="square" size="small" >
+                      <i class="el-icon-user-solid" style="padding-left:2px;color:black"/>
+                    </el-avatar>
+                    &nbsp;
+                    <span style="font-size:15px;">个人中心</span>
                 </el-menu-item>
                 <!-- <el-submenu index="2">
                   <template slot="title" style="font-weight:bolder">我的工作台</template>

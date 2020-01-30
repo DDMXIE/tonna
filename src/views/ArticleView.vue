@@ -26,20 +26,28 @@
             <el-col :xs="24" :sm="6" :md="6" :lg="6" :xl="16">
               <div class="right-card">
                 <el-card class="right-card" :body-style="{ padding: '10px',backgroundColor:'#6697a4' }">
-                  <i class="el-icon-s-custom right-card-icon"/>
-                  <span class="right-card-text">Tonna 会员 ></span>
+                  <div @click="goToMore('1')">
+                      <i class="el-icon-s-custom right-card-icon"/>
+                      <span class="right-card-text">Tonna 会员 ></span>
+                  </div>
                 </el-card>
                 <el-card class="right-card" :body-style="{ padding: '10px',backgroundColor:'#bdd5d7' }">
-                  <i class="el-icon-s-claim right-card-icon" style="color:#547c82;"/>
-                  <span class="right-card-text" style="color:#547c82">作品优选 ></span>
+                  <div @click="goToMore('2')">
+                      <i class="el-icon-s-claim right-card-icon" style="color:#547c82;"/>
+                      <span class="right-card-text" style="color:#547c82">作品优选 ></span>
+                  </div>
                 </el-card>
                 <el-card class="right-card" :body-style="{ padding: '10px',backgroundColor:'#ffbfb4' }">
-                  <i class="el-icon-s-home right-card-icon"/>
-                  <span class="right-card-text">我的Tonna ></span>
+                  <div @click="goToMore('3')">
+                      <i class="el-icon-s-home right-card-icon"/>
+                      <span class="right-card-text">我的Tonna ></span>
+                  </div>
                 </el-card>
                 <el-card class="right-card" :body-style="{ padding: '10px',backgroundColor:'#fdf1d9' }">
-                  <i class="el-icon-s-open right-card-icon" style="color:#c5ad7c;"/>
-                  <span class="right-card-text" style="color:#c5ad7c">版权申明 ></span>
+                  <div @click="goToMore('4')">
+                      <i class="el-icon-s-open right-card-icon" style="color:#c5ad7c;"/>
+                      <span class="right-card-text" style="color:#c5ad7c">版权申明 ></span>
+                  </div>
                 </el-card>
               </div>
               <div class="author-div" style="padding-top:30px;">
@@ -92,6 +100,16 @@ export default {
     },
     showType(typeId) {
       this.articleType = typeId
+    },
+    goToMore(flag) {
+      switch (flag) {
+        case '3':
+          this.$router.push('/index/personalManage')
+          break
+        case '4':
+          this.$router.push('/index/connectUs')
+          break
+      }
     }
   },
   computed: {

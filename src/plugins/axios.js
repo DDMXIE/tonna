@@ -28,11 +28,13 @@ _axios.interceptors.request.use(
       config.headers.Authorization = 'bearer ' + localStorage.getItem('token')
     }
     if (localStorage.getItem('token') === null) {
-      if (config.url === '/admin/addOrReplyTalk') {
+      if (config.url === '/admin/addOrReplyTalk' || config.url === '/admin/likeArticleByUser' ||
+      config.url === '/admin/collectArticleByUser') {
         Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 }
         Vue.prototype.$confirm('立即登录Tonna, 是否继续?', {
           dangerouslyUseHTMLString: true,
-          message: ' <div style="text-align:center"><i class="el-icon-user-solid" style="font-size:60px;color:#67C23A;"/><div style="padding-top:0;"><span style="font-weight:300;font-size:20px;color:black;">即刻登录Tonna</span></div></div>',
+          center: true,
+          message: ' <div style="text-align:center;"><i class="el-icon-user-solid" style="font-size:60px;color:#67C23A;"/><div style="padding-top:0;"><span style="font-weight:300;font-size:20px;color:black;">即刻登录Tonna</span></div></div>',
           confirmButtonText: '好',
           cancelButtonText: '再看看'
         }).then(() => {

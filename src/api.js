@@ -150,6 +150,52 @@ export function findAllTalk(params) {
     params: params
   })
 }
+// -------------------------------------点赞-------------------------------------
+/**
+ * 用户新增或删除赞
+ * @param {*} data
+ */
+export function likeArticleByUser(data) {
+  return request({
+    url: address.likeArticleByUser(),
+    method: 'post',
+    data
+  })
+}
+/**
+ * 用户查看此篇文章点赞情况
+ * @param {*} params
+ */
+export function findUserLikeByAticleId(params) {
+  return request({
+    url: address.findUserLikeByAticleId(),
+    method: 'get',
+    params: params
+  })
+}
+// -------------------------------------收藏-------------------------------------
+/**
+ * 用户新增或取消收藏
+ * @param {*} data
+ */
+export function collectArticleByUser(data) {
+  return request({
+    url: address.collectArticleByUser(),
+    method: 'post',
+    data
+  })
+}
+/**
+ * 用户查看此篇文章收藏情况
+ * @param {*} params
+ */
+export function findUserCollectByAticleId(params) {
+  return request({
+    url: address.findUserCollectByAticleId(),
+    method: 'get',
+    params: params
+  })
+}
 // -------------------------------------配置-------------------------------------
 /**
  * 获取配置类相应类型全部数据

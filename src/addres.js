@@ -77,6 +77,32 @@ const AddressLocal = {
   findAllTalk: () => {
     return `/tonna/findAllTalk`
   },
+  // -------------------------------------点赞-------------------------------------
+  /**
+   * 用户新增或删除赞
+   */
+  likeArticleByUser: () => {
+    return `/admin/likeArticleByUser`
+  },
+  /**
+   * 用户查看此篇文章点赞情况
+   */
+  findUserLikeByAticleId: () => {
+    return `/tonna/findUserLikeByAticleId`
+  },
+  // -------------------------------------收藏-------------------------------------
+  /**
+   * 用户新增或取消收藏
+   */
+  collectArticleByUser: () => {
+    return `/admin/collectArticleByUser`
+  },
+  /**
+   * 用户查看此篇文章收藏情况
+   */
+  findUserCollectByAticleId: () => {
+    return `/tonna/findUserCollectByAticleId`
+  },
   // --------------------------------------配置--------------------------------------
   /**
    * 获取配置类相应类型全部数据

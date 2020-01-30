@@ -30,9 +30,9 @@
                     <i class="el-icon-user-solid" style="font-size:16px;"/>
                     <span class="text-detail">{{item.article_AUTHOR}}</span>
                     <i class="el-icon-chat-line-square" style="font-size:16px;"/>
-                    <span class="text-detail">{{item.talk}}</span>
+                    <span class="text-detail">{{item.talk_NUM}}</span>
                     <img src="../assets/article/heart2.png" width="16px;" style="cursor:pointer;">
-                    <span style="font-size:12px;padding-left:5px;padding-right:15px;color:#bf2727;">{{item.like}}</span>
+                    <span style="font-size:12px;padding-left:5px;padding-right:15px;color:#bf2727;">{{item.like_NUM}}</span>
                   </div>
                 </div>
               </el-card>
@@ -52,9 +52,9 @@
                     <i class="el-icon-user-solid" style="font-size:16px;"/>
                     <span class="text-detail">{{item.article_AUTHOR}}</span>
                     <i class="el-icon-chat-line-square" style="font-size:16px;"/>
-                    <span class="text-detail">{{item.talk}}</span>
+                    <span class="text-detail">{{item.talk_NUM}}</span>
                     <img src="../assets/article/heart2.png" width="16px;" style="cursor:pointer;">
-                    <span style="font-size:12px;padding-left:5px;padding-right:15px;color:#bf2727;">{{item.like}}</span>
+                    <span style="font-size:12px;padding-left:5px;padding-right:15px;color:#bf2727;">{{item.like_NUM}}</span>
                   </div>
                 </div>
               </el-card>
