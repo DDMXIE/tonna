@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div v-if="showErrorPage === true">
+      <WaitPage></WaitPage>
+    </div>
+    <div v-else>
     <back-top></back-top>
     <transition name="el-zoom-in-bottom">
       <div class="title-div" v-if="showTitle">
@@ -27,12 +31,14 @@
               <div style="padding-top:30px;"><span style="font-size:28px;font-weight:900">{{markdownForm.title}}</span></div>
               <el-row style="padding-top:20px;padding-bottom:20px;padding-left:10px;">
                 <el-col :xs="4" :sm="3" :md="2" :lg="2" :xl="16">
-                  <el-avatar :src="article.user_IMG"></el-avatar>
+                  <img :src="article.user_IMG" width="40px" class="user-img" @click="goToUserPage(article.article.article_ORIGIN_USER_ID)"/>
+                  <!-- <el-avatar :src="article.user_IMG" @click="goToUserPage"></el-avatar> -->
                 </el-col>
                 <el-col :xs="20" :sm="21" :md="22" :lg="22" :xl="16">
                     <div>
                       <span style="font-weight:900">{{article.article_AUTHOR}}</span>
-                      <el-button type="success" round size="mini" style="margin-left:12px;">关注</el-button>
+                      <el-button v-if="showAttention === false && article.article.article_ORIGIN_USER_ID !== $store.getters.userId " round size="mini" style="margin-left:12px;" @click="attention('attention',article.article.article_ORIGIN_USER_ID)">+ 关注</el-button>
+                      <el-button v-else-if="showAttention === true" type="success" round size="mini" style="margin-left:12px;" @click="attention('unattention',article.article.article_ORIGIN_USER_ID)">已关注</el-button>
                     </div>
                     <div><span style="font-size:14px;color:#797979">{{article.create_DATE}}</span></div>
                 </el-col>
@@ -76,7 +82,8 @@
                         <el-divider></el-divider>
                         <el-row>
                           <el-col :xs="4" :sm="4" :md="3" :lg="2" :xl="16">
-                            <el-avatar :src="item.talk.user_IMG"></el-avatar>
+                            <img :src="item.talk.user_IMG" width="40px" class="user-img" @click="goToUserPage(item.talk.owner_ID)"/>
+                            <!-- <el-avatar :src="item.talk.user_IMG"></el-avatar> -->
                           </el-col>
                           <el-col :xs="20" :sm="20" :md="21" :lg="22" :xl="16">
                             <div><span style="font-size:18px;font-weight:900;">{{item.talk.owner_NAME}}</span> </div>
@@ -89,7 +96,8 @@
                                   <el-divider></el-divider>
                                   <el-row>
                                     <el-col :xs="4" :sm="4" :md="3" :lg="2" :xl="16">
-                                      <el-avatar :src="subitem.user_IMG"></el-avatar>
+                                      <img :src="subitem.user_IMG" width="40px" class="user-img" @click="goToUserPage(subitem.owner_ID)"/>
+                                      <!-- <el-avatar :src="subitem.user_IMG"></el-avatar> -->
                                     </el-col>
                                     <el-col :xs="20" :sm="20" :md="21" :lg="22" :xl="16">
                                       <div>
@@ -175,12 +183,14 @@
            </div>
               <el-row style="padding-top:20px;padding-bottom:20px;padding-left:10px;">
                 <el-col :xs="4" :sm="6" :md="6" :lg="4" :xl="16">
-                  <el-avatar :src="article.user_IMG"></el-avatar>
+                  <img :src="article.user_IMG" width="40px" class="user-img" @click="goToUserPage(article.article.article_ORIGIN_USER_ID)"/>
+                  <!-- <el-avatar :src="article.user_IMG"></el-avatar> -->
                 </el-col>
                 <el-col :xs="20" :sm="18" :md="18" :lg="20" :xl="16">
                     <div>
                       <span style="font-weight:900">{{article.article_AUTHOR}}</span>
-                      <el-button type="success" round size="mini" style="margin-left:12px;">关注</el-button>
+                      <el-button v-if="showAttention === false && article.article.article_ORIGIN_USER_ID !== $store.getters.userId" round size="mini" style="margin-left:12px;" @click="attention('attention',article.article.article_ORIGIN_USER_ID)">+ 关注</el-button>
+                      <el-button v-else-if="showAttention === true" type="success" round size="mini" style="margin-left:12px;" @click="attention('unattention',article.article.article_ORIGIN_USER_ID)">已关注</el-button>
                     </div>
                     <div><span style="font-size:14px;color:#797979">{{article.create_DATE}}</span></div>
                 </el-col>
@@ -197,19 +207,22 @@
          </el-card>
       </el-col>
     </el-row>
-   
+   </div>
   </div>
 </template>
 
 <script>
+import WaitPage from '../components/WaitPage'
 import BackTop from '../components/BackTop'
 import utilFunction from '../utilFunction'
 import { findAritcleByIdUser, findAllArticle, addOrReplyTalk, findAllTalk
-  , likeArticleByUser, findUserLikeByAticleId, collectArticleByUser, findUserCollectByAticleId } from '@/api'
+  , likeArticleByUser, findUserLikeByAticleId, collectArticleByUser, findUserCollectByAticleId,
+  addAttentionByUser, findUserAttentionById } from '@/api'
 export default {
-  components: { BackTop },
+  components: { BackTop, WaitPage },
   data() {
     return {
+      showErrorPage: null,
       topHeight: '',
       showTitle: false,
       typeId: '',
@@ -250,7 +263,8 @@ export default {
         targetName: ''
       },
       showLike: false,
-      showCollect: false
+      showCollect: false,
+      showAttention: false
     }
   },
   mounted() {
@@ -265,28 +279,34 @@ export default {
       var params = {}
       params.articleId = this.$route.query.articleId
       findAritcleByIdUser(params).then(res => {
-        this.article = res.data.data[0]
-        this.article.create_DATE = utilFunction.timeFormat(this.article.article.create_DATE, '/')
-        console.log('*********', this.article)
-        this.markdownForm.contentMarkdown = res.data.data[0].article.article_CONTENT == null ? '' : res.data.data[0].article.article_CONTENT
-        this.markdownForm.title = res.data.data[0].article.article_TITLE == null ? '' : res.data.data[0].article.article_TITLE
-        this.typeId = res.data.data[0].article.type_ID
-        var obj = {}
-        obj.typeId = this.typeId
-        obj.start = this.pageSize.start
-        obj.end = this.pageSize.end
-        findAllArticle(obj).then(res => {
-          this.articleData.shift()
-          for (var i = 0; i < res.data.data.length; i++) {
-            if (res.data.data[i].article.article_ID !== this.$route.query.articleId) {
-              this.articleData.push(res.data.data[i])
+        if (res.data.data[0].article.article_STATUS === '3') {
+          this.showErrorPage = false
+          this.article = res.data.data[0]
+          this.article.create_DATE = utilFunction.timeFormat(this.article.article.create_DATE, '/')
+          console.log('*********', this.article)
+          this.markdownForm.contentMarkdown = res.data.data[0].article.article_CONTENT == null ? '' : res.data.data[0].article.article_CONTENT
+          this.markdownForm.title = res.data.data[0].article.article_TITLE == null ? '' : res.data.data[0].article.article_TITLE
+          this.typeId = res.data.data[0].article.type_ID
+          var obj = {}
+          obj.typeId = this.typeId
+          obj.start = this.pageSize.start
+          obj.end = this.pageSize.end
+          findAllArticle(obj).then(res => {
+            this.articleData.shift()
+            for (var i = 0; i < res.data.data.length; i++) {
+              if (res.data.data[i].article.article_ID !== this.$route.query.articleId) {
+                this.articleData.push(res.data.data[i])
+              }
             }
-          }
-          this.topHeight = this.$refs.topDiv.offsetHeight
-        })
-        this.loadTalk()
-        this.loadLike()
-        this.loadCollect()
+            this.topHeight = this.$refs.topDiv.offsetHeight
+          })
+          this.loadTalk()
+          this.loadLike()
+          this.loadCollect()
+          this.loadAttention()
+        } else {
+          this.showErrorPage = true
+        }
       })
     },
     showIcon() {
@@ -439,6 +459,44 @@ export default {
           this.showCollect = false
         }
       })
+    },
+    attention(flag, authorId) {
+      var params = {}
+      params.ownerId = this.$store.getters.userId
+      params.targetId = authorId
+      if (flag === 'attention') {
+        params.isattention = 'attention'
+      } else {
+        params.isattention = 'unattention'
+      }
+      addAttentionByUser(params).then(res => {
+        console.log(222, res)
+        this.loadAttention()
+      })
+    },
+    loadAttention() {
+      var params = {}
+      params.ownerId = this.$store.getters.userId
+      params.targetId = this.article.article.article_ORIGIN_USER_ID
+      findUserAttentionById(params).then(res => {
+        console.log(333, res)
+        if (res.data.data.length !== 0 && res.data.data[0].owner_ID === this.$store.getters.userId) {
+          this.showAttention = true
+        } else {
+          this.showAttention = false
+        }
+      })
+    },
+    goToUserPage(id) {
+      console.log('goToUserPage', id)
+      var params = {}
+      params.userId = id
+      const details = this.$router.resolve({
+        path: '/index/userPage',
+        query: params,
+        params: { catId: params.userId }
+      })
+      window.open(details.href, '_blank')
     }
 
   }
@@ -446,6 +504,10 @@ export default {
 </script>
 
 <style scoped>
+  .user-img{
+    border-radius:50px;
+    cursor:pointer;
+  }
   .title-div{
     /* background-color:#424242; */
     background-color:white;

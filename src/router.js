@@ -16,6 +16,7 @@ import Register from './views/Register'
 import Weather from './views/Weather'
 import ArticleDetail from './views/ArticleDetail'
 import ConnectUs from './views/ConnectUs'
+import UserPage from './views/UserPage'
 // import Waterfall from './views/Waterfall'
 
 Vue.use(Router)
@@ -117,6 +118,11 @@ export default new Router({
         name: 'connectUs',
         component: ConnectUs,
         meta: { title: '关于我们' }
+      }, {
+        path: 'userPage',
+        name: 'userPage',
+        component: UserPage,
+        meta: { title: '用户主页' }
       }
       ]
     },

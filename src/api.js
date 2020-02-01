@@ -196,6 +196,41 @@ export function findUserCollectByAticleId(params) {
     params: params
   })
 }
+// -------------------------------------关注-------------------------------------
+/**
+ * 用户新增或取消关注
+ * @param {*} data
+ */
+export function addAttentionByUser(data) {
+  return request({
+    url: address.addAttentionByUser(),
+    method: 'post',
+    data
+  })
+}
+/**
+ * 用户查看该作者关注情况
+ * @param {*} params
+ */
+export function findUserAttentionById(params) {
+  return request({
+    url: address.findUserAttentionById(),
+    method: 'get',
+    params: params
+  })
+}
+// -------------------------------------动态-------------------------------------
+/**
+ * 用户根据id查询用户动态
+ * @param {*} params
+ */
+export function findUserActivityByPage(params) {
+  return request({
+    url: address.findUserActivityByPage(),
+    method: 'get',
+    params: params
+  })
+}
 // -------------------------------------配置-------------------------------------
 /**
  * 获取配置类相应类型全部数据

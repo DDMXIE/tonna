@@ -103,6 +103,26 @@ const AddressLocal = {
   findUserCollectByAticleId: () => {
     return `/tonna/findUserCollectByAticleId`
   },
+  // -------------------------------------关注-------------------------------------
+  /**
+   * 用户新增或取消关注
+   */
+  addAttentionByUser: () => {
+    return `/admin/addAttentionByUser`
+  },
+  /**
+   * 用户查看该作者关注情况
+   */
+  findUserAttentionById: () => {
+    return `/tonna/findUserAttentionById`
+  },
+  // -------------------------------------动态-------------------------------------
+  /**
+   * 用户根据id查询用户动态
+   */
+  findUserActivityByPage: () => {
+    return `/tonna/findUserActivityByPage`
+  },
   // --------------------------------------配置--------------------------------------
   /**
    * 获取配置类相应类型全部数据

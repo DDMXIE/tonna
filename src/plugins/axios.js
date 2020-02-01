@@ -24,12 +24,13 @@ _axios.interceptors.request.use(
       reqUrl = config.url.match(/(\S*)api/)[1]
     }
     if (config.url !== '/login' && reqUrl !== 'https://www.tianqiapi.com/' &&
-    config.url !== '/tonna/findAllArticle' && config.url !== '/tonna/findAritcleByIdUser') {
+    config.url !== '/tonna/findAllArticle' && config.url !== '/tonna/findAritcleByIdUser' &&
+    config.url !== '/tonna/findUserActivityByPage') {
       config.headers.Authorization = 'bearer ' + localStorage.getItem('token')
     }
     if (localStorage.getItem('token') === null) {
       if (config.url === '/admin/addOrReplyTalk' || config.url === '/admin/likeArticleByUser' ||
-      config.url === '/admin/collectArticleByUser') {
+      config.url === '/admin/collectArticleByUser' || config.url === '/admin/addAttentionByUser') {
         Vue.prototype.$ELEMENT = { size: 'small', zIndex: 3000 }
         Vue.prototype.$confirm('立即登录Tonna, 是否继续?', {
           dangerouslyUseHTMLString: true,
