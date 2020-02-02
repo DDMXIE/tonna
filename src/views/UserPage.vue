@@ -178,7 +178,7 @@
                             <el-col :xs="8" :sm="6" :md="5" :lg="4" :xl="16"><img :src="item.attentionUserData[0].user_IMG" width="60px" class="user-img" @click="goToUserPage(item.attentionUserData[0].user_ID)"/></el-col>
                             <el-col :xs="16" :sm="18" :md="19" :lg="20" :xl="16">
                               <span style="font-size:24px;font-weight:900;">{{item.attentionUserData[0].user_NAME}}</span>
-                              <el-button type="info" round style="float:right;">您已关注</el-button>  
+                              <el-button type="info" round style="float:right;"><i class="el-icon-check"/>&nbsp;已关注</el-button>  
                             </el-col>
                           </el-row>
                           <div class="link-top"></div>
@@ -193,6 +193,98 @@
                 <p v-if="loading=== false">没有更多了喔！</p>
             </div>
           </div>
+          <div v-if="tabIndex === '1'">
+             <ul class="list" v-infinite-scroll="load" infinite-scroll-disabled="disabled"  style="padding-left:0;overflow:auto">
+                  <li v-for="item in attentionList" class="infinite-list-item" style="list-style:none">
+                    <div>
+                      <el-card class="user-card">
+                        <div>
+                          <el-row>
+                            <el-col :xs="8" :sm="6" :md="5" :lg="4" :xl="16"><img :src="item.userInfoVO.user_IMG" width="60px" class="user-img" @click="goToUserPage(item.userInfoVO.user_ID)"/></el-col>
+                            <el-col :xs="16" :sm="18" :md="19" :lg="20" :xl="16">
+                              <span style="font-size:24px;font-weight:900;">{{item.userInfoVO.user_NAME}}</span>
+                              <el-button v-if="item.isMyAttention === '1'" type="info" round style="float:right;"><i class="el-icon-check"/>&nbsp;已关注</el-button>  
+                              <el-button v-else type="success" round style="float:right;" @click="addAttention">+ 关注</el-button>  
+                            </el-col>
+                          </el-row>
+                          <div class="link-top"></div>
+                          <span style="font-size:14px;">个人简介：{{item.userInfoVO.user_INTRODUCE}}</span>
+                        </div>
+                      </el-card>
+                      <el-divider style="background-color:#b5b5b5;"></el-divider>
+                    </div>
+                  </li>
+             </ul>
+            <p v-if="loading"><i class="el-icon-loading" style="padding-right:5px;"/>加载中...</p>
+            <p v-if="loading=== false">没有更多了喔！</p>
+          </div>
+          <div v-if="tabIndex === '2'">
+             <ul class="list" v-infinite-scroll="load" infinite-scroll-disabled="disabled"  style="padding-left:0;overflow:auto">
+                  <li v-for="item in articleList" class="infinite-list-item" style="list-style:none">
+                    <div v-if="item.img_URL && item.img_URL.length!==0">
+                        <div>
+                          <el-row style="margin:0;">
+                            <el-col :xs="18" :sm="19" :md="18" :lg="19" :xl="16">
+                              <div style="word-wrap:break-word;padding-right:30px;">
+                                <span class="article-title title-control" @click="showArticle(item)">{{item.article.article_TITLE}}</span>
+                                <div><span class="article-introduce introduce-control">{{item.article_INTRODUCE}}</span></div>
+                              </div>
+                            </el-col>
+                            <el-col :xs="6" :sm="5" :md="6" :lg="5" :xl="16">
+                              <div class="img-wrap">
+                                <!-- <img :src="item.img_URL[0]"> -->
+                                <el-image :src="item.img_URL[0]" :fit="'cover'" style="width: 110px; height: 110px">
+                                  <div slot="placeholder" class="image-slot">
+                                    加载中<span class="dot">...</span>
+                                  </div>
+                                </el-image>
+                              </div>
+                            </el-col>
+                          </el-row>
+                        </div>
+                        <div>
+                          <div>
+                            <el-button v-if="item.article.article_STATUS==='1'" type="warning" round size="mini" >待审核</el-button>
+                            <el-button v-else type="success" round size="mini" >已发表</el-button>
+                            <i class="el-icon-user-solid" style="font-size:16px;padding-left:10px;"/>
+                            <span class="text-detail">{{item.article_AUTHOR}}</span>
+                            <i class="el-icon-chat-line-square" style="font-size:16px;"/>
+                            <span class="text-detail">{{item.talk_NUM}}</span>
+                            <img src="../assets/article/heart2.png" width="16px;" style="cursor:pointer;">
+                            <span style="font-size:12px;padding-left:5px;padding-right:15px;color:#bf2727;">{{item.like_NUM}}</span>
+
+                          </div>
+                        </div>
+                         <el-divider></el-divider>
+                    </div>
+                    <div v-else>
+                        <div>
+                          <el-row style="margin:0;">
+                            <el-col :xs="18" :sm="19" :md="24" :lg="24" :xl="16">
+                              <div style="word-wrap:break-word;">
+                                <span class="article-title title-control" @click="showArticle(item)">{{item.article.article_TITLE}}</span>
+                                <div><span class="article-introduce introduce-control">{{item.article_INTRODUCE}}</span></div>
+                              </div>
+                            </el-col>
+                          </el-row>
+                        </div>
+                        <div>
+                          <div>
+                            <i class="el-icon-user-solid" style="font-size:16px;"/>
+                            <span class="text-detail">{{item.article_AUTHOR}}</span>
+                            <i class="el-icon-chat-line-square" style="font-size:16px;"/>
+                            <span class="text-detail">{{item.talk_NUM}}</span>
+                            <img src="../assets/article/heart2.png" width="16px;" style="cursor:pointer;">
+                            <span style="font-size:12px;padding-left:5px;padding-right:15px;color:#bf2727;">{{item.like_NUM}}</span>
+                          </div>
+                        </div>
+                         <el-divider></el-divider>
+                    </div>
+                  </li>
+             </ul>
+              <p v-if="loading"><i class="el-icon-loading" style="padding-right:5px;"/>加载中...</p>
+                <p v-if="loading=== false">没有更多了喔！</p>
+          </div>
         </el-col>
         <el-col :xs="0" :sm="4" :md="4" :lg="3" :xl="16">
 
@@ -204,7 +296,7 @@
 <script>
 import BackTop from '../components/BackTop'
 import utilFunction from '../utilFunction'
-import { findUserActivityByPage } from '@/api'
+import { findUserActivityByPage, findUserAndAuthorAttention, findAuthorArticle } from '@/api'
 export default {
   components: { BackTop },
   data() {
@@ -224,6 +316,8 @@ export default {
         end: 3
       },
       activityList: [],
+      attentionList: [],
+      articleList: [],
       count: 0
     }
   },
@@ -234,15 +328,15 @@ export default {
     loadData() {
       console.log(this.$route.query.userId)
       this.loadUserAcivity()
+      this.loadUserAttention()
+      this.loadUserArticle()
     },
     loadUserAcivity() {
       var params = {}
       params.userId = this.$route.query.userId
       params.start = this.pageSize.start
       params.end = this.pageSize.end
-      console.log(params)
       findUserActivityByPage(params).then(res => {
-        console.log('***', res)
         this.loading = false
         for (var s = 0; s < res.data.data.length; s++) {
           this.activityList.push(res.data.data[s])
@@ -261,13 +355,14 @@ export default {
     },
     handleClick(tab, event) {
       this.tabIndex = tab.index
-      console.log(tab.index)
     },
     load() {
       this.loading = true
       setTimeout(() => {
         this.pageSize.start += 3
         this.loadUserAcivity()
+        this.loadUserAttention()
+        this.loadUserArticle()
       }, 500)
     },
     showArticle(item) {
@@ -281,7 +376,6 @@ export default {
       window.open(details.href, '_blank')
     },
     goToUserPage(id) {
-      console.log('goToUserPage', id)
       var params = {}
       params.userId = id
       const details = this.$router.resolve({
@@ -290,11 +384,47 @@ export default {
         params: { catId: params.userId }
       })
       window.open(details.href, '_blank')
+    },
+    loadUserAttention() {
+      var params = {}
+      params.authorId = this.$route.query.userId
+      if (this.$store.getters.userId === null) {
+        params.userId = ''
+      } else {
+        params.userId = this.$store.getters.userId
+      }
+      params.start = this.pageSize.start
+      params.end = this.pageSize.end
+      findUserAndAuthorAttention(params).then(res => {
+        this.loading = false
+        for (var s = 0; s < res.data.data.length; s++) {
+          this.attentionList.push(res.data.data[s])
+          this.attentionList[s].attentionVO.create_DATE = utilFunction.timeFormat(this.attentionList[s].attentionVO.create_DATE, '.')
+        }
+      })
+    },
+    addAttention() {
+      if (this.$store.getters.userId === null || this.$store.getters.userId === '') {
+        utilFunction.showGoToLogin()
+      }
+    },
+    loadUserArticle() {
+      var params = {}
+      params.authorId = this.$route.query.userId
+      params.start = this.pageSize.start
+      params.end = this.pageSize.end
+      findAuthorArticle(params).then(res => {
+        this.loading = false
+        for (var s = 0; s < res.data.data.length; s++) {
+          this.articleList.push(res.data.data[s])
+          this.articleList[s].article.create_DATE = utilFunction.timeFormat(this.articleList[s].article.create_DATE, '.')
+        }
+      })
     }
   },
   computed: {
     noMore() {
-      return this.activityList.length < 0
+      return this.articleList.length < 0
     },
     disabled() {
       return this.loading || this.noMore

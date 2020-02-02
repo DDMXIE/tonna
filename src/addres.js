@@ -64,6 +64,12 @@ const AddressLocal = {
   findAritcleByIdUser: () => {
     return `/tonna/findAritcleByIdUser`
   },
+  /**
+   * 加载用户主页文章内容
+   */
+  findAuthorArticle: () => {
+    return `/tonna/findAuthorArticle`
+  },
   // --------------------------------------评论--------------------------------------
   /**
    * 用户新增或回复评论
@@ -115,6 +121,12 @@ const AddressLocal = {
    */
   findUserAttentionById: () => {
     return `/tonna/findUserAttentionById`
+  },
+  /**
+   * 加载用户主页的关注信息
+   */
+  findUserAndAuthorAttention: () => {
+    return `/tonna/findUserAndAuthorAttention`
   },
   // -------------------------------------动态-------------------------------------
   /**

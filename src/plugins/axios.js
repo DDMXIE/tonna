@@ -25,7 +25,7 @@ _axios.interceptors.request.use(
     }
     if (config.url !== '/login' && reqUrl !== 'https://www.tianqiapi.com/' &&
     config.url !== '/tonna/findAllArticle' && config.url !== '/tonna/findAritcleByIdUser' &&
-    config.url !== '/tonna/findUserActivityByPage') {
+    config.url !== '/tonna/findUserActivityByPage' && config.url !== '/tonna/findUserAndAuthorAttention') {
       config.headers.Authorization = 'bearer ' + localStorage.getItem('token')
     }
     if (localStorage.getItem('token') === null) {
@@ -60,7 +60,7 @@ _axios.interceptors.request.use(
 _axios.interceptors.response.use(
   function(response) {
     // Do something with response data
-    console.log('response', response)
+    // console.log('response', response)
     return response
   },
   function(error) {

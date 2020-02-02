@@ -127,6 +127,17 @@ export function findAritcleByIdUser(params) {
     params: params
   })
 }
+/**
+ * 加载用户主页文章内容
+ * @param {*} params
+ */
+export function findAuthorArticle(params) {
+  return request({
+    url: address.findAuthorArticle(),
+    method: 'get',
+    params: params
+  })
+}
 // -------------------------------------评论-------------------------------------
 /**
  * 用户新增或回复评论
@@ -215,6 +226,18 @@ export function addAttentionByUser(data) {
 export function findUserAttentionById(params) {
   return request({
     url: address.findUserAttentionById(),
+    method: 'get',
+    params: params
+  })
+}
+
+/**
+ * 加载用户主页的关注信息
+ * @param {*} params
+ */
+export function findUserAndAuthorAttention(params) {
+  return request({
+    url: address.findUserAndAuthorAttention(),
     method: 'get',
     params: params
   })
