@@ -32,7 +32,8 @@ export default {
       // ----------- 每次跳转页面时 重新拿token获取信息尝试，若token过期
       if (to.path !== '/login' && to.path !== '/register' && to.path !== '/index/weather' &&
           to.path !== '/index/lifeStyle' && to.path !== '/index/surf' &&
-          to.path !== '/index/articleView' && to.path !== '/index/connectUs') {
+          to.path !== '/index/articleView' && to.path !== '/index/connectUs' &&
+          to.path !== '/superindex/userManage' && to.path !== '/superindex/dataManage') {
         if (localStorage.getItem('token') !== null) {
           this.showUserInfoByToken()
         } else {

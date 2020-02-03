@@ -17,6 +17,10 @@ import Weather from './views/Weather'
 import ArticleDetail from './views/ArticleDetail'
 import ConnectUs from './views/ConnectUs'
 import UserPage from './views/UserPage'
+import Superindex from './superviews/SuperIndex.vue'
+import UserManage from './superviews/UserManage.vue'
+import DataManage from './superviews/DataManage.vue'
+import SuperLogin from './superviews/SuperLogin.vue'
 // import Waterfall from './views/Waterfall'
 
 Vue.use(Router)
@@ -139,6 +143,30 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       // component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
       component: About
+    },
+    {
+      path: '/superlogin',
+      name: 'superlogin',
+      component: SuperLogin
+    },
+    {
+      path: '/superindex',
+      name: 'superindex',
+      component: Superindex,
+      children: [{
+        // 测试页
+        path: 'userManage',
+        name: 'userManage',
+        component: UserManage,
+        meta: { title: '数据中心' }
+      },
+      {
+        // 测试页
+        path: 'dataManage',
+        name: 'dataManage',
+        component: DataManage,
+        meta: { title: '用户管理' }
+      }]
     }
   ]
 })

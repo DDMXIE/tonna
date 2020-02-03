@@ -147,6 +147,19 @@ const AddressLocal = {
    */
   uploadFile: () => {
     return `/admin/uploadFile`
+  },
+  // -------------------------------------后台-------------------------------------
+  /**
+   * 管理员分页获取用户信息
+   */
+  findUserByPage: () => {
+    return `/super/findUserByPage`
+  },
+  /**
+   * 后台-加载文章类型和统计数量
+   */
+  findAriticleTypeNum: () => {
+    return `/super/findAriticleTypeNum`
   }
 }
 

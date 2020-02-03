@@ -279,3 +279,26 @@ export function uploadFile(data) {
     data
   })
 }
+// -------------------------------------后台-------------------------------------
+/**
+ * 管理员分页获取用户信息
+ * @param {*} params
+ */
+export function findUserByPage(params) {
+  return request({
+    url: address.findUserByPage(),
+    method: 'get',
+    params: params
+  })
+}
+/**
+ * 后台-加载文章类型和统计数量
+ * @param {*} params
+ */
+export function findAriticleTypeNum(params) {
+  return request({
+    url: address.findAriticleTypeNum(),
+    method: 'get',
+    params: params
+  })
+}

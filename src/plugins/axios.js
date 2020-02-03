@@ -25,7 +25,8 @@ _axios.interceptors.request.use(
     }
     if (config.url !== '/login' && reqUrl !== 'https://www.tianqiapi.com/' &&
     config.url !== '/tonna/findAllArticle' && config.url !== '/tonna/findAritcleByIdUser' &&
-    config.url !== '/tonna/findUserActivityByPage' && config.url !== '/tonna/findUserAndAuthorAttention') {
+    config.url !== '/tonna/findUserActivityByPage' && config.url !== '/tonna/findUserAndAuthorAttention' &&
+    config.url !== '/tonna/findAuthorArticle') {
       config.headers.Authorization = 'bearer ' + localStorage.getItem('token')
     }
     if (localStorage.getItem('token') === null) {
