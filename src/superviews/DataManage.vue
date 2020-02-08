@@ -4,6 +4,10 @@
       <el-col :span="6" v-for="(item,index) in infoList" :key="index">
         <el-card :style="{marginLeft:'20px',marginRight:'20px',backgroundColor:item.bgcolor}">
           <div>
+            <i v-if="item.infoName === '用户总数'" class="el-icon-s-custom card-icon"/>
+            <i v-else-if="item.infoName === '笔记发表'" class="el-icon-s-management card-icon"/>
+            <i v-else-if="item.infoName === '收藏总量'" class="el-icon-star-on card-icon"/>
+            <i v-else-if="item.infoName === '评论总量'" class="el-icon-chat-dot-square card-icon"/>
             <span style="color:white;">{{item.infoName}}</span>
             <div style="text-align:center;">
               <span style="font-size:40px;font-weight:900;color:white;">{{item.num}}</span>
@@ -56,10 +60,11 @@
 </template>
 
 <script>
-import { findAriticleTypeNum } from '../api'
+import { findAriticleTypeNum, findSystemInfo } from '../api'
 export default {
   data() {
     return {
+      systemInfoObj: {},
       articleTypeObj: [],
       articleTotalNum: 0,
       percentage: 10,
@@ -74,23 +79,23 @@ export default {
       ],
       infoList: [{
         infoName: '用户总数',
-        num: '123',
+        num: '0',
         // bgcolor: '#006b89'
         bgcolor: '#c64b2b'
       },
       {
         infoName: '笔记发表',
-        num: '423',
+        num: '0',
         // bgcolor: '#a6bfc3'
         bgcolor: '#f9ce8c'
       }, {
         infoName: '收藏总量',
-        num: '258',
+        num: '0',
         // bgcolor: '#e2b477'
         bgcolor: '#2ab3c4'
       }, {
         infoName: '评论总量',
-        num: '556',
+        num: '0',
         // bgcolor: '#b97914'
         bgcolor: '#589bad'
       }],
@@ -217,6 +222,10 @@ export default {
   },
   mounted() {
     this.drawLine()
+    this.loadSystemInfo()
+  },
+  beforeDestroy() {
+    clearInterval(this.timer)
   },
   created() {
     this.loadArticleTypeNum()
@@ -283,15 +292,45 @@ export default {
         options.legend[0].data.push(this.articleTypeObj[i].typeName)
         options.series[0].data.push(obj)
         this.articleTotalNum += this.articleTypeObj[i].num
-        console.log(this.articleTotalNum)
       }
       this.articleTypeChart.setOption(options)
       this.increase()
+    },
+    // loadSystemInfo() {
+    //   findSystemInfo().then(res => {
+    //     console.log('---------------res----------', res)
+    //     this.systemInfoObj = res.data.data
+    //   })
+    // },
+    loadSystemInfo() {
+      var that = this
+      this.timer = setInterval(function() {
+        // 执行内容
+        findSystemInfo().then(res => {
+          that.systemInfoObj = res.data.data
+          for (var i = 0; i < that.infoList.length; i++) {
+            if (that.infoList[i].infoName === '用户总数') {
+              that.infoList[i].num = that.systemInfoObj.userNum
+            } else if (that.infoList[i].infoName === '笔记发表') {
+              that.infoList[i].num = that.systemInfoObj.articleNum
+            } else if (that.infoList[i].infoName === '收藏总量') {
+              that.infoList[i].num = that.systemInfoObj.collectNum
+            } else if (that.infoList[i].infoName === '评论总量') {
+              that.infoList[i].num = that.systemInfoObj.talkNum
+            }
+          }
+        })
+      }, 300)
     }
+
   }
 }
 </script>
 
 <style scoped>
-
+.card-icon{
+  font-size: 20px;
+  color: white;
+  padding-right: 8px;
+}
 </style>

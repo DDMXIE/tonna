@@ -302,3 +302,25 @@ export function findAriticleTypeNum(params) {
     params: params
   })
 }
+/**
+ * 管理员获取系统化基础信息
+ * @param {*} params
+ */
+export function findSystemInfo(params) {
+  return request({
+    url: address.findSystemInfo(),
+    method: 'get',
+    params: params
+  })
+}
+/**
+ * 管理员分页获取笔记信息
+ * @param {*} params
+ */
+export function findAllArticleByPage(params) {
+  return request({
+    url: address.findAllArticleByPage(),
+    method: 'get',
+    params: params
+  })
+}

@@ -160,6 +160,18 @@ const AddressLocal = {
    */
   findAriticleTypeNum: () => {
     return `/super/findAriticleTypeNum`
+  },
+  /**
+   * 管理员获取系统化基础信息
+   */
+  findSystemInfo: () => {
+    return `/super/findSystemInfo`
+  },
+  /**
+   * 管理员分页获取笔记信息
+   */
+  findAllArticleByPage: () => {
+    return `/super/findAllArticleByPage`
   }
 }
 

@@ -17,9 +17,13 @@
           <i class="el-icon-s-marketing"></i>
           <span slot="title">数据中心</span>
       </el-menu-item>
-       <el-menu-item index="/superindex/userManage">
+      <el-menu-item index="/superindex/userManage">
           <i class="el-icon-s-custom"></i>
           <span slot="title">用户管理</span>
+      </el-menu-item>
+       <el-menu-item index="/superindex/articleManage">
+          <i class="el-icon-s-management"></i>
+          <span slot="title">笔记管理</span>
       </el-menu-item>
     </el-menu>
   </el-aside>

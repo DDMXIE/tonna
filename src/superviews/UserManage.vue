@@ -3,6 +3,7 @@
   <el-button @click="resetDateFilter">清除用户状态筛选</el-button>
   <el-button @click="clearFilter">清除所有筛选</el-button>
   <el-table
+    stripe
     ref="filterTable"
     :data="tableData"
     style="width: 100%;">
@@ -10,6 +11,7 @@
       prop="user_ENABLED_DSCP"
       label="用户状态"
       width="180"
+      sortable
       column-key="user_ENABLED_DSCP"
       :filters="[{text: '使用中', value: '使用中'}, {text: '封号', value: '封号'}]"
       :filter-method="filterHandler"
@@ -42,8 +44,9 @@
 
     <el-table-column
       prop="role_ID"
-      label="标签"
-      width="100"
+      label="用户权限"
+      width="120"
+      sortable
       :filters="[{ text: '用户', value: '2565bhg2-bg9f-4dd6-9f03-b1235e883365' }, { text: '系统管理员', value: '14b8a5f2-659f-4dd6-9f03-b1235e883470' }]"
       :filter-method="filterTag"
       filter-placement="bottom-end">

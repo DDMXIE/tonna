@@ -21,6 +21,7 @@ import Superindex from './superviews/SuperIndex.vue'
 import UserManage from './superviews/UserManage.vue'
 import DataManage from './superviews/DataManage.vue'
 import SuperLogin from './superviews/SuperLogin.vue'
+import ArticleManage from './superviews/ArticleManage.vue'
 // import Waterfall from './views/Waterfall'
 
 Vue.use(Router)
@@ -154,18 +155,24 @@ export default new Router({
       name: 'superindex',
       component: Superindex,
       children: [{
-        // 测试页
+        // 数据中心
         path: 'userManage',
         name: 'userManage',
         component: UserManage,
         meta: { title: '数据中心' }
       },
       {
-        // 测试页
+        // 用户管理
         path: 'dataManage',
         name: 'dataManage',
         component: DataManage,
         meta: { title: '用户管理' }
+      }, {
+        // 用户管理
+        path: 'articleManage',
+        name: 'articleManage',
+        component: ArticleManage,
+        meta: { title: '笔记管理' }
       }]
     }
   ]
