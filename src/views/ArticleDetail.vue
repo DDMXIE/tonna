@@ -226,7 +226,9 @@ export default {
       topHeight: '',
       showTitle: false,
       typeId: '',
-      article: {},
+      article: {
+        article: { article_ORIGIN_USER_ID: '' }
+      },
       pageSize: {
         start: 0,
         end: 4

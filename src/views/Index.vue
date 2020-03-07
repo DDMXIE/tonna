@@ -3,7 +3,9 @@
   <el-header style="margin:0;padding:0;position:fixed;left:0;top:0;z-index:2001;width:100%">
       <el-row :style="{'backgroundColor':topMenuBgColor}">
         <el-col :xs="0" :sm="4" :md="4" :lg="4" :xl="4">
-          <span class="title" @click="goToSurf" :style="{'color':titleColor}">Tonna</span>
+          <img v-if="whatColorRadio === '深'" src="../assets/surf/tonna3.png" width="55%" style="padding-top:15px;padding-left:20px;"/>
+          <img v-else src="../assets/surf/tonna.png" width="50%" style="padding-top:15px;padding-left:26px;"/>
+          <!-- <span class="title" @click="goToSurf" :style="{'color':titleColor}">Tonna</span> -->
         </el-col>
         <el-col :xs="24" :sm="20" :md="20" :lg="20" :xl="20">
             <el-menu

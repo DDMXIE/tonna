@@ -17,11 +17,13 @@ import Weather from './views/Weather'
 import ArticleDetail from './views/ArticleDetail'
 import ConnectUs from './views/ConnectUs'
 import UserPage from './views/UserPage'
+import PersonalEdit from './views/PersonalEdit'
 import Superindex from './superviews/SuperIndex.vue'
 import UserManage from './superviews/UserManage.vue'
 import DataManage from './superviews/DataManage.vue'
 import SuperLogin from './superviews/SuperLogin.vue'
 import ArticleManage from './superviews/ArticleManage.vue'
+
 // import Waterfall from './views/Waterfall'
 
 Vue.use(Router)
@@ -128,6 +130,12 @@ export default new Router({
         name: 'userPage',
         component: UserPage,
         meta: { title: '用户主页' }
+      },
+      {
+        path: 'personalEdit',
+        name: 'personalEdit',
+        component: PersonalEdit,
+        meta: { title: '用户信息' }
       }
       ]
     },

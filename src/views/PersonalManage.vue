@@ -17,8 +17,15 @@
         </el-col>
       </el-row>
 
+     
+      
+
       <div style="padding-top:60px;">
         <el-divider ><i class="el-icon-user"></i></el-divider>
+        <div style="text-align:center;padding-bottom:30px;">
+            <el-button type="success" icon="el-icon-edit" round 
+            style="width:190px;" @click="goToUserSettings">前往用户设置</el-button>
+        </div>
         <el-row :gutter="40">
           <el-col :xs="0" :sm="3" :md="3" :lg="3" :xl="3">&nbsp;</el-col>
           <el-col :xs="24" :sm="6" :md="6" :lg="6" :xl="6">
@@ -200,6 +207,9 @@ export default {
         params: { catId: params.userId }
       })
       window.open(details.href, '_blank')
+    },
+    goToUserSettings() {
+      this.$router.push('/index/personalEdit')
     }
   },
   computed: {

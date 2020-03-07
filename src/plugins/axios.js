@@ -23,8 +23,8 @@ _axios.interceptors.request.use(
     if (config.url.substr(0, 5) === 'https') {
       reqUrl = config.url.match(/(\S*)api/)[1]
     }
-    if (config.url !== '/login' && reqUrl !== 'https://www.tianqiapi.com/' &&
-    config.url !== '/tonna/findAllArticle' && config.url !== '/tonna/findAritcleByIdUser' &&
+    if (config.url !== '/login' && reqUrl !== 'https://www.tianqiapi.com/' && config.url !== '/tonna/saveSignUser' &&
+    config.url !== '/tonna/findAllArticle' && config.url !== '/tonna/findArticleByName' && config.url !== '/tonna/findAritcleByIdUser' &&
     config.url !== '/tonna/findUserActivityByPage' && config.url !== '/tonna/findUserAndAuthorAttention' &&
     config.url !== '/tonna/findAuthorArticle') {
       config.headers.Authorization = 'bearer ' + localStorage.getItem('token')

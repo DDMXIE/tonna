@@ -21,6 +21,54 @@ export function getUserInfoByToken(params) {
 }
 
 /**
+ * 用户注册
+ * @param {*} data
+ */
+export function saveSignUser(data) {
+  return request({
+    url: address.saveSignUser(),
+    method: 'post',
+    data
+  })
+}
+
+/**
+ * 用户通过id获取自身信息
+ * @param {*} params
+ */
+export function findUserInfoById(params) {
+  return request({
+    url: address.findUserInfoById(),
+    method: 'get',
+    params: params
+  })
+}
+
+/**
+ * 用户保存更新用户信息
+ * @param {*} params
+ */
+export function saveUserInfoById(data) {
+  return request({
+    url: address.saveUserInfoById(),
+    method: 'post',
+    data
+  })
+}
+
+/**
+ * 用户上传保存头像
+ * @param {*} params
+ */
+export function updateUserAvatarById(data) {
+  return request({
+    url: address.updateUserAvatarById(),
+    method: 'post',
+    data
+  })
+}
+
+/**
  * 查询留言数据（可根据用户查询）
  * @param {*} params
  */
@@ -111,6 +159,18 @@ export function publishedAriticle(params) {
 export function findAllArticle(params) {
   return request({
     url: address.findAllArticle(params),
+    method: 'get',
+    params: params
+  })
+}
+
+/**
+ * 模糊查询笔记信息
+ * @param {*} params
+ */
+export function findArticleByName(params) {
+  return request({
+    url: address.findArticleByName(params),
     method: 'get',
     params: params
   })

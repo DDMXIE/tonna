@@ -7,6 +7,34 @@ const AddressLocal = {
   },
 
   /**
+   * 用户注册
+   */
+  saveSignUser: () => {
+    return `/tonna/saveSignUser`
+  },
+
+  /**
+   * 用户通过id获取自身信息
+   */
+  findUserInfoById: () => {
+    return `/admin/findUserInfoById`
+  },
+
+  /**
+   * 用户保存更新用户信息
+   */
+  saveUserInfoById: () => {
+    return `/admin/saveUserInfoById`
+  },
+
+  /**
+   * 用户上传保存头像
+   */
+  updateUserAvatarById: () => {
+    return `/admin/updateUserAvatarById`
+  },
+
+  /**
    * 查询留言数据（可根据用户查询）
    */
   getMessageByAdmin: () => {
@@ -57,6 +85,12 @@ const AddressLocal = {
    */
   findAllArticle: () => {
     return `/tonna/findAllArticle`
+  },
+  /**
+   * 模糊查询笔记信息
+   */
+  findArticleByName: () => {
+    return `/tonna/findArticleByName`
   },
   /**
    * 用户根据id获取笔记信息
