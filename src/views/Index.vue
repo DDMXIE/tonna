@@ -7,7 +7,7 @@
           <img v-else src="../assets/surf/tonna.png" width="50%" style="padding-top:15px;padding-left:26px;"/>
           <!-- <span class="title" @click="goToSurf" :style="{'color':titleColor}">Tonna</span> -->
         </el-col>
-        <el-col :xs="24" :sm="20" :md="20" :lg="20" :xl="20">
+         <el-col :xs="24" :sm="0" :md="0" :lg="0" :xl="0">
             <el-menu
               :router="true"
               class="el-menu-demo"
@@ -16,6 +16,7 @@
               :background-color="topMenuBgColor"
               text-color="#fff"
               :active-text-color="topMenuChosedColor" >
+                
                 <el-menu-item v-if="$store.getters.userImg !== null" index="/index/PersonalManage" style="font-weight:bolder;border-bottom-width:0px;">
                     <el-avatar  shape="square" size="small" :src="$store.getters.userImg"></el-avatar>
                     &nbsp;
@@ -28,21 +29,94 @@
                     &nbsp;
                     <span style="font-size:15px;">个人中心</span>
                 </el-menu-item>
-                <!-- <el-submenu index="2">
-                  <template slot="title" style="font-weight:bolder">我的工作台</template>
-                  <el-menu-item index="2-1">选项1</el-menu-item>
-                  <el-menu-item index="2-2">选项2</el-menu-item>
-                  <el-menu-item index="2-3">选项3</el-menu-item>
-                  <el-submenu index="2-4">
-                    <template slot="title">选项4</template>
-                    <el-menu-item index="2-4-1">选项1</el-menu-item>
-                    <el-menu-item index="2-4-2">选项2</el-menu-item>
-                    <el-menu-item index="2-4-3">选项3</el-menu-item>
-                  </el-submenu>
-                </el-submenu> -->
-                <!-- <el-menu-item index="3" style="font-weight:bolder">文章管理</el-menu-item>
-                <el-menu-item index="4" style="font-weight:bolder">消息中心</el-menu-item> -->
+
+                 <div style="float:right;">
+                  <!-- <el-radio-group class="display-none" v-model="whatColorRadio" size="mini" >
+                    <el-radio-button label="浅"></el-radio-button>
+                    <el-radio-button label="深"></el-radio-button>
+                  </el-radio-group> -->
+                  <el-button type="info" 
+                    size="mini"
+                    @click="menuCollapse"
+                    style="margin-top:15px;margin-right:10px;">
+                    <i v-if="isCollapse === true" class="el-icon-s-unfold">&nbsp;MENU</i>
+                    <i v-if="isCollapse === false" class="el-icon-s-fold">&nbsp;MENU</i>
+                  </el-button>
+                  </div>
+            </el-menu>
+        </el-col>
+        <el-col :xs="0" :sm="20" :md="20" :lg="20" :xl="20">
+            <el-menu
+              :router="true"
+              class="el-menu-demo"
+              mode="horizontal"
+              @select="handleSelect"
+              :background-color="topMenuBgColor"
+              text-color="#fff"
+              :active-text-color="topMenuChosedColor" style="padding-bottom:11px;">
+                
+                <!-- <el-menu-item v-if="$store.getters.userImg !== null && isTonnaShow === false" index="/index/PersonalManage" style="font-weight:bolder;border-bottom-width:0px;">
+                    <el-avatar  shape="square" size="small" :src="$store.getters.userImg"></el-avatar>
+                    &nbsp;
+                    <span style="font-size:15px;">个人中心</span>
+                </el-menu-item>
+                <el-menu-item v-else-if="($store.getters.userImg === null || $store.getters.userImg === '') && isTonnaShow === false" index="/index/PersonalManage" style="font-weight:bolder;border-bottom-width:0px;">
+                    <el-avatar  shape="square" size="small" >
+                      <i class="el-icon-user-solid" style="padding-left:2px;color:black"/>
+                    </el-avatar>
+                    &nbsp;
+                    <span style="font-size:15px;">个人中心</span>
+                </el-menu-item> -->
+              
                 <div style="float:right;margin-top:15px;padding-right:10px;">
+                 <div style="float:right;">
+                  <!-- <el-radio-group class="display-none" v-model="whatColorRadio" size="mini" >
+                    <el-radio-button label="浅"></el-radio-button>
+                    <el-radio-button label="深"></el-radio-button>
+                  </el-radio-group> -->
+                  <el-button type="info" 
+                    size="mini"
+                    @click="menuCollapse"
+                    style="margin-left:10px;">
+                    <i v-if="isCollapse === true" class="el-icon-s-unfold">&nbsp;MENU</i>
+                    <i v-if="isCollapse === false" class="el-icon-s-fold">&nbsp;MENU</i>
+                  </el-button>
+                  </div>
+                    
+                  <el-avatar v-if="isTonnaShow === true && $store.getters.userImg !== null" shape="square" size="small" :src="$store.getters.userImg" style="margin-right:5px;"></el-avatar>
+                   <el-avatar v-else shape="square" size="small" style="margin-right:5px;">
+                      <i class="el-icon-user-solid"/>
+                    </el-avatar>
+                    <el-dropdown v-if="isTonnaShow === true">
+                        <i class="el-icon-caret-bottom" style="margin-right: 15px;color:white"></i>
+                        <el-dropdown-menu slot="dropdown">
+                          <el-dropdown-item>
+                            <div style="text-align:center;padding-top:10px;">
+                                <el-avatar v-if="$store.getters.userImg !== null" shape="square" size="medium" :src="$store.getters.userImg"></el-avatar>
+                                 <el-avatar v-else shape="square" size="medium" >
+                                   <i class="el-icon-user-solid" style="padding-left:5px;"/>
+                                 </el-avatar>
+                                <div v-if="$store.getters.userImg !== null">
+                                  <span style="font-weight:900;font-size:14px;">欢迎，{{$store.getters.userName}}!</span>
+                                </div>
+                                <div v-else>
+                                  <span style="font-weight:900;font-size:14px;" @click="goToLogin">您好，请登录!</span>
+                                </div>
+                            </div>
+                          </el-dropdown-item>
+                          <el-dropdown-item><div @click="goToMyPage($store.getters.userId)" style="text-align:center">我的主页</div></el-dropdown-item>
+                          <el-dropdown-item><div @click="goToUserPage" style="text-align:center">用户中心</div></el-dropdown-item>
+                          <el-dropdown-item><div @click="goToUserSettings" style="text-align:center">用户设置</div></el-dropdown-item>
+                          <el-dropdown-item v-if="whatColorRadio === '浅'"><div @click="changeNightOrLight" style="text-align:center">深色模式</div></el-dropdown-item>
+                          <el-dropdown-item v-else><div @click="changeNightOrLight" style="text-align:center">浅色模式</div></el-dropdown-item>
+                          <el-dropdown-item><div @click="goToMyCollect" style="text-align:center">我的收藏</div></el-dropdown-item>
+                          <el-dropdown-item><div @click="logout" style="text-align:center">退出登录</div></el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                  <!-- <div style="float:right;">
+                     <el-avatar  shape="square" size="small" :src="$store.getters.userImg" style="margin-left:10px;"></el-avatar>
+                  </div>
+                 
                   <el-radio-group class="display-none" v-model="whatColorRadio" size="mini" >
                     <el-radio-button label="浅"></el-radio-button>
                     <el-radio-button label="深"></el-radio-button>
@@ -53,7 +127,7 @@
                     style="margin-left:10px;">
                     <i v-if="isCollapse === true" class="el-icon-s-unfold">&nbsp;MENU</i>
                     <i v-if="isCollapse === false" class="el-icon-s-fold">&nbsp;MENU</i>
-                  </el-button>
+                  </el-button> -->
                 </div>
               </el-menu>
         </el-col>
@@ -218,6 +292,51 @@ export default {
     },
     goToSurf() {
       this.$router.push('/index/surf')
+    },
+    goToMyPage(id) {
+      console.log('goToUserPage', id)
+      var params = {}
+      params.userId = id
+      const details = this.$router.resolve({
+        path: '/index/userPage',
+        query: params,
+        params: { catId: params.userId }
+      })
+      window.open(details.href, '_blank')
+    },
+    goToUserPage() {
+      this.$router.push('/index/personalManage')
+    },
+    goToUserSettings() {
+      this.$router.push('/index/personalEdit')
+    },
+    goToLogin() {
+      this.$router.push('/login')
+    },
+    goToMyCollect() {
+      this.$router.push('/index/myCollect')
+    },
+    logout() {
+      this.axios.post('/logout')
+        .then(res => {
+          console.log('退出登录按钮', res)
+          localStorage.removeItem('user_name')
+          localStorage.removeItem('token')
+          localStorage.removeItem('user_id')
+          localStorage.removeItem('user_img')
+          this.$notify({
+            title: '您已退出登录',
+            type: 'success'
+          })
+        })
+      this.$router.push('/login')
+    },
+    changeNightOrLight() {
+      if (this.whatColorRadio === '深') {
+        this.whatColorRadio = '浅'
+      } else {
+        this.whatColorRadio = '深'
+      }
     }
   },
 

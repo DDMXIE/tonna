@@ -38,7 +38,7 @@
                 <el-card class="right-card" :body-style="{ padding: '10px',backgroundColor:'#6697a4' }">
                   <div @click="goToMore('1')">
                       <i class="el-icon-s-custom right-card-icon"/>
-                      <span class="right-card-text">Tonna 会员 ></span>
+                      <span class="right-card-text" @click="goToRegister">Tonna 会员 ></span>
                   </div>
                 </el-card>
                 <el-card class="right-card" :body-style="{ padding: '10px',backgroundColor:'#bdd5d7' }">
@@ -242,6 +242,9 @@ export default {
         params: { catId: params.articleId }
       })
       window.open(details.href, '_blank')
+    },
+    goToRegister() {
+      this.$router.push('/register')
     }
   },
   computed: {

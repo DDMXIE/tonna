@@ -4,8 +4,8 @@
       <!-- <el-card :body-style="{ padding: '0px' }"> -->
         <img src="../assets/personal/personalEditb1g.jpg" width="100%"/>
       <!-- </el-card> -->
-      <el-col :xs="24" :sm="12" :md="4" :lg="5" :xl="12">&nbsp;</el-col>
-      <el-col :xs="24" :sm="12" :md="16" :lg="14" :xl="12">
+      <el-col :xs="24" :sm="3" :md="4" :lg="5" :xl="12">&nbsp;</el-col>
+      <el-col :xs="24" :sm="17" :md="16" :lg="14" :xl="12">
           <el-tabs type="border-card" :tab-position="'left'" :style="{height:fullHeight+'px'}">
             <el-tab-pane label="用户管理" style="height:100%">
               <div class="block">
@@ -85,12 +85,37 @@
                 
               </div>
             </el-tab-pane>
-            <el-tab-pane label="配置管理">配置管理</el-tab-pane>
-            <el-tab-pane label="角色管理">角色管理</el-tab-pane>
-            <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
+            <el-tab-pane label="修改密码">
+               <div style="text-align:center;">
+                  <el-avatar v-if="isUploadAvatar === false" shape="square" :size="180"  :fit="fit" :src="userInfo.user_IMG"></el-avatar>
+                  <div>
+                     <span style="font-size:30px;font-weight:200;">密钥管理</span>
+                  </div>
+                  <el-form :model="passRuleForm" status-icon :rules="passRule" ref="passRuleForm"
+                            label-width="100px" class="demo-ruleForm" style="padding-top:40px;">
+                    <!-- <el-form-item label="联系方式" prop="userTel">
+                    <el-input v-model="ruleForm.userTel" :disabled="isEditDisabled"></el-input>
+                  </el-form-item> -->
+                 
+                    <el-form-item label="新密码" prop="pass">
+                      <el-input type="password" v-model="passRuleForm.pass" :disabled="isEditPassDisabled"></el-input>
+                    </el-form-item>
+                    <el-form-item label="确认密码" prop="checkPass">
+                      <el-input type="password" v-model="passRuleForm.checkPass" :disabled="isEditPassDisabled"></el-input>
+                    </el-form-item>
+                    
+                    <el-button v-if="isEditPassDisabled === false" type="primary" @click="submitPassForm('passRuleForm')">保存</el-button>
+                    <el-button v-else @click="resetPassForm('passRuleForm')" type="primary" icon="el-icon-refresh">重置密码</el-button>
+                    <el-button v-if="isEditPassDisabled === false" @click="cancelPassForm('passRuleForm')">取消</el-button>
+                   
+                  </el-form>
+               </div>
+            </el-tab-pane>
+            <!-- <el-tab-pane label="角色管理">角色管理</el-tab-pane>
+            <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane> -->
           </el-tabs>
       </el-col>
-      <el-col :xs="24" :sm="12" :md="4" :lg="5" :xl="12">&nbsp;</el-col>
+      <el-col :xs="24" :sm="4" :md="4" :lg="5" :xl="12">&nbsp;</el-col>
       <div></div>
     </el-row>
    
@@ -98,32 +123,53 @@
 </template>
 
 <script>
-import { findUserInfoById, getUserInfoByToken, saveUserInfoById, updateUserAvatarById } from '@/api'
+import { findUserInfoById, getUserInfoByToken, saveUserInfoById
+  , saveUserPassById, updateUserAvatarById } from '@/api'
 export default {
 
   data() {
-    var checkAge = (rule, value, callback) => {
+    var checkTel = (rule, value, callback) => {
       if (value === '') {
-        return callback(new Error('年龄不能为空'))
+        return callback(new Error('联系方式不能为空'))
+      }
+      callback()
+    }
+    var checkUsername = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('用户昵称不能为空'))
+      }
+      callback()
+    }
+    var checkUserIntroduce = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('用户简介不能为空'))
       }
       callback()
     }
     var validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'))
+      } else {
+        if (this.passRuleForm.checkPass !== '') {
+          this.$refs.passRuleForm.validateField('checkPass')
+        }
+        callback()
       }
-      callback()
     }
     var validatePass2 = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入密码'))
+        callback(new Error('请再次输入密码'))
+      } else if (value !== this.passRuleForm.pass) {
+        callback(new Error('两次输入密码不一致!'))
+      } else {
+        callback()
       }
-      callback()
     }
     return {
       fit: 'cover', // 头像类型
       fullHeight: document.documentElement.clientHeight - 60,
       isEditDisabled: true,
+      isEditPassDisabled: true,
       userInfo: [],
       ruleForm: {
         username: '',
@@ -132,13 +178,25 @@ export default {
       },
       rules: {
         username: [
-          { validator: validatePass, trigger: 'blur' }
+          { validator: checkUsername, trigger: 'blur' }
         ],
         userIntroduce: [
-          { validator: validatePass2, trigger: 'blur' }
+          { validator: checkUserIntroduce, trigger: 'blur' }
         ],
         userTel: [
-          { validator: checkAge, trigger: 'blur' }
+          { validator: checkTel, trigger: 'blur' }
+        ]
+      },
+      passRuleForm: {
+        pass: '',
+        checkPass: ''
+      },
+      passRule: {
+        pass: [
+          { validator: validatePass, trigger: 'blur' }
+        ],
+        checkPass: [
+          { validator: validatePass2, trigger: 'blur' }
         ]
       },
       dialogImageUrl: '',
@@ -199,6 +257,34 @@ export default {
     },
     cancelForm(formName) {
       this.isEditDisabled = true
+    },
+    submitPassForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          var params = {}
+          params.userId = this.$store.getters.userId
+          params.password = this.passRuleForm.checkPass
+          saveUserPassById(params).then(res => {
+            console.log('---------222--1------', res)
+            this.isEditPassDisabled = true
+            this.$notify({
+              title: '成功',
+              message: '修改密码成功',
+              type: 'success'
+            })
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    resetPassForm(formName) {
+      this.isEditPassDisabled = false
+    },
+    cancelPassForm(formName) {
+      this.$refs[formName].resetFields()
+      this.isEditPassDisabled = true
     },
     handleRemove(file) {
       console.log(file)

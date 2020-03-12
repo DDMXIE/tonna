@@ -57,6 +57,18 @@ export function saveUserInfoById(data) {
 }
 
 /**
+ * 用户修改密码
+ * @param {*} params
+ */
+export function saveUserPassById(data) {
+  return request({
+    url: address.saveUserPassById(),
+    method: 'post',
+    data
+  })
+}
+
+/**
  * 用户上传保存头像
  * @param {*} params
  */
@@ -263,6 +275,18 @@ export function collectArticleByUser(data) {
 export function findUserCollectByAticleId(params) {
   return request({
     url: address.findUserCollectByAticleId(),
+    method: 'get',
+    params: params
+  })
+}
+
+/**
+ * 用户查看自己的收藏
+ * @param {*} params
+ */
+export function findCollectByUserId(params) {
+  return request({
+    url: address.findCollectByUserId(),
     method: 'get',
     params: params
   })

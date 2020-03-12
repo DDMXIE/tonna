@@ -12,7 +12,7 @@
       </div>
       <span class="block-text">欢迎来到Tonna,你可以在这里尽情享受生活的每分每刻，快来分享你的快乐！</span>
       <div class="btn-join">
-        <el-button plain>立刻加入 Tonna ></el-button>
+        <el-button plain @click="goToRegister">立刻加入 Tonna ></el-button>
       </div>
     </div>
   </div>
@@ -122,6 +122,9 @@ export default {
       } catch (error) {
         console.log(error.res)
       }
+    },
+    goToRegister() {
+      this.$router.push('/register')
     }
   },
   computed: {
@@ -156,7 +159,7 @@ export default {
 }
 .div-title{
   width: 100%;
-  background: url('../assets/surf/surf_bg2.png')  no-repeat;
+  background: url('../assets/surf/surf_bg5.png')  no-repeat;
   background-size: 100% auto;
 }
 .div-title-content{
@@ -241,7 +244,8 @@ export default {
   }
   .div-title{
     width: 100%;
-    background: url('../assets/surf/surf_bg2.png')  no-repeat;
+    /* background: url('../assets/surf/surf_bg2.png')  no-repeat; */
+    background: url('../assets/surf/surf_bg5.png')  no-repeat;
     background-size: 100% 95%;
   }
   .div-title-content{

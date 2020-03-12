@@ -44,7 +44,7 @@
             <el-card :body-style="{ padding: '5px' }">
               <div style="text-align:center">
                   <img src="../assets/personal/myPage2.jpg" width="100%"/>
-                  <el-button type="warning" round style="margin-top:10px;">收藏的文章</el-button>
+                  <el-button type="warning" round style="margin-top:10px;" @click="goToCollectPage">收藏的文章</el-button>
                   <div style="padding-left:20px;padding-right:20px;padding-top:10px;">
                     <span style="font-size:14px;">我的收藏—在这里你可以进入我的收藏，可以详细查看我的收藏和文章信息。</span>
                   </div>
@@ -210,6 +210,9 @@ export default {
     },
     goToUserSettings() {
       this.$router.push('/index/personalEdit')
+    },
+    goToCollectPage() {
+      this.$router.push('/index/myCollect')
     }
   },
   computed: {

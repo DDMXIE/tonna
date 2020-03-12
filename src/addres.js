@@ -28,6 +28,13 @@ const AddressLocal = {
   },
 
   /**
+   * 用户修改密码
+   */
+  saveUserPassById: () => {
+    return `/admin/saveUserPassById`
+  },
+
+  /**
    * 用户上传保存头像
    */
   updateUserAvatarById: () => {
@@ -142,6 +149,12 @@ const AddressLocal = {
    */
   findUserCollectByAticleId: () => {
     return `/tonna/findUserCollectByAticleId`
+  },
+  /**
+   * 用户查看自己的收藏
+   */
+  findCollectByUserId: () => {
+    return `/admin/findCollectByUserId`
   },
   // -------------------------------------关注-------------------------------------
   /**
