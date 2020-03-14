@@ -7,19 +7,49 @@
         <el-row :gutter="20" style="padding-top:50px;padding-right:10px;padding-left:10px;margin:0;"> 
            <el-col :xs="24" :sm="24" :md="6" :lg="6" :xl="8"  style="margin-bottom:15px;">
              <div>
-               <div style="margin-top:10px;margin_bottom:30px;">
+               <div style="margin-top:10px;margin_bottom:30px;" >
                   <el-input placeholder="在此搜索喔！" v-model="searchValue" class="input-with-select">
                     <el-button slot="append" icon="el-icon-search" @click="searchArticle"></el-button>
                   </el-input>
                 </div>
-               <el-card style="margin-top:10px;">
-                  <div>
+                 <img id="hotimg" src="../assets/other/hotSearch.png" width="100%" />
+               <el-card v-if="isLargeWidth === true" :style="{marginTop: topHeight + 'px'}">
+                  <div ref="topDiv">
                     <i class="el-icon-s-flag" style="padding-right:5px;color:#d81e05;font-size:18px;"/>
                     <span>热搜榜</span>
+                    
                     <div style="padding-top:30px;"></div>
-                    <div v-for="items in 3">
-                      <span>sjdf</span>
-                      <hr>
+                    <div v-for="(items,index) in hotArticleData" :key="index">
+                      <span class="title-inline-control hot-title" @click="showHotArticle(items)">{{items.article_TITLE}}</span>
+                      <el-row>
+                        <el-col :span="12">
+                           <span class="hot-subtitle">类型：{{items.type_NAME}}</span>
+                        </el-col>
+                         <el-col :span="12">
+                           <i class="el-icon-s-help" style="font-size:10px;color:#ea0202;"/>&nbsp;<span class="hot-subtitle" style="font-weight:500;">热度：{{items.count_NUM}}</span>
+                        </el-col>
+                      </el-row>
+                      <div style="padding-top:20px;"></div>
+                    </div>
+                  </div>
+                </el-card>
+                <el-card v-else :style="{marginTop: 10 + 'px'}">
+                  <div ref="topDiv">
+                    <i class="el-icon-s-flag" style="padding-right:5px;color:#d81e05;font-size:18px;"/>
+                    <span>热搜榜</span>
+                    
+                    <div style="padding-top:30px;"></div>
+                    <div v-for="(items,index) in hotArticleData" :key="index">
+                      <span class="title-inline-control hot-title" @click="showHotArticle(items)">{{items.article_TITLE}}</span>
+                      <el-row>
+                        <el-col :span="12">
+                           <span class="hot-subtitle">类型：{{items.type_NAME}}</span>
+                        </el-col>
+                         <el-col :span="12">
+                           <i class="el-icon-s-help" style="font-size:10px;color:#ea0202;"/>&nbsp;<span class="hot-subtitle" style="font-weight:500;">热度：{{items.count_NUM}}</span>
+                        </el-col>
+                      </el-row>
+                      <div style="padding-top:20px;"></div>
                     </div>
                   </div>
                 </el-card>
@@ -161,12 +191,14 @@
 import Bread from '../components/Bread'
 import Foot from '../components/Foot'
 import ArticlePage from '../views/ArticlePage'
-import { findArticleByName } from '@/api'
+import { findArticleByName, findHotArticle } from '@/api'
 // import Aplayer from 'vue-aplayer'
 export default {
   components: { Bread, ArticlePage, Foot },
   data() {
     return {
+      topHeight: '',
+      hotImg: {},
       loading: true,
       isLike: false, // 是否添加喜欢
       fit: 'cover', // 头像类型
@@ -177,6 +209,7 @@ export default {
       searchValue: '',
       dialogVisible: false,
       searchArticleData: [],
+      hotArticleData: [],
       items: [
         { type: 'primary', label: '生活穿搭', typeId: '1' },
         { type: 'success', label: '好文分享', typeId: '2' },
@@ -186,7 +219,16 @@ export default {
       ]
     }
   },
+  mounted() {
+    window.addEventListener('scroll', this.showIcon)
+  },
+  created() {
+    this.loadData()
+  },
   methods: {
+    loadData() {
+      this.findHotArticle()
+    },
     likeIt() {
       this.isLike = true
     },
@@ -204,12 +246,9 @@ export default {
       }
     },
     searchArticle() {
-      console.log(1111)
       var params = {}
       params.articleName = this.searchValue
-      console.log(params)
       findArticleByName(params).then(res => {
-        console.log(res)
         this.searchArticleData = res.data.data
         if (this.searchArticleData.length > 0) {
           this.dialogVisible = true
@@ -243,8 +282,37 @@ export default {
       })
       window.open(details.href, '_blank')
     },
+    showHotArticle(item) {
+      var params = {}
+      params.articleId = item.article_ID
+      const details = this.$router.resolve({
+        path: '/index/articleDetail',
+        query: params,
+        params: { catId: params.articleId }
+      })
+      window.open(details.href, '_blank')
+    },
     goToRegister() {
       this.$router.push('/register')
+    },
+    findHotArticle() {
+      findHotArticle().then(res => {
+        if (res.data.data.length > 0) {
+          for (var i = 0; i < 4; i++) {
+            this.hotArticleData.push(res.data.data[i])
+          }
+        }
+        this.topHeight = this.$refs.topDiv.offsetHeight - this.hotImg.height
+      })
+    },
+    showIcon() {
+      if (
+        !!document.documentElement.scrollTop &&
+        document.documentElement.scrollTop > 250
+      ) {
+        this.hotImg = document.getElementById('hotimg')
+        this.topHeight = document.documentElement.scrollTop - this.hotImg.height - 100
+      }
     }
   },
   computed: {
@@ -260,6 +328,13 @@ export default {
         return 'top'
       } else {
         return 'right'
+      }
+    },
+    isLargeWidth() {
+      if (document.documentElement.clientWidth > 990) {
+        return true
+      } else {
+        return false
       }
     }
   }
@@ -319,6 +394,27 @@ export default {
     font-weight: 900;
     padding-left: 20px;
     color: white;
+  }
+  .hot-title{
+    font-size: 14px;
+    font-weight: 900;
+  }
+  .hot-title:hover{
+    color: #409eff;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .hot-subtitle{
+    font-size: 12px;
+    font-weight: 200;
+  }
+  .title-inline-control{
+    /* width: 180px; */
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
   }
   @media(max-width:500px){
     .right-card{

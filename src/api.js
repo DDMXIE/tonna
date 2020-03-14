@@ -210,6 +210,18 @@ export function findAuthorArticle(params) {
     params: params
   })
 }
+
+/**
+ * 获取热度笔记
+ * @param {*} params
+ */
+export function findHotArticle(params) {
+  return request({
+    url: address.findHotArticle(),
+    method: 'get',
+    params: params
+  })
+}
 // -------------------------------------评论-------------------------------------
 /**
  * 用户新增或回复评论

@@ -111,6 +111,12 @@ const AddressLocal = {
   findAuthorArticle: () => {
     return `/tonna/findAuthorArticle`
   },
+  /**
+   * 获取热度笔记
+   */
+  findHotArticle: () => {
+    return `/tonna/findHotArticle`
+  },
   // --------------------------------------评论--------------------------------------
   /**
    * 用户新增或回复评论
