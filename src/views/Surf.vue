@@ -58,6 +58,63 @@
           </el-carousel-item>
       </el-carousel>
     </div>
+
+    <div style="text-align:center;padding-top:80px;">
+      <span style="font-size:45px;font-weight:200;">畅游生活，想你所想</span>
+      <div><span style="font-size:20px;font-weight:100;">Travel through life, think what you think</span></div>
+    </div>
+    <el-row style="padding-top:40px;">
+       <el-col :xs="24" :sm="5" :md="3" :lg="3" :xl="6">
+        &nbsp;
+      </el-col>
+      <el-col :xs="24" :sm="8" :md="8" :lg="9" :xl="6">
+        <img src="../assets/surf/surf_img_1.png" width="100%">
+        <div>
+          <span style="font-size:20px;font-weight:light;">这便是你要的，生活的初衷。</span>
+          <div style="padding-right:40px;padding-top:5px;">
+            <span style="font-size:14px;font-weight:lighter;">在一回首间，才忽然发现，原来，我一生的种种努力，不过只为了周遭的人对我满意而已。为了搏得他人的称许与微笑，我战战兢兢地将自己套入所有的模式所有的桎梏。走到途中才忽然发现，我只剩下一副模糊的面目，和一条不能回头的路。 ——席慕蓉 《独白》</span>
+          </div>
+        </div>
+      </el-col>
+       <el-col :xs="24" :sm="8" :md="8" :lg="9" :xl="6">
+        <img src="../assets/surf/surf_img_2.png" width="100%">
+        <div style="padding-left:10px;">
+        <span style="font-size:20px;font-weight:light;">生活，就是保持一份初心。</span>
+        <div style="padding-right:40px;padding-top:5px;">
+            <span style="font-size:14px;font-weight:lighter;">现在我们能够做的，是找一个静静的地方，让自己静静的思考，明白该如何做，才能够不让珍贵的东西，重要的人再次失去，明白该如何做，同样的错误不会再次发生。从中吸取经验，吸取力量，继续坚定的前行，寻找喜欢的东西，碰到真爱的人，去做正确的事。 ——席慕蓉</span>
+        </div>
+        </div>
+      </el-col>
+       <el-col :xs="24" :sm="5" :md="3" :lg="3" :xl="6">
+        &nbsp;
+      </el-col>
+    </el-row>
+
+     <div style="text-align:center;padding-top:100px;">
+      <span style="font-size:45px;font-weight:200;">一切，都触手可及</span>
+      <div><span style="font-size:20px;font-weight:100;">Everything is within reach</span></div>
+    </div>
+    <el-row style="padding-top:30px;">
+      <el-col :xs="24" :sm="13" :md="16" :lg="17" :xl="6">
+        <img src="../assets/surf/surf_img_3.png" width="100%"/>
+      </el-col>
+      <el-col :xs="24" :sm="11" :md="8" :lg="7" :xl="6">
+        <div style="padding-top:30px;padding-left:10px;">
+          <span style="font-size:30px;font-weight:200;">源于生活的“小氛围”</span>
+          <div style="padding-top:50px;">
+            <div>
+              <span>让每个人都感受生活的乐趣与快乐，</span>
+            </div>
+             <div>
+              <span>这便是我想并愿意做的。</span>
+            </div>
+             <div style="padding-top:40px;">
+               <span>BY Designer: TONY</span><img src="../assets/surf/tonna.png" width="25%" style="padding-left:20px;"/>
+            </div>
+          </div>
+        </div>
+      </el-col>
+    </el-row>
       
     <el-row class="row-advertise">
       <el-col :xs="24" :sm="8" :md="8" :lg="10" :xl="6">

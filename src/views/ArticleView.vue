@@ -95,6 +95,21 @@
                   <div>
                     <i class="el-icon-s-flag" style="padding-right:5px;color:#d81e05;font-size:18px;"/>
                     <span>作者推荐</span>
+                    <div style="">
+                      <div v-for="item in authorRecommendData">
+                         <el-divider> <i class="el-icon-s-open"></i> </el-divider>
+                        <el-row>
+                          <el-col :span="6">
+                            <img :src="item.user_IMG" width="40px" class="user-img" @click="goToUserPage(item.user_ID)"/>
+                          </el-col>
+                          <el-col :span="18">
+                            <span style="font-size:20px;font-weight:900;">{{item.user_NAME}}</span> 
+                            <div><span class="title-inline-control" style="font-size:12px;font-weight:200;">{{item.user_INTRODUCE}}</span></div>
+                          </el-col>
+                        </el-row>
+                       
+                      </div>
+                    </div>
                   </div>
                 </el-card>
               </div>
@@ -191,7 +206,7 @@
 import Bread from '../components/Bread'
 import Foot from '../components/Foot'
 import ArticlePage from '../views/ArticlePage'
-import { findArticleByName, findHotArticle } from '@/api'
+import { findArticleByName, findHotArticle, findRecommendAuthor } from '@/api'
 // import Aplayer from 'vue-aplayer'
 export default {
   components: { Bread, ArticlePage, Foot },
@@ -210,6 +225,7 @@ export default {
       dialogVisible: false,
       searchArticleData: [],
       hotArticleData: [],
+      authorRecommendData: [],
       items: [
         { type: 'primary', label: '生活穿搭', typeId: '1' },
         { type: 'success', label: '好文分享', typeId: '2' },
@@ -228,6 +244,7 @@ export default {
   methods: {
     loadData() {
       this.findHotArticle()
+      this.findRecommendAuthor()
     },
     likeIt() {
       this.isLike = true
@@ -305,6 +322,31 @@ export default {
         this.topHeight = this.$refs.topDiv.offsetHeight - this.hotImg.height
       })
     },
+    findRecommendAuthor() {
+      findRecommendAuthor().then(res => {
+        if (res.data.data.length > 0 && res.data.data.length < 4) {
+          for (var i = 0; i < res.data.data.length; i++) {
+            this.authorRecommendData.push(res.data.data[i])
+          }
+        } else {
+          for (var j = 0; j < 4; j++) {
+            this.authorRecommendData.push(res.data.data[i])
+          }
+        }
+        console.log(this.authorRecommendData)
+      })
+    },
+    goToUserPage(id) {
+      console.log('goToUserPage', id)
+      var params = {}
+      params.userId = id
+      const details = this.$router.resolve({
+        path: '/index/userPage',
+        query: params,
+        params: { catId: params.userId }
+      })
+      window.open(details.href, '_blank')
+    },
     showIcon() {
       if (
         !!document.documentElement.scrollTop &&
@@ -343,6 +385,10 @@ export default {
 </script>
 
 <style scoped>
+ .user-img{
+    border-radius:10px;
+    cursor:pointer;
+  }
  .time {
     font-size: 13px;
     color: #999;

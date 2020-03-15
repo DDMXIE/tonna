@@ -222,6 +222,18 @@ export function findHotArticle(params) {
     params: params
   })
 }
+
+/**
+ * 获取作者推荐
+ * @param {*} params
+ */
+export function findRecommendAuthor(params) {
+  return request({
+    url: address.findRecommendAuthor(),
+    method: 'get',
+    params: params
+  })
+}
 // -------------------------------------评论-------------------------------------
 /**
  * 用户新增或回复评论
