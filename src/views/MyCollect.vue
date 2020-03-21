@@ -1,13 +1,13 @@
 <template>
   <div style="width:100%">
     <div>
-      <img src="../assets/other/collect_bg.png" width="100%" />
+      <img src="../assets/other/collect_bg.png" width="100%"/>
       <el-row>
           <el-col :xs="24" :sm="2" :md="3" :lg="5" :xl="16">
               <div>&nbsp;</div>
             </el-col>
          <el-col :xs="24" :sm="19" :md="18" :lg="14" :xl="16">
-            <div style="padding-top:10px;" v-for="item in articleData">
+            <div style="padding-top:10px;" v-for="(item,index) in articleData" :key="index" @mouseover="changeMask(index)" @mouseout="changeMask(index)">
               <el-card v-if="item.img_URL.length!==0">
                 <div>
                   <el-row style="margin:0;">
@@ -38,8 +38,11 @@
                     <span class="text-detail">{{item.talk_NUM}}</span>
                     <img src="../assets/article/heart2.png" width="16px;" style="cursor:pointer;">
                     <span style="font-size:12px;padding-left:5px;padding-right:15px;color:#bf2727;">{{item.like_NUM}}</span>
+                    <span :ref="'mask' + index" @click="uncollect(item)"
+                          style="display:none;font-size:12px;color:#a0a0a0;cursor:pointer;font-weight:900;">取消收藏</span>
                   </div>
                 </div>
+                
               </el-card>
               <el-card v-else>
                  <div>
@@ -60,6 +63,8 @@
                     <span class="text-detail">{{item.talk_NUM}}</span>
                     <img src="../assets/article/heart2.png" width="16px;" style="cursor:pointer;">
                     <span style="font-size:12px;padding-left:5px;padding-right:15px;color:#bf2727;">{{item.like_NUM}}</span>
+                    <span :ref="'mask' + index" @click="uncollect(item)"
+                          style="display:none;font-size:12px;color:#a0a0a0;cursor:pointer;font-weight:900;">取消收藏</span>
                   </div>
                 </div>
               </el-card>
@@ -71,7 +76,7 @@
 </template>
 
 <script>
-import { findCollectByUserId } from '@/api'
+import { findCollectByUserId, collectArticleByUser } from '@/api'
 export default {
   data() {
     return {
@@ -102,6 +107,29 @@ export default {
         params: { catId: params.articleId }
       })
       window.open(details.href, '_blank')
+    },
+    changeMask(index) {
+      const vm = this
+      const mask = vm.$refs['mask' + index]
+      if (mask[0].style.display === 'none') {
+        mask[0].style.display = 'inline'
+      } else {
+        mask[0].style.display = 'none'
+      }
+    },
+    uncollect(val) {
+      console.log(val)
+      var params = {}
+      params.userId = this.$store.getters.userId
+      params.articleId = val.article.article_ID
+      params.iscollect = 'uncollect'
+      collectArticleByUser(params).then(res => {
+        this.loadData()
+        this.$notify({
+          title: '您已成功取消收藏',
+          type: 'success'
+        })
+      })
     }
   }
 }

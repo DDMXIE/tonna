@@ -240,6 +240,11 @@ export default {
   },
   created() {
     this.loadData()
+    document.onkeydown = e => {
+      if (e.keyCode === 13) {
+        this.searchArticle()
+      }
+    }
   },
   methods: {
     loadData() {

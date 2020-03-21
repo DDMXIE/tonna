@@ -231,6 +231,12 @@ const AddressLocal = {
    */
   findAllArticleByPage: () => {
     return `/super/findAllArticleByPage`
+  },
+  /**
+   * 管理员分页获取笔记信息
+   */
+  updateArticleBySuper: () => {
+    return `/super/updateArticleBySuper`
   }
 }
 

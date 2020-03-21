@@ -432,3 +432,14 @@ export function findAllArticleByPage(params) {
     params: params
   })
 }
+/**
+ * 管理员修改笔记信息
+ * @param {*} data
+ */
+export function updateArticleBySuper(data) {
+  return request({
+    url: address.updateArticleBySuper(),
+    method: 'post',
+    data
+  })
+}

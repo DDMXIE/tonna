@@ -78,6 +78,7 @@
         type="flex"
       >
         <span style="font-size:14px;color: #aaa;">@托纳博客 Tonna China &nbsp;&nbsp;&nbsp; Designed by Tony</span>
+        &nbsp;&nbsp;&nbsp; <span class="surf-tip" @click="goToSurf">去首页</span>
       </el-row>
     </div>
   </transition>
@@ -244,6 +245,16 @@ export default {
   color:white;
   font-weight:500;
   font-size:60px;
+}
+.surf-tip{
+  font-size:14px;
+  color: #aaa;
+  cursor: pointer;
+}
+.surf-tip:hover{
+  font-size:14px;
+  color: white;
+  text-decoration:underline;
 }
 </style>
 

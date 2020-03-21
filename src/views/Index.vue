@@ -1,10 +1,10 @@
 <template>
   <el-container>
-  <el-header style="margin:0;padding:0;position:fixed;left:0;top:0;z-index:2001;width:100%">
+  <el-header class="header-class" :style="{'opacity':headerOpacity}">
       <el-row :style="{'backgroundColor':topMenuBgColor}">
         <el-col :xs="0" :sm="4" :md="4" :lg="4" :xl="4">
-          <img v-if="whatColorRadio === '深'" src="../assets/surf/tonna3.png" width="55%" style="padding-top:15px;padding-left:20px;"/>
-          <img v-else src="../assets/surf/tonna.png" width="50%" style="padding-top:15px;padding-left:26px;"/>
+          <img v-if="whatColorRadio === '深'" src="../assets/surf/tonna3.png" width="64%" style="padding-top:15px;padding-left:25px;"/>
+          <img v-else src="../assets/surf/tonna.png" width="60%" style="padding-top:15px;padding-left:36px;"/>
           <!-- <span class="title" @click="goToSurf" :style="{'color':titleColor}">Tonna</span> -->
         </el-col>
          <el-col :xs="24" :sm="0" :md="0" :lg="0" :xl="0">
@@ -88,7 +88,8 @@
                       <i class="el-icon-user-solid"/>
                     </el-avatar>
                     <el-dropdown v-if="isTonnaShow === true">
-                        <i class="el-icon-caret-bottom" style="margin-right: 15px;color:white"></i>
+                        <i  v-if="whatColorRadio === '深'" class="el-icon-caret-bottom" style="margin-right: 15px;color:white"></i>
+                        <i  v-else class="el-icon-caret-bottom" style="margin-right: 15px;color:black"></i>
                         <el-dropdown-menu slot="dropdown">
                           <el-dropdown-item>
                             <div style="text-align:center;padding-top:10px;">
@@ -221,8 +222,12 @@
 
 <script>
 import Bread from '../components/Bread'
+// import { userInfo } from 'os'
 export default {
   components: { Bread },
+  mounted() {
+    window.addEventListener('scroll', this.showIcon)
+  },
   created() {
     this.isCollapse = false
     if (document.documentElement.clientWidth < 500) {
@@ -250,7 +255,8 @@ export default {
       activeIndex2: '1',
       height: {
         height: window.innerHeight - 60 + 'px'
-      }
+      },
+      headerOpacity: 1
     }
   },
   methods: {
@@ -295,14 +301,23 @@ export default {
     },
     goToMyPage(id) {
       console.log('goToUserPage', id)
-      var params = {}
-      params.userId = id
-      const details = this.$router.resolve({
-        path: '/index/userPage',
-        query: params,
-        params: { catId: params.userId }
-      })
-      window.open(details.href, '_blank')
+      console.log(this.$store.getters.userId)
+      if (this.$store.getters.userId !== '' && this.$store.getters.userId !== null) {
+        var params = {}
+        params.userId = id
+        const details = this.$router.resolve({
+          path: '/index/userPage',
+          query: params,
+          params: { catId: params.userId }
+        })
+        window.open(details.href, '_blank')
+      } else {
+        this.$notify({
+          title: '请先登录！',
+          type: 'warning'
+        })
+        this.$router.push('/login')
+      }
     },
     goToUserPage() {
       this.$router.push('/index/personalManage')
@@ -337,6 +352,16 @@ export default {
       } else {
         this.whatColorRadio = '深'
       }
+    },
+    showIcon() {
+      if (
+        !!document.documentElement.scrollTop &&
+        document.documentElement.scrollTop > 30
+      ) {
+        this.headerOpacity = 0.8
+      } else {
+        this.headerOpacity = 1
+      }
     }
   },
 
@@ -365,7 +390,8 @@ export default {
       } else {
         this.titleColor = '#454545'
         this.topMenuChosedColor = '#424242'
-        this.topMenuBgColor = '#bfbfbf'
+        // this.topMenuBgColor = '#bfbfbf'
+        this.topMenuBgColor = 'white'
         this.leftMenuBgColor = '#f2f2f2'
         this.leftMenuTextColor = '#454545'
         this.leftMenuChosedColor = '#409EFF'
@@ -376,6 +402,16 @@ export default {
 </script>
 
 <style scoped>
+
+.header-class{
+  margin:0;
+  padding:0;
+  position:fixed;
+  left:0;
+  top:0;
+  z-index:2001;
+  width:100%;
+}
 @media(max-width:500px){
   .display-none{
     display: none;
