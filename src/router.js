@@ -24,6 +24,7 @@ import UserManage from './superviews/UserManage.vue'
 import DataManage from './superviews/DataManage.vue'
 import SuperLogin from './superviews/SuperLogin.vue'
 import ArticleManage from './superviews/ArticleManage.vue'
+import TalkManage from './superviews/TalkManage.vue'
 
 // import Waterfall from './views/Waterfall'
 
@@ -183,11 +184,17 @@ export default new Router({
         component: DataManage,
         meta: { title: '用户管理' }
       }, {
-        // 用户管理
+        // 笔记管理
         path: 'articleManage',
         name: 'articleManage',
         component: ArticleManage,
         meta: { title: '笔记管理' }
+      }, {
+        // 评论管理
+        path: 'talkManage',
+        name: 'talkManage',
+        component: TalkManage,
+        meta: { title: '评论管理' }
       }]
     }
   ]

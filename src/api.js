@@ -443,3 +443,58 @@ export function updateArticleBySuper(data) {
     data
   })
 }
+/**
+ * 管理员审核文章
+ * @param {*} params
+ */
+export function checkArticleBySuper(params) {
+  return request({
+    url: address.checkArticleBySuper(),
+    method: 'get',
+    params: params
+  })
+}
+/**
+ * 管理员删除文章（软删）
+ * @param {*} params
+ */
+export function deleteArticleBySuper(params) {
+  return request({
+    url: address.deleteArticleBySuper(),
+    method: 'get',
+    params: params
+  })
+}
+/**
+ * 管理员分页获取评论信息
+ * @param {*} params
+ */
+export function findAllTalkBySuper(params) {
+  return request({
+    url: address.findAllTalkBySuper(),
+    method: 'get',
+    params: params
+  })
+}
+/**
+ * 管理员修改评论信息
+ * @param {*} data
+ */
+export function updateTalkBySuper(data) {
+  return request({
+    url: address.updateTalkBySuper(),
+    method: 'post',
+    data
+  })
+}
+/**
+ * 管理员删除评论（软删）
+ * @param {*} params
+ */
+export function deleteTalkBySuper(params) {
+  return request({
+    url: address.deleteTalkBySuper(),
+    method: 'get',
+    params: params
+  })
+}

@@ -3,35 +3,39 @@ import router from './router'
 export default {
   // 时间格式化方法2
   timeFormat(time, flag) { // flag是以什么隔开
-    var d = new Date(time)
+    if (time !== null) {
+      var d = new Date(time)
 
-    var year = d.getFullYear() // 年
-    var month = d.getMonth() + 1 // 月
-    var day = d.getDate() // 日
+      var year = d.getFullYear() // 年
+      var month = d.getMonth() + 1 // 月
+      var day = d.getDate() // 日
 
-    var hh = d.getHours() // 时
-    var mm = d.getMinutes() // 分
-    var ss = d.getSeconds() // 秒
+      var hh = d.getHours() // 时
+      var mm = d.getMinutes() // 分
+      var ss = d.getSeconds() // 秒
 
-    var clock = year + flag
+      var clock = year + flag
 
-    if (month < 10) { clock += '0' }
+      if (month < 10) { clock += '0' }
 
-    clock += month + flag
+      clock += month + flag
 
-    if (day < 10) { clock += '0' }
+      if (day < 10) { clock += '0' }
 
-    clock += day + ' '
+      clock += day + ' '
 
-    if (hh < 10) { clock += '0' }
+      if (hh < 10) { clock += '0' }
 
-    clock += hh + ':'
-    if (mm < 10) clock += '0'
-    clock += mm + ':'
+      clock += hh + ':'
+      if (mm < 10) clock += '0'
+      clock += mm + ':'
 
-    if (ss < 10) clock += '0'
-    clock += ss
-    return (clock)
+      if (ss < 10) clock += '0'
+      clock += ss
+      return (clock)
+    } else {
+      return '---'
+    }
   },
   showGoToLogin() {
     Vue.prototype.$confirm('立即登录Tonna, 是否继续?', {

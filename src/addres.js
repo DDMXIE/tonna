@@ -237,6 +237,36 @@ const AddressLocal = {
    */
   updateArticleBySuper: () => {
     return `/super/updateArticleBySuper`
+  },
+  /**
+   * 管理员审核文章
+   */
+  checkArticleBySuper: () => {
+    return `/super/checkArticleBySuper`
+  },
+  /**
+   * 管理员删除文章（软删）
+   */
+  deleteArticleBySuper: () => {
+    return `/super/deleteArticleBySuper`
+  },
+  /**
+   * 管理员分页获取评论信息
+   */
+  findAllTalkBySuper: () => {
+    return `/super/findAllTalkBySuper`
+  },
+  /**
+   * 管理员分页获取评论信息
+   */
+  updateTalkBySuper: () => {
+    return `/super/updateTalkBySuper`
+  },
+  /**
+   * 管理员删除评论（软删）
+   */
+  deleteTalkBySuper: () => {
+    return `/super/deleteTalkBySuper`
   }
 }
 

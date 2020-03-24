@@ -7,22 +7,24 @@
     ref="filterTable"
     :data="tableData"
     style="width: 100%;">
+    
     <el-table-column
       fixed
+      prop="article_TITLE"
+      label="笔记标题"
+      width="180"
+      show-overflow-tooltip>
+      <template slot-scope="scope">
+        {{scope.row.article.article_TITLE}}
+      </template> 
+    </el-table-column>
+    <el-table-column
+     
       label="笔记ID"
       width="180"
       show-overflow-tooltip>
       <template slot-scope="scope">
         {{scope.row.article.article_ID}}
-      </template> 
-    </el-table-column>
-    <el-table-column
-      prop="article_TITLE"
-      label="标题"
-      width="180"
-      show-overflow-tooltip>
-      <template slot-scope="scope">
-        {{scope.row.article.article_TITLE}}
       </template> 
     </el-table-column>
      <el-table-column
@@ -73,10 +75,13 @@
       <template slot-scope="scope">
         <!-- {{scope.row.article.article_STATUS}} -->
         <div v-if="scope.row.article.article_STATUS === '1'">
-          <el-button type="warning" round size="mini">待审核</el-button>
+          <el-button type="warning" round size="mini" @click="goToCheck(scope.row)">待审核</el-button>
+        </div>
+        <div v-if="scope.row.article.article_STATUS === '2'">
+          <el-button type="info" round size="mini">已保存</el-button>
         </div>
         <div v-if="scope.row.article.article_STATUS === '3'">
-          <el-button type="success" round size="mini">已发表</el-button>
+          <el-button type="success" round size="mini" @click="goToCheck(scope.row)">已发表</el-button>
         </div>
        </template> 
     </el-table-column>
@@ -113,14 +118,8 @@
         <!-- {{scope.row.article.article_STATUS}} -->
         <div>
           <el-button type="primary" round size="mini" @click="scanAndEdit(scope.row)">详情<i class="el-icon-edit el-icon--right"></i></el-button>
-          <!-- <el-button type="primary" round size="mini">修改</el-button> -->
-          <!-- <el-button type="success" icon="el-icon-edit" circle size="mini"></el-button> -->
-          <el-button type="danger" icon="el-icon-delete" circle size="mini"></el-button>
-          <!-- <el-button type="primary" round size="mini">删除</el-button> -->
+          <el-button type="danger" icon="el-icon-delete" circle size="mini" @click="deleteArticleBySuper(scope.row)"></el-button>
         </div>
-        <!-- <div v-if="scope.row.article.article_STATUS === '3'">
-          <el-button type="success" round size="mini">已发表</el-button>
-        </div> -->
        </template> 
     </el-table-column>
   </el-table>
@@ -135,48 +134,86 @@
     </div>
 
   <el-dialog title="笔记详情" :visible.sync="dialogFormVisible">
-  
-  <el-form :model="form">
-    <el-form-item label="笔记标题" :label-width="formLabelWidth">
-      <el-input :disabled="isNotEdit" v-model="form.article_TITLE" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item label="笔记作者" :label-width="formLabelWidth">
-      <el-input :disabled="isNotEdit" v-model="form.article_AUTHOR" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item label="笔记简览" :label-width="formLabelWidth">
-      <el-input :disabled="isNotEdit" v-model="form.article_CONTENT_HTML" type="textarea" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item label="笔记内容" :label-width="formLabelWidth" >
-      <el-input :disabled="isNotEdit" v-model="form.article_CONTENT" type="textarea" autocomplete="off" :autosize="{ minRows: 2, maxRows: 6 }"></el-input>
-    </el-form-item>
-     <el-form-item label="权限" :label-width="formLabelWidth" prop="article_SECURITY">
-      <el-switch
-        :disabled="isNotEdit"
-        v-model="articleSecurity"
-        active-color="#13ce66"
-        inactive-color="#ff4949"
-        active-text="所有人可见"
-        inactive-text="私密">
-      </el-switch>
-    </el-form-item>
+      <el-form :model="form">
+        <el-form-item label="笔记标题" :label-width="formLabelWidth">
+          <el-input :disabled="isNotEdit" v-model="form.article_TITLE" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="笔记作者" :label-width="formLabelWidth">
+          <el-input :disabled="isNotEdit" v-model="form.article_AUTHOR" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="笔记简览" :label-width="formLabelWidth">
+          <el-input :disabled="isNotEdit" v-model="form.article_CONTENT_HTML" type="textarea" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="笔记内容" :label-width="formLabelWidth" >
+          <el-input :disabled="isNotEdit" v-model="form.article_CONTENT" type="textarea" autocomplete="off" :autosize="{ minRows: 2, maxRows: 6 }"></el-input>
+        </el-form-item>
+        <el-form-item label="权限" :label-width="formLabelWidth" prop="article_SECURITY">
+          <el-switch
+            :disabled="isNotEdit"
+            v-model="articleSecurity"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            active-text="所有人可见"
+            inactive-text="私密">
+          </el-switch>
+        </el-form-item>
 
-    <el-form-item label="活动区域" :label-width="formLabelWidth">
-      <el-select :disabled="isNotEdit" v-model="form.type_ID" placeholder="请选择文章类型">
-          <el-option v-for="(item,index) in constType" :label="item.type_NAME" :value="item.type_ID" :key="index"></el-option>
-      </el-select>
-    </el-form-item>
-  </el-form>
-  <div slot="footer" class="dialog-footer">
-    <el-button v-if="isNotEdit === true" type="primary" round @click="startEdit">修 改</el-button>
-    <el-button v-else type="success" round @click="submitEdit">确 定</el-button>
-    <el-button v-if="isNotEdit === false" plain round @click="cancelEdit">取 消</el-button>
-  </div>
-</el-dialog>
+        <el-form-item label="文章类型" :label-width="formLabelWidth">
+          <el-select :disabled="isNotEdit" v-model="form.type_ID" placeholder="请选择文章类型">
+              <el-option v-for="(item,index) in constType" :label="item.type_NAME" :value="item.type_ID" :key="index"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button v-if="isNotEdit === true" type="primary" round @click="startEdit">修 改</el-button>
+        <el-button v-else type="success" round @click="submitEdit">确 定</el-button>
+        <el-button v-if="isNotEdit === false" plain round @click="cancelEdit">取 消</el-button>
+      </div>
+  </el-dialog>
+  <el-dialog title="笔记审核" :visible.sync="checkDialogVisible">
+    <div>
+       <el-form :model="form">
+        <el-form-item label="笔记标题" :label-width="formLabelWidth">
+          <el-input :readonly="true" v-model="form.article_TITLE" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="笔记作者" :label-width="formLabelWidth">
+          <el-input :readonly="true" v-model="form.article_AUTHOR" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="笔记简览" :label-width="formLabelWidth">
+          <el-input :readonly="true" v-model="form.article_CONTENT_HTML" type="textarea" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="笔记内容" :label-width="formLabelWidth" >
+          <el-input :readonly="true" v-model="form.article_CONTENT" type="textarea" autocomplete="off" :autosize="{ minRows: 2, maxRows: 6 }"></el-input>
+        </el-form-item>
+        <el-form-item label="权限" :label-width="formLabelWidth" prop="article_SECURITY">
+          <el-switch
+            :disabled="isNotEdit"
+            v-model="articleSecurity"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            active-text="所有人可见"
+            inactive-text="私密">
+          </el-switch>
+        </el-form-item>
+
+        <el-form-item label="文章类型" :label-width="formLabelWidth">
+          <el-select :disabled="isNotEdit" v-model="form.type_ID" placeholder="请选择文章类型">
+              <el-option v-for="(item,index) in constType" :label="item.type_NAME" :value="item.type_ID" :key="index"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+    </div>
+      <div slot="footer" class="dialog-footer"> 
+        <el-button v-if="form.article_STATUS === '1'" type="primary" round @click="submitCheck('3')">通过审核</el-button>
+        <el-button v-else-if="form.article_STATUS === '3'" type="danger" round @click="submitCheck('1')">撤回审核</el-button>
+      </div>
+  </el-dialog>
   </div>
 </template>
 
 <script>
-import { findAllArticleByPage, getConstType, updateArticleBySuper } from '@/api'
+import { findAllArticleByPage, getConstType, updateArticleBySuper
+  , checkArticleBySuper, deleteArticleBySuper } from '@/api'
 import utilFunction from '../utilFunction'
 export default {
   data() {
@@ -192,6 +229,7 @@ export default {
         }
       }],
       dialogFormVisible: false,
+      checkDialogVisible: false,
       formLabelWidth: '120px',
       form: {
         user_IMG: '',
@@ -310,6 +348,58 @@ export default {
           message: '笔记信息已成功修改',
           type: 'success'
         })
+      })
+    },
+    deleteArticleBySuper(item) {
+      this.$confirm('此操作将删除该条笔记, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        var params = {}
+        params.articleId = item.article.article_ID
+        deleteArticleBySuper(params).then(res => {
+          this.loadData()
+          this.$notify({
+            title: 'Tonna',
+            message: '笔记已成功删除',
+            type: 'success'
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    goToCheck(item) {
+      this.scanAndEdit(item)
+      this.dialogFormVisible = false
+      this.checkDialogVisible = true
+    },
+    submitCheck(status) {
+      var params = {}
+      params.articleId = this.form.article_ID
+      params.articleStatus = status
+      console.log(params)
+      checkArticleBySuper(params).then(res => {
+        console.log(res)
+        this.checkDialogVisible = false
+        if (params.articleStatus === '3') {
+          this.$notify({
+            title: 'Tonna',
+            message: '笔记已通过审核',
+            type: 'success'
+          })
+        } else if (params.articleStatus === '1') {
+          this.$notify({
+            title: 'Tonna',
+            message: '笔记已撤回审核',
+            type: 'success'
+          })
+        }
+        this.loadData()
       })
     }
   }

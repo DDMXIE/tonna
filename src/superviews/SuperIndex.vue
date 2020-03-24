@@ -25,6 +25,10 @@
           <i class="el-icon-s-management"></i>
           <span slot="title">笔记管理</span>
       </el-menu-item>
+      <el-menu-item index="/superindex/talkManage">
+          <i class="el-icon-chat-dot-square"></i>
+          <span slot="title">评论管理</span>
+      </el-menu-item>
     </el-menu>
   </el-aside>
 
