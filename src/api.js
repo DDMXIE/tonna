@@ -234,6 +234,42 @@ export function findRecommendAuthor(params) {
     params: params
   })
 }
+
+/**
+ * 用户草稿箱笔记信息
+ * @param {*} params
+ */
+export function findDraftArticle(params) {
+  return request({
+    url: address.findDraftArticle(),
+    method: 'get',
+    params: params
+  })
+}
+
+/**
+ * 用户管理笔记-获取自己的笔记信息
+ * @param {*} params
+ */
+export function findUserArticleByUserId(params) {
+  return request({
+    url: address.findUserArticleByUserId(),
+    method: 'get',
+    params: params
+  })
+}
+
+/**
+ * 用户管理笔记-删除笔记（软删）
+ * @param {*} params
+ */
+export function deleteArticleByUser(params) {
+  return request({
+    url: address.deleteArticleByUser(),
+    method: 'get',
+    params: params
+  })
+}
 // -------------------------------------评论-------------------------------------
 /**
  * 用户新增或回复评论

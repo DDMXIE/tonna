@@ -111,6 +111,7 @@
                           <el-dropdown-item v-if="whatColorRadio === '浅'"><div @click="changeNightOrLight" style="text-align:center">深色模式</div></el-dropdown-item>
                           <el-dropdown-item v-else><div @click="changeNightOrLight" style="text-align:center">浅色模式</div></el-dropdown-item>
                           <el-dropdown-item><div @click="goToMyCollect" style="text-align:center">我的收藏</div></el-dropdown-item>
+                          <el-dropdown-item><div @click="goToUserArticle" style="text-align:center">草稿箱</div></el-dropdown-item>
                           <el-dropdown-item><div @click="logout" style="text-align:center">退出登录</div></el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
@@ -330,6 +331,9 @@ export default {
     },
     goToMyCollect() {
       this.$router.push('/index/myCollect')
+    },
+    goToUserArticle() {
+      this.$router.push('/index/userArticle')
     },
     logout() {
       this.axios.post('/logout')

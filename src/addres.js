@@ -123,6 +123,24 @@ const AddressLocal = {
   findRecommendAuthor: () => {
     return `/tonna/findRecommendAuthor`
   },
+  /**
+   * 用户草稿箱笔记信息
+   */
+  findDraftArticle: () => {
+    return `/admin/findDraftArticle`
+  },
+  /**
+   *  用户管理笔记-获取自己的笔记信息
+   */
+  findUserArticleByUserId: () => {
+    return `/admin/findUserArticleByUserId`
+  },
+  /**
+   *  用户管理笔记-删除笔记（软删）
+   */
+  deleteArticleByUser: () => {
+    return `/admin/deleteArticleByUser`
+  },
   // --------------------------------------评论--------------------------------------
   /**
    * 用户新增或回复评论

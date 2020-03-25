@@ -19,6 +19,7 @@ import ConnectUs from './views/ConnectUs'
 import UserPage from './views/UserPage'
 import PersonalEdit from './views/PersonalEdit'
 import MyCollect from './views/MyCollect'
+import UserArticle from './views/UserArticle'
 import Superindex from './superviews/SuperIndex.vue'
 import UserManage from './superviews/UserManage.vue'
 import DataManage from './superviews/DataManage.vue'
@@ -143,6 +144,12 @@ export default new Router({
         path: 'myCollect',
         name: 'myCollect',
         component: MyCollect,
+        meta: { title: '我的收藏' }
+      },
+      {
+        path: 'userArticle',
+        name: 'userArticle',
+        component: UserArticle,
         meta: { title: '我的收藏' }
       }
       ]
